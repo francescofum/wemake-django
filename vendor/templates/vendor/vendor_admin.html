@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+
+{%block title %} Vendor Admin {% endblock %} 
+
+{% block content %}
+    {{r.status_code}}
+    <h1> Vendor Admin - {{ vendor.created_by.username }}</h1>
+    <form method="POST" action=".">
+        {% csrf_token %}
+        <button type="submit">Press me </button>
+    </form>
+    
+{% endblock %}

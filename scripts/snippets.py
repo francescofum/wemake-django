@@ -5,6 +5,10 @@ from django.db.models import Q
 
 from pprint import pprint as pp 
 
+'''
+    How To: python manage.py runscript snippets
+
+'''
 ## Add a printer 
 # def run():
 #     vendor = Vendor.objects.first()
@@ -32,12 +36,30 @@ def run():
     # create_printer()
     # delete_printer()
     # Material
-    create_material()
+    # create_material()
     # update_material()
     # assign_material_to_printer()
     # unassign_material_from_printer()
     # delete_material()
+    update_vendor_settings()
 
+def update_vendor_settings():
+    from django.test import  Client
+    from django.urls import reverse
+
+    client = Client()
+    login_url = reverse('login')
+    vendor_admin_url = reverse('vendor_admin')
+
+    # Login
+    response = client.post(login_url, {'username': 'francesco', 'password': 'athens123'})
+    # Simulate updating the name 
+    response = client.post(vendor_admin_url,\
+        {'update':'1','store_name':'OldName',\
+        'slug':"somenewslug",\
+        'description':"Some desc"},\
+        follow=True)
+    
 def create_printer():
     '''
         Create a printer 
