@@ -1,3 +1,5 @@
+
+
 <h1> WeMake Installation Guide </h1>
 
 <ol>
@@ -9,7 +11,7 @@
   <li> Run django server <code>cd src && python manage.py runserver</code> </li>
 </ol>
 
-<strong>Note:</strong> If you install any modules make sure to generate a new requirements.txt by running "pip freeze>requirements.txt"
+<strong>Note:</strong> If you install any modules make sure to generate a new requirements.txt by running <code>pip freeze>requirements.txt</code>
 <br>
 <strong>Note:</strong> Remember to activate your environemnt each time you open a new terminal.
 
