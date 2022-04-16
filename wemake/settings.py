@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',  # Added for debugging.
     'vendor',
     'printer',
-    'wm_admin',
+    'core',
     'materials'
 ]
 

@@ -1,7 +1,7 @@
 from django.db import models
 
-from wm_admin.models import MATERIAL_GLOBAL
-from wm_admin.models import COLOUR_GLOBAL
+from core.models import MATERIAL_GLOBAL
+from core.models import COLOUR_GLOBAL
 from vendor.models import Vendor
 
 

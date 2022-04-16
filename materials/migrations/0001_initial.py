@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('wm_admin', '0001_initial'),
+        ('core', '0001_initial'),
         ('printer', '0016_remove_materialoptions_colour_and_more'),
         ('vendor', '0003_alter_vendor_options_remove_vendor_name'),
     ]
@@ -22,8 +22,8 @@ class Migration(migrations.Migration):
                 ('quantity', models.BooleanField(default=True)),
                 ('price_coefficient', models.DecimalField(decimal_places=2, default=1.0, max_digits=3)),
                 ('price_length', models.DecimalField(decimal_places=2, default=1.0, max_digits=3)),
-                ('colour', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='colour', to='wm_admin.colour_global')),
-                ('material', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='material', to='wm_admin.material_global')),
+                ('colour', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='colour', to='core.colour_global')),
+                ('material', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='material', to='core.material_global')),
                 ('printers', models.ManyToManyField(null=True, related_name='materials', to='printer.printer')),
                 ('vendor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='materials', to='vendor.vendor')),
             ],
