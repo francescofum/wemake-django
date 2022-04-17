@@ -5,9 +5,18 @@
 {% block content %}
     {{r.status_code}}
     <h1> Vendor Admin - {{ vendor.created_by.username }}</h1>
-    <form method="POST" action=".">
+    <p> Since: {{ vendor.created_at }} </p>
+    <hr>
+
+
+    <form method="POST" action="." class="form-group">
         {% csrf_token %}
-        <button type="submit">Press me </button>
+        <div class="input-group mb-3">
+            {{ form.as_p }}
+        </div>
+
+        <input type='number' name='update' value='1' hidden></input>
+        <input class='btn btn-primary' type="submit" value="Save"></input>
     </form>
-    
+
 {% endblock %}

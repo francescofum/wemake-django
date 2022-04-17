@@ -46,7 +46,7 @@ class Vendor(models.Model):
         of a given vendor which can PLA BLUE
     '''
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.OneToOneField(User, related_name='vendor', on_delete=models.CASCADE)
+    created_by = models.OneToOneField(User,related_name='vendor', on_delete=models.CASCADE, null=True)
     store_name = models.CharField(max_length=255,blank=True, null=True)
     slug = models.SlugField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
