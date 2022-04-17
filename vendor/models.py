@@ -102,10 +102,10 @@ class Vendor(models.Model):
         vendor = Vendor.objects.get(id=self.id)
         materials = list()
         for material in vendor.materials.all():
-            if material.material.name not in materials:
-                materials.append(material.material.name)
+            if material.material.id not in materials:
+                materials.append((material.material.id,material.material.name))
 
-        return materials
+        return list(set(materials))
     
     def get_materials(self,material:str):
         '''
