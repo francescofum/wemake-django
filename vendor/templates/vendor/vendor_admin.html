@@ -4,29 +4,26 @@
 
 {% block content %}
     {{r.status_code}}
-    <img src="{{vendor.store_logo_thumbnail.url}}" alt="" class="profile-pic">
-    <h1> </h1>
-    <p>  </p>
     <hr>
 
 
 
-    <div class="card mb-3" style="max-width: 540px;">
+    <div class="card mb-3 border-0" style="max-width: 540px;">
         <div class="row g-0">
           <div class="col-md-4 image-container">
-            <!-- <img src="" alt="store-logo" class="profile-pic"> -->
+            <img src="{{vendor.get_thumbnail }}" alt="store-logo" class="profile-pic">
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">Vendor Admin - {{ vendor.created_by.username }}</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <h2 class="card-title">Vendor Admin - {{ vendor.created_by.username }}</h2>
+              <p class="card-text">This is the space where you can edit your personal store settings. </p>
               <p class="card-text"><small class="text-muted">Since: {{ vendor.created_at }}</small></p>
             </div>
           </div>
         </div>
       </div>
 
-    <form method="POST" action="." class="form-group">
+    <form method="POST" action="." class="form-group" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="input-group mb-3">
             {{ form.as_p }}

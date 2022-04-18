@@ -55,7 +55,7 @@ class Vendor(models.Model):
     slug                    = models.SlugField(blank=True, null=True)
     description             = models.TextField(blank=True, null=True)
     store_logo_raw          = models.ImageField(null=True, blank=True)
-    store_logo_thumbnail    = models.ImageField(upload_to='uploads/images/profile_pics/', null=True, blank=True)
+    store_logo_thumbnail    = models.ImageField(null=True, blank=True)
     # TODO store gallery
 
     class Meta:
