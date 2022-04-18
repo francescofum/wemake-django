@@ -34,3 +34,4 @@ class MaterialOptions(models.Model):
     
     def __str__(self):
         return f"{self.material.name} {self.colour.name}"
+
