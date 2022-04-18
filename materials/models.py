@@ -29,8 +29,9 @@ class MaterialOptions(models.Model):
     colour   = models.ForeignKey(COLOUR_GLOBAL, related_name='colour',on_delete=models.DO_NOTHING) # On delete no cascade?
 
     # Materials
-    printers = models.ManyToManyField(to='printer.Printer',related_name="materials")
+    printers = models.ManyToManyField(to='printer.Printer',related_name="materials",blank=True)
     vendor = models.ForeignKey(Vendor,related_name='materials',on_delete=models.CASCADE)
     
     def __str__(self):
         return f"{self.material.name} {self.colour.name}"
+
