@@ -20,6 +20,7 @@
   <li> From the src directory run <code>python manage.py createsuperuser</code></li>
   <li> Fill in the details </li>
   <li> Start the server and navigate to http://127.0.0.1:8000/admin </li>
+  <li> Make sure your user is the owner of all folders/files in directory. If not, <code>sudo chown -R ['user' eg: raul] wemake-django</code> </li>
 </ol>
 
 <h1> Making database migrations </h1>  
@@ -45,4 +46,11 @@
   <li>GitGraph</li>
   <li>Remote-SSH</li>
   <li>TODO: add django plugins</li>
+</ul>
+
+
+<h1>Useful Tips</h1>
+<ul>
+  <li>How do I ignore an error on 'git pull' about my local changes would be overwritten by merge?<code>git stash push --include-untracked</code><code>git pull</code><code>git stash drop</code></li> 
+
 </ul>

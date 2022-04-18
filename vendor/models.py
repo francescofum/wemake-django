@@ -30,6 +30,10 @@ TODO:
 '''
 
 
+from io import BytesIO
+from PIL import Image
+
+from django.core.files import File
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
@@ -45,12 +49,13 @@ class Vendor(models.Model):
         User case: you need to identify all the printers
         of a given vendor which can PLA BLUE
     '''
-    created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.OneToOneField(User, related_name='vendor', on_delete=models.CASCADE)
-    store_name = models.CharField(max_length=255,blank=True, null=True)
-    slug = models.SlugField(blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    # TODO store logo 
+    created_at              = models.DateTimeField(auto_now_add=True)
+    created_by              = models.OneToOneField(User,related_name='vendor', on_delete=models.CASCADE, null=True)
+    store_name              = models.CharField(max_length=255,blank=True, null=True)
+    slug                    = models.SlugField(blank=False, null=False)
+    description             = models.TextField(blank=True, null=True)
+    store_logo_raw          = models.ImageField(null=True, blank=True)
+    store_logo_thumbnail    = models.ImageField(null=True, blank=True)
     # TODO store gallery
 
     class Meta:
@@ -58,6 +63,33 @@ class Vendor(models.Model):
 
     def __str__(self):
         return self.store_name
+
+
+    def get_thumbnail(self):
+        if self.store_logo_thumbnail:
+            return self.store_logo_thumbnail.url
+        else:
+            if self.store_logo_raw: 
+                self.store_logo_thumbnail = self.make_thumbnail()
+                self.save()
+
+                return self.store_logo_thumbnail.url
+            else: 
+                return 'https://via.placeholder.com/240x240.jpg'
+
+
+    def make_thumbnail(self, size=(300,200)):
+        image = self.store_logo_raw 
+        img = Image.open(image)
+        img.convert('RGB')
+        img.thumbnail(size)
+
+        thumb_io = BytesIO()
+        img.save(thumb_io, 'JPEG', quality=85)
+
+        thumbnail = File(thumb_io, name=image.name)
+
+        return thumbnail
 
     def get_compatible_printers(self,material:str,colour:str,size:dict) -> list:
         '''

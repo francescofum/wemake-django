@@ -3,11 +3,37 @@
 {%block title %} Vendor Admin {% endblock %} 
 
 {% block content %}
-    {{r.status_code}}
-    <h1> Vendor Admin - {{ vendor.created_by.username }}</h1>
-    <form method="POST" action=".">
+
+<div class="row justify-content-center">
+<div class='col-8'>
+
+    <hr>
+
+
+
+    <div class="card mb-3 border-0" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4 image-container">
+            <img src="{{ vendor.get_thumbnail }}" alt="store-logo" class="profile-pic">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h2 class="card-title">Vendor Admin - {{ vendor.created_by.username }}</h2>
+              <p class="card-text">This is the space where you can edit your personal store settings. </p>
+              <p class="card-text"><small class="text-muted">Since: {{ vendor.created_at }}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <form method="POST" action="." class="form-group" enctype="multipart/form-data">
         {% csrf_token %}
-        <button type="submit">Press me </button>
+        <div class="input-group mb-3">
+            {{ form.as_p }}
+        </div>
+
+        <input class='btn btn-primary' type="submit" value="Save"></input>
     </form>
-    
+</div>
+</div>
 {% endblock %}
