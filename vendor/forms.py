@@ -15,7 +15,8 @@ class VendorSettingsForm(forms.ModelForm):
         fields = [
             'store_name',
             'slug',
-            'description'
+            'description', 
+            'store_logo_raw'
         ]
 
     def clean_store_name(self, *args, **kwargs):

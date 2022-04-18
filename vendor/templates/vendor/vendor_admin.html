@@ -4,10 +4,27 @@
 
 {% block content %}
     {{r.status_code}}
-    <h1> Vendor Admin - {{ vendor.created_by.username }}</h1>
-    <p> Since: {{ vendor.created_at }} </p>
+    <img src="{{vendor.store_logo_thumbnail.url}}" alt="" class="profile-pic">
+    <h1> </h1>
+    <p>  </p>
     <hr>
 
+
+
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4 image-container">
+            <!-- <img src="" alt="store-logo" class="profile-pic"> -->
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">Vendor Admin - {{ vendor.created_by.username }}</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text"><small class="text-muted">Since: {{ vendor.created_at }}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <form method="POST" action="." class="form-group">
         {% csrf_token %}
