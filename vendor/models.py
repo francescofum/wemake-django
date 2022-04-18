@@ -52,7 +52,7 @@ class Vendor(models.Model):
     created_at              = models.DateTimeField(auto_now_add=True)
     created_by              = models.OneToOneField(User,related_name='vendor', on_delete=models.CASCADE, null=True)
     store_name              = models.CharField(max_length=255,blank=True, null=True)
-    slug                    = models.SlugField(blank=True, null=True)
+    slug                    = models.SlugField(blank=False, null=False)
     description             = models.TextField(blank=True, null=True)
     store_logo_raw          = models.ImageField(null=True, blank=True)
     store_logo_thumbnail    = models.ImageField(null=True, blank=True)
@@ -70,7 +70,7 @@ class Vendor(models.Model):
             return self.store_logo_thumbnail.url
         else:
             if self.store_logo_raw: 
-                self.store_logo_thumbnail = self.make_thumbnail(self.store_logo_raw)
+                self.store_logo_thumbnail = self.make_thumbnail()
                 self.save()
 
                 return self.store_logo_thumbnail.url
@@ -78,7 +78,8 @@ class Vendor(models.Model):
                 return 'https://via.placeholder.com/240x240.jpg'
 
 
-    def make_thumbnail(self, image, size=(300,200)):
+    def make_thumbnail(self, size=(300,200)):
+        image = self.store_logo_raw 
         img = Image.open(image)
         img.convert('RGB')
         img.thumbnail(size)

@@ -12,29 +12,27 @@ def vendor_admin(request):
     '''
         Main entry point for vendor (dashboards/orders etc)
     '''
+
     vendor = request.user.vendor
-    form = VendorSettingsForm(instance=vendor)
-    context = {
-        'form':form,
-        'vendor':vendor,
-        'r':request
-    }
     
     if(request.method == 'GET'):
+        form = VendorSettingsForm(instance=vendor)
+        context = {
+            'form':form,
+            'vendor':vendor,
+        }        
         return render(request,'vendor/vendor_admin.html',context)
 
     if(request.method == 'POST'):
-        print(request.POST)
-        form = VendorSettingsForm(request.POST or None, request.FILES, instance=vendor)
+        form = VendorSettingsForm(request.POST, request.FILES, instance=vendor)
+        context = {
+            'form':form,
+            'vendor':vendor,
+        }        
 
-        if(request.POST.get('update') == '1') & form.is_valid():
+        if (form.is_valid()):
             print("***********************************")
-            vendor = form.save(commit=False)
-            vendor.store_name       = request.POST.get('store_name')
-            vendor.slug             = request.POST.get('slug')
-            vendor.description      = request.POST.get('description')
-            vendor.store_logo_thumbnail = ''
-            vendor.save()
-
+            form.save()
+            vendor.store_logo_thumbnail = '' # Ensures thumbnail is re-loaded when new pic is uploaded (can be optimised tho)
 
         return render(request,'vendor/vendor_admin.html',context)

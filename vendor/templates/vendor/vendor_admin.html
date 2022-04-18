@@ -3,7 +3,10 @@
 {%block title %} Vendor Admin {% endblock %} 
 
 {% block content %}
-    {{r.status_code}}
+
+<div class="row justify-content-center">
+<div class='col-8'>
+
     <hr>
 
 
@@ -11,7 +14,7 @@
     <div class="card mb-3 border-0" style="max-width: 540px;">
         <div class="row g-0">
           <div class="col-md-4 image-container">
-            <img src="{{vendor.get_thumbnail }}" alt="store-logo" class="profile-pic">
+            <img src="{{ vendor.get_thumbnail }}" alt="store-logo" class="profile-pic">
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -29,8 +32,8 @@
             {{ form.as_p }}
         </div>
 
-        <input type='number' name='update' value='1' hidden></input>
         <input class='btn btn-primary' type="submit" value="Save"></input>
     </form>
-
+</div>
+</div>
 {% endblock %}

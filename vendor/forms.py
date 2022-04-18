@@ -1,4 +1,5 @@
 # from attr import fields
+from cProfile import label
 from django import forms
 
 from .models import Vendor
@@ -9,9 +10,7 @@ class VendorSettingsForm(forms.ModelForm):
         model = Vendor
         fields = '__all__'
         exclude = ['user','created_by','store_logo_thumbnail']
+        labels = {        
+            'store_logo_raw': 'Change Logo',         
+            }
 
-    # def clean_store_name(self, *args, **kwargs):
-    #     store_name = self.cleaned_data.get("store_name")
-    #     if not "raul" in store_name:
-    #         raise forms.ValidationError("Pretty lame")
-    #     return store_name
