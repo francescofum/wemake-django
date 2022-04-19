@@ -14,9 +14,11 @@ def vendor_admin(request):
     '''
 
     vendor = request.user.vendor
-    
+    print("***********************************")
+    print(request.method)
+
     if(request.method == 'GET'):
-        form = VendorSettingsForm(instance=vendor)
+        form = VendorSettingsForm(None, instance=vendor)
         context = {
             'form':form,
             'vendor':vendor,
@@ -31,8 +33,12 @@ def vendor_admin(request):
         }        
 
         if (form.is_valid()):
-            print("***********************************")
             form.save()
             vendor.store_logo_thumbnail = '' # Ensures thumbnail is re-loaded when new pic is uploaded (can be optimised tho)
-
+            context = {
+                'form':form,
+                'vendor':vendor,
+            }        
         return render(request,'vendor/vendor_admin.html',context)
+
+

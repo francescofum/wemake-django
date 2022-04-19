@@ -56,6 +56,14 @@ class Vendor(models.Model):
     description             = models.TextField(blank=True, null=True)
     store_logo_raw          = models.ImageField(null=True, blank=True)
     store_logo_thumbnail    = models.ImageField(null=True, blank=True)
+    image_1                 = models.ImageField(null=True, blank=True)
+    image_2                 = models.ImageField(null=True, blank=True)
+    image_3                 = models.ImageField(null=True, blank=True)
+    image_4                 = models.ImageField(null=True, blank=True)
+    image_5                 = models.ImageField(null=True, blank=True)
+    image_6                 = models.ImageField(null=True, blank=True)
+    image_7                 = models.ImageField(null=True, blank=True)
+    image_8                 = models.ImageField(null=True, blank=True)
     # TODO store gallery
 
     class Meta:
@@ -150,7 +158,4 @@ class Vendor(models.Model):
         vendor = Vendor.objects.get(id=self.id)
         return vendor.materials.filter(material__name__iexact=material) 
 
-
-
-    
 
