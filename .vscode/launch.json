@@ -8,7 +8,7 @@
             "name": "Python: Test Vendor",
             "type": "python",
             "request": "launch",
-            "program": "/Users/raul/Projects/WeMake/wemake-django/src/manage.py",
+            "program": "/home/francesco/Projects/wemake-django/src/manage.py",
             "args": [
                 "test",
                 "vendor"
@@ -20,7 +20,7 @@
             "name": "Python: Django",
             "type": "python",
             "request": "launch",           
-            "program": "/Users/raul/Projects/WeMake/wemake-django/src/manage.py",
+            "program": "/home/francesco/Projects/wemake-django/src/manage.py",
             "args": [
                 "runserver",
                 "8000"

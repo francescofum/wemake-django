@@ -1,9 +1,7 @@
 from django.shortcuts import render
-from django.db.models import Q
+
 
 from materials.models import MaterialOptions
-
-
 
 from .models import Printer
 from vendor.models import Vendor
