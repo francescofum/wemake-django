@@ -13,6 +13,8 @@ class MaterialForm(forms.ModelForm):
     class Meta:
         model = MaterialOptions
         fields = '__all__' 
+        exclude = ['printers','vendor']
+        labels = {'quantity': 'In stock',}
 
 
 
