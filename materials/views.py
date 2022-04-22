@@ -1,13 +1,12 @@
 from django.shortcuts import render
 
 
-<<<<<<< HEAD
 from materials.models Material
 from .models import Printer
-=======
+
 from materials.models import MaterialOptions
 
->>>>>>> WP-24
+
 from vendor.models import Vendor
 from .forms import  MaterialForm
 
