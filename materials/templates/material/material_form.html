@@ -8,6 +8,12 @@
 <form method="post" action=".">
     {% csrf_token %}
     {{ material_form.as_p}}
+    <!-- Loop over all the colours, display them. -->
+    {% for form in colour_forms %}
+    ------------------------------
+        {{form.as_p}}
+    {% endfor %}
+
     <div class="field">
         {% if not material_form.instance.id %}
             <div class="control">
