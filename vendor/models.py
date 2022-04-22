@@ -125,7 +125,8 @@ class Vendor(models.Model):
                     printers.add(printer)
 
         return list(printers)
-    
+
+
     def get_unique_materials(self) -> list:
         '''
             @brief: Get all the materials of a given vendor. 

@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+
+{%block title %} Vendor Home {% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <header class="d-flex justify-content-center py-3">
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a href="{% url 'vendor_home' %}" class="nav-link active" aria-current="page">Home</a></li>
+      <li class="nav-item"><a href="{% url 'printer_dashboard' %}" class="nav-link">Printers</a></li>
+      <li class="nav-item"><a href="{% url 'material_dashboard' %}" class="nav-link">Materials</a></li>
+      <li class="nav-item"><a href="{% url 'vendor_admin' %}" class="nav-link">Admin</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
+    </ul>
+  </header>
+</div>
+
+<div class="row justify-content-center">
+  <div class='col-8'>
+
+    <hr>
+
+    <div class="card mb-3 border-0" style="max-width: 540px;">
+      <div class="row g-0">
+        <div class="col-md-4 image-container">
+          <img src="{{ vendor.get_thumbnail }}" alt="store-logo" class="profile-pic">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h2 class="card-title">Vendor Home - {{ vendor.created_by.username }}</h2>
+            <p class="card-text">This is your home.</p>
+            <p class="card-text"><small class="text-muted">Since: {{ vendor.created_at }}</small></p>
+          </div>
+          <hr>
+          <p>You have X orders pending</p>
+          <p>You have Y printers online</p>
+          <p>You have Z materials in stock</p>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

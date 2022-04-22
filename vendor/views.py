@@ -35,3 +35,20 @@ def vendor_admin(request):
             vendor.store_logo_thumbnail = '' # Ensures thumbnail is re-loaded when new pic is uploaded (can be optimised tho)
 
         return render(request,'vendor/vendor_admin.html',context)
+
+
+@login_required
+def vendor_home(request):
+    '''
+        Main entry point for vendor home
+    '''
+
+    vendor = request.user.vendor
+    
+    if(request.method == 'GET'):
+        form = VendorSettingsForm(instance=vendor)
+        context = {
+            'form':form,
+            'vendor':vendor,
+        }        
+        return render(request,'vendor/vendor_home.html',context)

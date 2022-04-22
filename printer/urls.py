@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     path('<int:id>/',views.printer_details,name='printer'),
     path('',views.printer_details,name='printer'),
+    path('printer_dashboard/',views.printer_dashboard,name='printer_dashboard')
 ]

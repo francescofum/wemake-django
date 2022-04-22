@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{%block title %} Material {% endblock %} 
+
+{% block content %}
+<div class="container">
+    <header class="d-flex justify-content-center py-3">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="{% url 'vendor_home' %}" class="nav-link" aria-current="page">Home</a></li>
+        <li class="nav-item"><a href="{% url 'printer_dashboard' %}" class="nav-link">Printers</a></li>
+        <li class="nav-item"><a href="{% url 'material_dashboard' %}" class="nav-link active">Materials</a></li>
+        <li class="nav-item"><a href="{% url 'vendor_admin' %}"  class="nav-link">Admin</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
+      </ul>
+    </header>
+  </div>
+
+
+<div class="row justify-content-center">
+    <div class='col-8'>
+
+        <hr>
+
+
+        <div class="card mb-3 border-0" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4 image-container">
+                    <img src="{{ vendor.get_thumbnail }}" alt="store-logo" class="profile-pic">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h2 class="card-title">Material Dashboard</h2>
+                        <p class="card-text">Display the materials you have in stock</p>
+                        <p class="card-text"><small class="text-muted">Since: {{ vendor.created_at }}</small></p>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+
+
+        <h2 class="card-title">Vendor Materials - {{ vendor.get_materials }}</h2>
+        {% for id, material in materials %}
+
+            <div class="card text-center" style="width: 18rem; margin: 10px">
+                <div class="card-body">
+                    <h5 class="card-title">{{ material }}</h5>
+                    <p class="card-text"> {{ id }}With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="{% url 'material' %}" class="btn btn-primary">Edit</a>
+                </div>
+            </div>
+
+
+
+        {% endfor %}
+        
+
+
+    </div>
+</div>
+
+{% endblock %}
+

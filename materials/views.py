@@ -5,6 +5,7 @@ from materials.models import MaterialOptions
 
 from vendor.models import Vendor
 from .forms import  MaterialForm
+from django.contrib.auth.decorators import login_required
 
 
 def material_details(request,id:int=None): 
@@ -52,3 +53,23 @@ def material_details(request,id:int=None):
     # Render the view
     context = {'material_form':material_form}
     return render(request,'material/material_form.html',context)
+
+@login_required
+def material_dashboard(request):
+    '''
+        Main entry point for material_dashboard
+    '''
+
+    vendor = request.user.vendor
+
+    print('vendor:')
+    print(vendor)
+    print('vendor.get_unique_materials:')
+    materials = vendor.get_unique_materials()
+
+    if(request.method == 'GET'):
+        context = {
+            'vendor':vendor, 
+            'materials':materials
+        }            
+        return render(request,'material/material_dashboard.html', context)

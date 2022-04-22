@@ -22,11 +22,11 @@ class MaterialOptions(models.Model):
     #quantity = models.DecimalField(max_digits=6, decimal_places=2,default=0.0)
     quantity = models.BooleanField(default=True)
     # Price coefficient  as a % 
-    price_coefficient = models.DecimalField(max_digits=3,decimal_places=2,default=1.0)
+    # price_coefficient = models.DecimalField(max_digits=3,decimal_places=2,default=1.0)
     price_length      = models.DecimalField(max_digits=3, decimal_places=2,default=1.0)
     # Foreign keys to relate to global material and colour tables.
     material = models.ForeignKey(MATERIAL_GLOBAL, related_name='material',on_delete=models.DO_NOTHING) # On delete no cascade?
-    colour   = models.ForeignKey(COLOUR_GLOBAL, related_name='colour',on_delete=models.DO_NOTHING) # On delete no cascade?
+    colour   = models.ManyToManyField(COLOUR_GLOBAL, related_name='colour') # On delete no cascade?
 
     # Materials
     printers = models.ManyToManyField(to='printer.Printer',related_name="materials",blank=True)

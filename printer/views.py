@@ -6,6 +6,7 @@ from materials.models import MaterialOptions
 from .models import Printer
 from vendor.models import Vendor
 from .forms import PrinterForm, MaterialForm
+from django.contrib.auth.decorators import login_required
 
 
 def printer_details(request,id:int=None): 
@@ -70,4 +71,22 @@ def printer_details(request,id:int=None):
     context = {'printer_form':printer_form, 'material_form':material_form}
     return render(request,'printer/printer_form.html',context)
 
+@login_required
+def printer_dashboard(request):
+    '''
+        Main entry point for vendor (dashboards/orders etc)
+    '''
 
+    vendor = request.user.vendor
+    print('vendor:')
+    print(vendor)
+    print('vendor.get_unique_materials:')
+    printers = vendor.printers.all()
+    print(printers)
+
+    if(request.method == 'GET'):
+        context = {
+            'vendor':vendor,
+            'printers':printers
+        }        
+        return render(request,'printer/printer_dashboard.html', context)
