@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Q
 
-from materials.models import MaterialOptions
+from materials.models import Material
 
 
 
@@ -49,7 +49,7 @@ def printer_details(request,id:int=None):
         if material_form.is_valid():
 
             material_ids = material_form.cleaned_data.get("materials")
-            materials = MaterialOptions.objects.filter(material__pk__in=material_ids, vendor__pk__iexact=vendor.pk)
+            materials = Material.objects.filter(global_material__pk__in=material_ids, vendor__pk__iexact=vendor.pk)
             for material in printer.materials.all():
                 printer.materials.remove(material)
             for material in materials:

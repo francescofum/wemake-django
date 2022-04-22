@@ -1,9 +1,9 @@
 from django import forms
 from django.forms.widgets import CheckboxSelectMultiple
 
-from .models import MaterialOptions
-from core.models import MATERIAL_GLOBAL
-from core.models import COLOUR_GLOBAL
+from .models Material
+from core.models import GLOBAL_MATERIALS
+from core.models import GLOBAL_COLOURS
 
 
 class MaterialForm(forms.ModelForm):
@@ -11,7 +11,7 @@ class MaterialForm(forms.ModelForm):
         @brief TODO
     '''
     class Meta:
-        model = MaterialOptions
+        model = Material
         fields = '__all__' 
 
 

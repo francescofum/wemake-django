@@ -102,17 +102,17 @@ def create_material():
     # Get the vendor 
     vendor = Vendor.objects.first()
     # Get the material 
-    material_global = MATERIAL_GLOBAL.objects.last()
+    material_global = GLOBAL_MATERIALS.objects.last()
     # Get the colour 
-    colour_global   = COLOUR_GLOBAL.objects.first()
+    colour_global   = GLOBAL_COLOURS.objects.first()
    
     # Check if the material already exists. 
-    exists = MaterialOptions.objects.filter(Q(colour__name__iexact=colour_global.name) &
+    exists = Material.objects.filter(Q(colour__name__iexact=colour_global.name) &
                                             Q(material__name__iexact=material_global.name) &
                                             Q(vendor__id__iexact=vendor.id)).exists()
 
     if not exists:
-        material1 = MaterialOptions.objects.create(
+        material1 = Material.objects.create(
                     quantity = 1,
                     price_coefficient = 1.1,
                     price_length = 1.1,
@@ -156,7 +156,7 @@ def delete_material():
     # Get the vendor 
     vendor = Vendor.objects.first()
     # Get the material 
-    material = MaterialOptions.objects.first()
+    material = Material.objects.first()
     # Delete it
     material.delete()
 

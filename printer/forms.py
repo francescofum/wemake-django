@@ -3,7 +3,7 @@ from django.forms.widgets import CheckboxSelectMultiple
 
 from .models import Printer
 from vendor.models import Vendor
-from materials.models import MaterialOptions
+from materials.models import Material
 
 
 class PrinterForm(forms.ModelForm):
@@ -46,8 +46,10 @@ class MaterialForm(forms.Form):
         self.vendor = kwargs.pop('vendor', None)
         self.printer = kwargs.pop('printer', None)
 
-        MATERIALS = list([str(id),material] for id,material in self.vendor.get_unique_materials())
+        MATERIALS = list([str(material.id),material.global_material.name] for material in self.vendor.materials.all())
+
         super().__init__(*args, **kwargs)
+
         self.fields['materials'] = forms.MultipleChoiceField(initial=self.get_initial(),
                                     choices = MATERIALS,
                                     widget=forms.CheckboxSelectMultiple)
@@ -58,10 +60,10 @@ class MaterialForm(forms.Form):
             @brief Returns a list of material ids. 
             Useful for checking the material checkboxes
             which the printer already has.
-            @return A list containing the MATERIAL_GLOBAL ids of each material.
+            @return A list containing the GLOBAL_MATERIALS ids of each material.
         '''
         if self.printer is not None:
-            return [material.material.id for material in self.printer.materials.all()]
+            return [material.id for material in self.printer.materials.all()]
         else:
             return []
 
