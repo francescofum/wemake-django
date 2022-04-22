@@ -1,7 +1,7 @@
 from django.db import models
 from printer.models import * 
 
-class MATERIAL_GLOBAL(models.Model):
+class GLOBAL_MATERIALS(models.Model):
     '''
         A class representing global materials.
     '''
@@ -11,7 +11,7 @@ class MATERIAL_GLOBAL(models.Model):
     def __str__(self):
         return self.name
     
-class COLOUR_GLOBAL(models.Model):
+class GLOBAL_COLOURS(models.Model):
     '''
         A class representing global colours.
     '''
