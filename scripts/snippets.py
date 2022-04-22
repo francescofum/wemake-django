@@ -41,7 +41,14 @@ def run():
     # assign_material_to_printer()
     # unassign_material_from_printer()
     # delete_material()
-    update_vendor_settings()
+    # update_vendor_settings()
+
+    get_materials()
+
+def get_materials():
+    vendor = Vendor.objects.first()
+    mat = vendor.materials.all()
+    pp(mat)
 
 def update_vendor_settings():
     from django.test import  Client

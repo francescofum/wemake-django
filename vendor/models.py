@@ -39,6 +39,8 @@ from django.db import models
 from django.db.models import Q
 
 
+
+
 # User model 
 
 
@@ -149,6 +151,15 @@ class Vendor(models.Model):
         '''
         vendor = Vendor.objects.get(id=self.id)
         return vendor.materials.filter(material__name__iexact=material) 
+    
+    # def get_formatted_materials_for_print_preview(self):
+    #     result = list()
+    #     vendor = Vendor.objects.get(id=self.id)
+    #     materials = self.get_materials()
+    #     for material in materials:
+    #         # get all the colours 
+    #         result.append([material.material.name , [material]])
+
 
 
 

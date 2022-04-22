@@ -25,6 +25,7 @@ urlpatterns = [
     path('',include('core.urls')),
     path('vendor/printer/',include('printer.urls')),
     path('vendor/',include('vendor.urls')),
+    path('print/',include('printPreview.urls')),
     
 ]
 

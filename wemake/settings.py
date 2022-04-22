@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'vendor',
     'printer',
     'core',
-    'materials'
+    'materials',
+    'printPreview',
 ]
 
 MIDDLEWARE = [
@@ -123,11 +124,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    BASE_DIR / "static",
 ]
 
+CSRF_USE_SESSIONS = False
 
 MEDIA_URL = '/media/'
 
