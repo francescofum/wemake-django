@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+
+{%block title %} Material {% endblock %} 
+
+{% block content %}
+
+<h1 class="title">Materials</h1>
+<form method="post" action=".">
+    {% csrf_token %}
+    {{ material_form.as_p}}
+    <div class="field">
+        {% if not material_form.instance.id %}
+            <div class="control">
+                <button class="button" type="submit" name="add">Add</button>
+            </div>
+        {% else %}
+        <div class="control">
+            <button class="button" type="submit" name="update">Update</button>
+        </div>
+
+        <div class="control">
+            <button class="button" type="submit" name="delete">Delete</button>
+        </div>
+        {% endif %}
+    </div>
+</form>
+
+{% endblock %}

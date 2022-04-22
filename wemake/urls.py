@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('core.urls')),
     path('vendor/printer/',include('printer.urls')),
+    path('vendor/material/',include('materials.urls')),
     path('vendor/',include('vendor.urls')),
     
 ]
