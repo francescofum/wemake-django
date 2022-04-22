@@ -31,7 +31,7 @@ class Material(models.Model):
 
 class Colour(models.Model):
     
-    stock = models.BooleanField(default=True)
+    stock = models.BooleanField(default=False)
     owned_by = models.ForeignKey(Material, related_name='colours',on_delete=models.DO_NOTHING) # On delete no cascade?
     global_colours = models.ForeignKey(GLOBAL_COLOURS, related_name='colour_global',on_delete=models.DO_NOTHING) # On delete no cascade?
     price_coefficient = models.DecimalField(max_digits=3,decimal_places=2,default=1.0)

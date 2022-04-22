@@ -1,13 +1,8 @@
 from django.shortcuts import render
-<<<<<<< HEAD
 from django.db.models import Q
 
 from materials.models import Material
-=======
->>>>>>> WP-24
-
-
-from materials.models import MaterialOptions
+from materials.models import Colour
 
 from .models import Printer
 from vendor.models import Vendor
