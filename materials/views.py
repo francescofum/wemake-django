@@ -75,13 +75,13 @@ def material_dashboard(request):
         Main entry point for material_dashboard
     '''
 
-    vendor = request.user.vendor
+    vendor      = request.user.vendor
+    materials   = vendor.materials.all()
 
-    print('vendor:')
-    print(vendor)
-    print('vendor.get_unique_materials:')
-    materials = vendor.get_unique_materials()
-       
+    print('materials:')
+    print(materials)
+
+
 
     if(request.method == 'GET'):
         context = {

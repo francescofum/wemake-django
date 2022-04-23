@@ -127,18 +127,18 @@ class Vendor(models.Model):
         return list(printers)
 
 
-    def get_unique_materials(self) -> list:
-        '''
-            @brief: Get all the materials of a given vendor. 
-            @return: a list of strings, each string is a material name. 
-        '''
-        vendor = Vendor.objects.get(id=self.id)
-        materials = list()
-        for material in vendor.materials.all():
-            if material.material.id not in materials:
-                materials.append((material.material.id,material.material.name))
+    # def get_unique_materials(self) -> list:
+    #     '''
+    #         @brief: Get all the materials of a given vendor. 
+    #         @return: a list of strings, each string is a material name. 
+    #     '''
+    #     vendor = Vendor.objects.get(id=self.id)
+    #     materials = list()
+    #     for material in vendor.materials.all():
+    #         if material.material.id not in materials:
+    #             materials.append((material.material.id,material.material.name))
 
-        return list(set(materials))
+    #     return list(set(materials))
     
     def get_materials(self,material:str):
         '''

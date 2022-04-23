@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Q
 
 from materials.models import Material
@@ -57,6 +57,9 @@ def printer_details(request,id:int=None):
         else:
             print(material_form.errors.as_data()) 
 
+        # Redirect to Dashboard 
+        return redirect('printer_dashboard')
+
     # Either display an existing printer,
     # or a blank form for a new printer.
     if request.method == "GET":
@@ -68,9 +71,9 @@ def printer_details(request,id:int=None):
             printer_form = PrinterForm(prefix="printer")
             material_form = MaterialForm(vendor=vendor,prefix="material")
 
-    # Render the form 
-    context = {'printer_form':printer_form, 'material_form':material_form}
-    return render(request,'printer/printer_form.html',context)
+        # Render the form 
+        context = {'printer_form':printer_form, 'material_form':material_form}
+        return render(request,'printer/printer_form.html',context)
 
 @login_required
 def printer_dashboard(request):
@@ -79,11 +82,7 @@ def printer_dashboard(request):
     '''
 
     vendor = request.user.vendor
-    print('vendor:')
-    print(vendor)
-    print('vendor.get_unique_materials:')
     printers = vendor.printers.all()
-    print(printers)
 
     if(request.method == 'GET'):
         context = {

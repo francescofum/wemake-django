@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
@@ -34,7 +34,7 @@ def vendor_admin(request):
             form.save()
             vendor.store_logo_thumbnail = '' # Ensures thumbnail is re-loaded when new pic is uploaded (can be optimised tho)
 
-        return render(request,'vendor/vendor_admin.html',context)
+        return redirect('vendor_home')
 
 
 @login_required

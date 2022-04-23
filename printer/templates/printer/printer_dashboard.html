@@ -16,7 +16,7 @@
 </div>
 
 <div class="row justify-content-center">
-    <div class='col-8'>
+    <div class='col-8 '>
 
         <hr>
 
@@ -37,22 +37,27 @@
             </div>
         </div>
 
-        <h2 class="card-title">Vendor Printers - </h2>
-        <a href="{% url 'printer'  %}" class="btn btn-primary">Add printer</a>
+        <h2 class="card-title">Your Printers -         <a href="{% url 'printer'  %}" class="btn btn-primary">Add printer</a>        </h2>
+        
+        <br>
 
-        {% for printer in printers %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
 
-            <div class="card text-center" style="width: 18rem; margin: 10px">
-                <div class="card-body">
-                    <h5 class="card-title">{{ printer }}</h5>
-                    <p class="card-text"> With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="{% url 'printer'  printer.id %}" class="btn btn-primary">Edit</a>
+            {% for printer in printers %}
+            <div class="col">
+
+                <div class="card text-center" >
+                    <div class="card-body">
+                        <h5 class="card-title">{{ printer }}</h5>
+                        <p class="card-text"> With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="{% url 'printer'  printer.id %}" class="btn btn-primary">Edit</a>
+                    </div>
                 </div>
             </div>
 
 
-
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 </div>
 
