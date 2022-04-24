@@ -4,12 +4,14 @@ from django.shortcuts import render
 from django.http import JsonResponse
 
 from vendor.models import Vendor
+
 from .models import STL
+
 
 def print_preview(request):
     vendor = Vendor.objects.first()
+    materials = v
     context = {'vendor':vendor}
-    x = vendor.get_unique_materials()
     return render(request,'print_preview/print_preview.html',context)
 
 def upload(request):
