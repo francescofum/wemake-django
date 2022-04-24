@@ -31,7 +31,6 @@ def vendor_admin(request):
         }        
 
         if (form.is_valid()):
-            print("***********************************")
             form.save()
             vendor.store_logo_thumbnail = '' # Ensures thumbnail is re-loaded when new pic is uploaded (can be optimised tho)
 

@@ -8,7 +8,11 @@
             "name": "Python: Test Vendor",
             "type": "python",
             "request": "launch",
+<<<<<<< HEAD
             "program": "manage.py",
+=======
+            "program": "/home/francesco/Projects/wemake-django/src/manage.py",
+>>>>>>> material_fix
             "args": [
                 "test",
                 "vendor"
@@ -20,7 +24,11 @@
             "name": "Python: Django",
             "type": "python",
             "request": "launch",           
+<<<<<<< HEAD
             "program": "manage.py",
+=======
+            "program": "/home/francesco/Projects/wemake-django/src/manage.py",
+>>>>>>> material_fix
             "args": [
                 "runserver",
                 "8000"

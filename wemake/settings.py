@@ -84,6 +84,17 @@ WSGI_APPLICATION = 'wemake.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE'  : 'django.db.backends.mysql', # <-- UPDATED line 
+        'NAME'    : 'wemake',                 # <-- UPDATED line 
+        'USER'    : 'wemake',                     # <-- UPDATED line
+        'PASSWORD': 'secret',              # <-- UPDATED line
+        'HOST'    : '127.0.0.1',                # <-- UPDATED line
+        'PORT'    : '3306',
+        # 'OPTIONS': {
+        #     'read_default_file': './conf/mysql.cnf',
+        # }
+    },
+    'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }

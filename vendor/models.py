@@ -147,7 +147,7 @@ class Vendor(models.Model):
             given material. 
             i.e material="ABS" will return all the abs colours.
             @param[material]: A string representing the material name . 
-            @return: A list of QuerySet MaterialOptions objects. 
+            @return: A list of QuerySet Material objects. 
         '''
         vendor = Vendor.objects.get(id=self.id)
         return vendor.materials.filter(material__name__iexact=material) 

@@ -6,8 +6,8 @@
 from django.db import models
 
 from vendor.models import Vendor 
-from core.models import MATERIAL_GLOBAL, COLOUR_GLOBAL
-from materials.models import MaterialOptions
+from core.models import GLOBAL_MATERIALS, GLOBAL_COLOURS
+from materials.models import  Material
 
 class Printer(models.Model):
     '''
