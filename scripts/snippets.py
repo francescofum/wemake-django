@@ -5,6 +5,7 @@ from django.core import serializers
 from django.db.models import Q
 
 from pprint import pprint as pp 
+from django.forms.models import model_to_dict
 
 '''
     How To: python manage.py runscript snippets
@@ -42,33 +43,72 @@ def run():
     # assign_material_to_printer()
     # unassign_material_from_printer()
     # delete_material()
-<<<<<<< HEAD
     # update_vendor_settings()
 
-    get_materials()
+    # get_materials_with_colours()
+    printers = get_compatible_printers('ABS','BLACK',size={'x':1000,'y':2000,'z':3000})
+    print(10*"*")
+    print(printers)
+def get_compatible_printers(sel_material:str,sel_colour:str,size:dict) -> list:
+    '''
+        @brief: Returns a list of compatible printers based on:
+                - Colour
+                - Material
+                - Model dimensions
+
+        @parm[material] : The material, in string format. 
+        @parm[colour]   : The colour, in string format. 
+        @parm[size]     : The dimensions of the model {'x': , 'y': , 'z'}
+        @return: A list of printer objects
+    '''
+    compatible_printers = []
+    # Scale factor
+    scale = 0.9
+
+    # get the vendor 
+    vendor = Vendor.objects.first()
+
+    printers = set()
+    # Get the printers which can do the material and colour
+    for printer in vendor.printers.all():
+        # Check if printer can handle colour and material
+        
+        # get all the materials 
+        materials = printer.materials.all()
+        # loo over each material and get the colour 
+        for material in materials:
+            colours = material.colours.all()
+            if material.global_material.name == sel_material:
+                for colour in colours:
+                    if colour.global_colours.name == sel_colour:
+                        # check if printer can handle model dims
+                        if( (size['x'] < printer.tray_length * scale ) and 
+                            (size['y'] < printer.tray_width  * scale )  and 
+                            (size['z'] < printer.tray_height * scale )): 
+                            compatible_printers.append(printer)
+
+    return list(compatible_printers)
+
+
+def get_materials_with_colours():
+    materials_json = {}
+    vendor = Vendor.objects.first()
+    materials = vendor.materials.all()
+    for material in materials:
+        materials_json[material.global_material.id] = {}
+        materials_json[material.global_material.id]['name'] = material.global_material.name
+        materials_json[material.global_material.id]['colours'] = {}
+        for colour in material.colours.all():
+            materials_json[material.global_material.id]['colours'][colour.id] = colour.global_colours.name
+    
+    pp(materials_json)
+            
+    
 
 def get_materials():
     vendor = Vendor.objects.first()
     mat = vendor.materials.all()
     pp(mat)
-=======
-
-
-    vendor = Vendor.objects.first()
-    
-
-    MATERIALS = list([str(material.id),material.global_material.name] for material in vendor.materials.all())
-    printer = vendor.printers.first()
-    materials = printer.materials.all()
-    print(materials)
-    for material in materials:
-        print(material.id)
-
-    ids = [material.id for material in printer.materials.all()]
-   
-    
-    # print(pm)
->>>>>>> material_fix
 
 def update_vendor_settings():
     from django.test import  Client

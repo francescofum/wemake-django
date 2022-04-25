@@ -93,7 +93,7 @@ class Vendor(models.Model):
 
         return thumbnail
 
-    def get_compatible_printers(self,material:str,colour:str,size:dict) -> list:
+    def get_compatible_printers(self,sel_material:str,sel_colour:str,size:dict) -> list:
         '''
             @brief: Returns a list of compatible printers based on:
                     - Colour
@@ -105,6 +105,7 @@ class Vendor(models.Model):
             @parm[size]     : The dimensions of the model {'x': , 'y': , 'z'}
             @return: A list of printer objects
         '''
+        compatible_printers = []
         # Scale factor
         scale = 0.9
 
@@ -115,18 +116,22 @@ class Vendor(models.Model):
         # Get the printers which can do the material and colour
         for printer in vendor.printers.all():
             # Check if printer can handle colour and material
-            if printer.materials.filter(
-                Q(colour__name__contains=colour) &
-                Q(material__name__contains=material)):
-                    
-                # check if printer can handle model dims
-                if( (size['x'] < printer.tray_length * scale ) and 
-                    (size['y'] < printer.tray_width  * scale )  and 
-                    (size['z'] < printer.tray_height * scale )): 
+            
+            # get all the materials 
+            materials = printer.materials.all()
+            # loo over each material and get the colour 
+            for material in materials:
+                colours = material.colours.all()
+                if material.global_material.name == sel_material:
+                    for colour in colours:
+                        if colour.global_colours.name == sel_colour and colour.stock == True:
+                            # check if printer can handle model dims
+                            if( (size['x'] < printer.tray_length * scale ) and 
+                                (size['y'] < printer.tray_width  * scale )  and 
+                                (size['z'] < printer.tray_height * scale )): 
+                                compatible_printers.append(printer)
 
-                    printers.add(printer)
-
-        return list(printers)
+        return list(compatible_printers)
     
     def get_unique_materials(self) -> list:
         '''
@@ -140,6 +145,41 @@ class Vendor(models.Model):
                 materials.append((material.material.id,material.material.name))
 
         return list(set(materials))
+
+    def serialize_materials_for_print_preview(self):
+        '''
+            For a given vendor will return a json with materials and colours
+            {1: {'colours': 
+                    {1: 'RED',
+                    2: 'BLUE',
+                    3: 'PURPLE',
+                    4: 'ORANGE',
+                    5: 'WHITE',
+                    6: 'BLACK'},
+                'name': 'PLA'},
+            3: {'colours': 
+                    {7: 'RED',
+                    8: 'BLUE',
+                    9: 'PURPLE',
+                    10: 'ORANGE',
+                    11: 'WHITE',
+                    12: 'BLACK'},
+                'name': 'ABS'}}
+        This could be achieved with an inner join, but this was faster to implement. 
+        Currently this is used in order to make the python wemake compatible
+        with print preview, but could change in the future. 
+        '''
+        materials_json = {}
+        materials = self.materials.all()
+        for material in materials:
+            materials_json[material.global_material.id] = {}
+            materials_json[material.global_material.id]['name'] = material.global_material.name
+            materials_json[material.global_material.id]['colours'] = {}
+            for colour in material.colours.all():
+                if(colour.stock):
+                    materials_json[material.global_material.id]['colours'][colour.id] = colour.global_colours.name
+    
+        return materials_json
     
     def get_materials(self,material:str):
         '''
@@ -152,14 +192,6 @@ class Vendor(models.Model):
         vendor = Vendor.objects.get(id=self.id)
         return vendor.materials.filter(material__name__iexact=material) 
     
-    # def get_formatted_materials_for_print_preview(self):
-    #     result = list()
-    #     vendor = Vendor.objects.get(id=self.id)
-    #     materials = self.get_materials()
-    #     for material in materials:
-    #         # get all the colours 
-    #         result.append([material.material.name , [material]])
-
 
 
 

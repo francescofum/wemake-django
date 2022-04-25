@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['testserver','127.0.0.1'] # Remove after debugger+unit tests wo
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'vendor_admin'
 
+SESSION_COOKIE_AGE = 86400 # One day in seconds 
+CART_SESSION_ID =  'cart'
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'core',
     'materials',
     'printPreview',
+    'cart',
 ]
 
 MIDDLEWARE = [

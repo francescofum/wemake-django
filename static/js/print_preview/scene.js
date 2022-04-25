@@ -24,7 +24,7 @@ stl_obj_list = {};
 row_not_selected_flag = false;
 // Keeps track of how many prices are still being calculated
 var price_counter=0;
-
+const csrftoken = getCookie('csrftoken');
 string_mess = "Click Here";
 
 display_total_price_spinner();
@@ -77,7 +77,7 @@ function reload_cart() {
 
 
 function wm_create_dropzone() {
-    const csrftoken = getCookie('csrftoken');
+    
     Dropzone.autoDiscover = false;
     var dropzoneOptions = { // Make the whole body a dropzone
         dictDefaultMessage: "Drop files here to upload",
@@ -90,7 +90,7 @@ function wm_create_dropzone() {
         // uploadMultiple: false,
         success: wm_stl_uploaded_success_callback,       // Callback function for when a file has been uploaded successfully. This will create a new row in the table.   
         // complete: wm_stl_uploaded_complete_callback, // Callback function for when a file upload is complete, whether successfull or erronous.  
-        // sending: wm_stl_upload_sending_callback,  // Callback function for when dropzone starts to send. All the callback does is remove the thumbnail (I havent found another way of doing it).
+        sending: wm_stl_upload_sending_callback,  // Callback function for when dropzone starts to send. All the callback does is remove the thumbnail (I havent found another way of doing it).
         createImageThumbnails: false,
         // uploadprogress(file, progress, bytesSent) {
         //     if (file.previewElement) {
@@ -103,19 +103,19 @@ function wm_create_dropzone() {
         //       }
         //     }
         // },
-        // uploadprogress: function (file, progress, bytesSent) {
-        //     if (file.previewElement) {
-        //         var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
-        //         progressElement.style.width = progress + "%";
+        uploadprogress: function (file, progress, bytesSent) {
+            if (file.previewElement) {
+                var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
+                progressElement.style.width = progress + "%";
         
-        //         $("#nav-prog-bar").attr('aria-valuenow', progress).css('width', progress + '%');
-        //         //console.log('data-dz-uploadprogress:')
-        //         //console.log(progress);
-        //     }
-        // },
-        // totaluploadprogress(progress) {
-        //     total_loading_progress(progress, -1);
-        // },
+                $("#nav-prog-bar").attr('aria-valuenow', progress).css('width', progress + '%');
+                //console.log('data-dz-uploadprogress:')
+                //console.log(progress);
+            }
+        },
+        totaluploadprogress(progress) {
+            total_loading_progress(progress, -1);
+        },
         headers: {
             'X-CSRFToken': csrftoken
         }
@@ -206,7 +206,7 @@ function wm_stl_uploaded_success_callback(file, response) {
         stl_list[id]['volume'] = null; //to be filled in the stl viewer callback
         stl_list[id]['scale'] = 1;
         stl_list[id]['infill'] = 100;
-        stl_list[id]['price'] = "";
+        stl_list[id]['price'] = Math.floor(Math.random() * (100 - 10 + 1)) + 10;
         stl_list[id]['printer'] = '';
         stl_list[id]['units'] = units;
         stl_list[id]['quantity'] = 1;
@@ -237,8 +237,8 @@ function create_row_html(id,printer_id=1) {
                 <!-- 'Select'  -->
 
                 <div id="stl_${id}_copies" class="col-sm-2 stl_copies" style=' display: inherit; '>
-                    <div class="col-sm-3">
-                    <i      onclick="delete_stl(${id});" class="far fa-trash-alt"></i>
+                    <div class="col-sm-3" onclick="delete_stl(${id});">
+                        X
                     </div>
                     <div class="col-sm-9">
                         <!-- 'Copies' -->
@@ -309,11 +309,8 @@ function create_row_html(id,printer_id=1) {
                 <!-- end of 'Advanced Options' -->
                 <!-- 'Price' -->
                 <div id="stl_${id}_price" class="col-sm-1 text-center stl_price">
-                    <div id="stl_${id}_price_loading" class="spinner-border spinner-border-sm" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
                     <small id="stl_${id}_price_value" >
-                    
+                        10
                     </small>
                 </div>
                 <!-- end of 'Price' -->
@@ -390,10 +387,10 @@ function create_row_html(id,printer_id=1) {
 
 
     // Populate the material dropdown
-    // for (const [key, value] of Object.entries(material_colours)) {
-    //     var name = material_colours[key]['name'];
-    //     $(`#stl_${id}_material`).append(new Option(name, key))
-    // }
+    for (const [key, value] of Object.entries(material_colours)) {
+        var name = material_colours[key]['name'];
+        $(`#stl_${id}_material`).append(new Option(name, key))
+    }
 
 
 
@@ -430,18 +427,18 @@ function material_selection_changed(id,printer_id) {
     if (material == 'Select') $(`#stl_${id}_colour`).append(new Option('Select', 'Select'));
     else {
         // Add the 'any' option and select it.
-        // $(`#stl_${id}_colour`).append(new Option('Select', 'Select',true,true))       
-        // for (const [key, value] of Object.entries(material_colours[material]['colours'])){
+        $(`#stl_${id}_colour`).append(new Option('Select', 'Select',true,true))       
+        for (const [key, value] of Object.entries(material_colours[material]['colours'])){
                 
-        //         $(`#stl_${id}_colour`).append(new Option(value, value));
+                $(`#stl_${id}_colour`).append(new Option(value, value));
             
-        // };
+        };
         // Upate stl_list
-        // stl_list[id]['material']        = material_colours[material]['name'];
-        // stl_list[id]['material-id']     = material_colours[material]['id'];
-        // stl_list[id]['colour']          = material_colours[material][0];
+        stl_list[id]['material']        = material_colours[material]['name'];
+        stl_list[id]['material-id']     = material_colours[material]['id'];
+        stl_list[id]['colour']          = material_colours[material][0];
 
-        // stl_list[id]['price_length']    = material_colours[material]['price_length'];
+        stl_list[id]['price_length']    = material_colours[material]['price_length'];
 
         colour_selection_changed(id,printer_id);
 
@@ -516,28 +513,28 @@ function getKeyByValue(object, value) {
 function wm_stl_upload_sending_callback() {
     $('.dz-preview').remove();
 
-    document.getElementById("large-image").classList.remove("show");
-    document.getElementById("large-image").classList.add("hide");
+    // document.getElementById("large-image").classList.remove("show");
+    // document.getElementById("large-image").classList.add("hide");
 
 
-    document.getElementById("large-text").classList.remove("show");
-    document.getElementById("large-text").classList.add("hide");
+    // document.getElementById("large-text").classList.remove("show");
+    // document.getElementById("large-text").classList.add("hide");
 
-    document.getElementById("user_dropzone").classList.remove("large");
-    document.getElementById("user_dropzone").classList.add("small");
+    // document.getElementById("user_dropzone").classList.remove("large");
+    // document.getElementById("user_dropzone").classList.add("small");
 
-    document.getElementById("dropzone-button").classList.remove("btn-primary");
-    document.getElementById("dropzone-button").classList.add("btn-link");
+    // document.getElementById("dropzone-button").classList.remove("btn-primary");
+    // document.getElementById("dropzone-button").classList.add("btn-link");
 
-    document.getElementById("stl_carousel").classList.remove("hide");
-    document.getElementById("stl_carousel").classList.add("show");
+    // document.getElementById("stl_carousel").classList.remove("hide");
+    // document.getElementById("stl_carousel").classList.add("show");
 
-    document.getElementById("stl_table").classList.remove("hide");
-    document.getElementById("stl_table").classList.add("show");
+    // document.getElementById("stl_table").classList.remove("hide");
+    // document.getElementById("stl_table").classList.add("show");
 
     try {
-        document.getElementById("Summary-Checkout").classList.remove('hide');
-        document.getElementById("Summary-Checkout").classList.add("show");
+        // document.getElementById("Summary-Checkout").classList.remove('hide');
+        // document.getElementById("Summary-Checkout").classList.add("show");
     } catch (error) {
     }
 
@@ -575,14 +572,13 @@ function delete_stl(id,printer_id=1) {
     //console.log("Clearing session");
     // Notify backend so that it can be removed from the session. 
     response = $.ajax({
-        url: ajax_object.ajax_url,
+        url: 'remove_item_from_cart/',
         type: 'POST',
-        data: {
-            action:'remove_from_cart_session',
-            stl_id:id
-        },
+        data: {stl_id:id},
         success:function(response){
-            //console.log(response);
+        },
+        headers: {
+            'X-CSRFToken': csrftoken
         }
     });
 
@@ -736,12 +732,12 @@ function  display_price_spinner(id){
     price_counter++;
     // //console.log("Caller");
     // //console.log(display_price_spinner.caller);
-    $(`#stl_${id}_price_value`).hide()
+    // $(`#stl_${id}_price_value`).hide()
     $(`#stl_${id}_price_loading`).show()
     // display_total_price_spinner();
     // display_checkout_spinner();
     display_total_price_spinner();
-    $(`#checkout`).prop('disabled', true);
+    // $(`#checkout`).prop('disabled', true);
 
     
 }
@@ -758,7 +754,7 @@ function  remove_price_spinner(id){
 
 // "Loading" for the total prices
 function display_total_price_spinner() {
-    $(`#checkout`).prop('disabled', true);
+    // $(`#checkout`).prop('disabled', true);
     $(`#total_price_value`).hide()
     $(`#total_price_loading`).show()
     // display_checkout_spinner();
@@ -767,16 +763,16 @@ function display_total_price_spinner() {
 function remove_total_price_spinner() {
     if(price_counter == 0){ //quick fix
         
-        $(`#checkout`).prop('disabled', false);
+        // $(`#checkout`).prop('disabled', false);
         $(`#total_price_loading`).hide()
         $(`#total_price_value`).css({ 'display': 'inline-block' });
         remove_checkout_spinner();
-        $(`#checkout`).prop('disabled', false);
+        // $(`#checkout`).prop('disabled', false);
     }
 }
 
 function display_checkout_spinner() {
-    $(`#checkout`).prop('disabled', true);
+    // $(`#checkout`).prop('disabled', true);
     $(`#checkout_value`).hide()
     $(`#checkout_loading`).show()
 }
@@ -784,8 +780,8 @@ function display_checkout_spinner() {
 function remove_checkout_spinner() {
     // Should loop over all the row, if there is any
     // active price spinner then wait, else remove the checkout spinner. 
-    $(`#checkout`).prop('disabled', false);
-    $(`#checkout_value`).show()
+    // $(`#checkout`).prop('disabled', false);
+    // $(`#checkout_value`).show()
     $(`#checkout_loading`).hide()
     
 }
@@ -884,7 +880,8 @@ function get_available_printers() {
 // This fixes the bug where the price isn't displayed when multiple
 // STLs are present but not all have colours (not the most elegant way, we should change the backend isntead.)
 function get_available_printer(id) {
-
+    
+    vendor_id = 1;
     //console.log("Getting available printers")
     //console.log(stl_list);
     ;
@@ -893,40 +890,65 @@ function get_available_printer(id) {
     display_price_spinner(id);
     // POST to backend.
     response = $.ajax({
-        url: ajax_object.ajax_url,
+        url: "get_available_printers/",
         type: 'POST',
         success: get_available_printer_success_callback,
         data: {
-            action: 'get_available_printers',
-            vendor_id: vendor_id,
-            stl_list_string: stl_to_send
+            id:stl_list[id]['id'],
+            name:stl_list[id]['pretty_name'],
+            url:stl_list[id]['url'],
+            filename:stl_list[id]['filename'],
+            material:stl_list[id]['material'],
+            colour:stl_list[id]['colour'],
+            file_size:stl_list[id]['file_size'],
+            size_x:stl_list[id]['dims']['x'],
+            size_y:stl_list[id]['dims']['y'],
+            size_z:stl_list[id]['dims']['z'],
+            volume:stl_list[id]['volume'],
+            scale:stl_list[id]['scale'],
+            infill:stl_list[id]['infill'],
+            price:stl_list[id]['price'],
+            printer:stl_list[id]['printer'],
+            units:stl_list[id]['units'],
+            quantity:stl_list[id]['quantity'],
+            ttp:stl_list[id]['time_to_print'],
+            lof:stl_list[id]['length_of_filament']
+        },
+        // data: {
+        //     action: 'get_available_printers',
+        //     vendor_id: vendor_id,
+        //     body: JSON.stringify({stl: stl_to_send})
+        // },
+        headers: {
+            'X-CSRFToken': csrftoken
         }
     });
+    // dummmy
+    
 
 }
 
 function get_available_printer_success_callback(response) {
 
-
+    
     response = JSON.parse(response);
+    // var total_price = 0
+    // for (var id of Object.keys(response)) {
+    //     console.log(id + " -> " + response[id]['printer_id'])
+    //     console.log(response);
+    //     old_stl_printer = stl_list[id]['printer']
+    //     stl_list[id]['printer'] = parseFloat(response[id]['printer_id']);
+    //     if(old_stl_printer != stl_list[id]['printer']){
+    //         analyse_stl(id);
+    //     }
+    //     else{
+    //         get_stl_price(id); // just get the price no need to analyse
 
-    var total_price = 0
-    for (var id of Object.keys(response)) {
-        console.log(id + " -> " + response[id]['printer_id'])
-        console.log(response);
-        old_stl_printer = stl_list[id]['printer']
-        stl_list[id]['printer'] = parseFloat(response[id]['printer_id']);
-        if(old_stl_printer != stl_list[id]['printer']){
-            analyse_stl(id);
-        }
-        else{
-            get_stl_price(id); // just get the price no need to analyse
-
-        }
+    //     }
         
 	    
-    }
-    // update_total_price();
+    // }
+    update_total_price();
 }
 
 

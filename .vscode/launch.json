@@ -5,14 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Chrome",
+            "request": "launch",
+            "type": "chrome",
+            "url": "http://127.0.0.1:8000/print",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
             "name": "Python: Test Vendor",
             "type": "python",
             "request": "launch",
-<<<<<<< HEAD
-            "program": "manage.py",
-=======
             "program": "/home/francesco/Projects/wemake-django/src/manage.py",
->>>>>>> material_fix
             "args": [
                 "test",
                 "vendor"
@@ -24,14 +27,23 @@
             "name": "Python: Django",
             "type": "python",
             "request": "launch",           
-<<<<<<< HEAD
-            "program": "manage.py",
-=======
             "program": "/home/francesco/Projects/wemake-django/src/manage.py",
->>>>>>> material_fix
             "args": [
                 "runserver",
                 "8000"
+            ],
+            "django": true,
+            "justMyCode": true
+        },
+        {
+            "name": "snipets",
+            "type": "python",
+            "request": "launch",           
+            "program": "/home/francesco/Projects/wemake-django/src/manage.py",
+            "cwd":"/home/francesco/Projects/wemake-django/src/",
+            "args": [
+                "runscript",
+                "snippets"
             ],
             "django": true,
             "justMyCode": true

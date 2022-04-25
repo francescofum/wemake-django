@@ -4,27 +4,18 @@
 
 {% block content %}
 <!-- Javascript for 3D stuff -->
-{% load static %}
+<!-- {% load static %} -->
+{% csrf_token %}
 
-{% block js %}
-<!-- Dropzone js -->
-<script src="{% static 'js/dropzone_5_7_0/dist/dropzone.js' %}"></script>
-<!-- STL Lib  -->
-<script src="{% static 'js/viewstl_lib/three.min.js' %}"></script>
-<script src="{% static 'js/viewstl_lib/webgl_detector.js' %}"></script>
-<script src="{% static 'js/viewstl_lib/Projector.js' %}"></script>
-<script src="{% static 'js/viewstl_lib/CanvasRenderer.js' %}"></script>
-<script src="{% static 'js/viewstl_lib/OrbitControls.js' %}"></script>
-<script src="{% static 'js/viewstl_lib/stl_viewer.min.js' %}"></script>
-<!-- Scene js -->
-<script src="{% static 'js/print_preview/scene.js' %}"></script>
-<!-- print preview js  -->
-<script src="{% static 'js/print_preview/print_preview.js' %}"></script>
-{% endblock %}
-{{vendor.materials.first.colour.name }}
+
+<script>
+    const material_colours = {{ materials_json| safe}};
+    const cart = {};
+</script>
+
 
 {{vendor.created_by.first_name}}
-<div id='background-image' class="row mx-1" style="height:100vh; padding-top: 5vh">
+<div id="background-image" class="row mx-1" style="height:100vh; padding-top: 5vh">
     <div class="col-md-5 translucent" style="height: 100%; min-width:440px; padding-top: 4vh; padding-bottom:4vh;">
         <div class="row" style="height: 100%">
             <div class="col-xl-12" style="height: 100%">
@@ -40,7 +31,9 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="text-left">
-                                                <strong><h4> {{vendor.created_by.first_name}} </h4></strong>
+                                                <strong>
+                                                    <h4> {{vendor.created_by.first_name}} </h4>
+                                                </strong>
                                             </div>
                                         </div>
                                     </div>
@@ -48,7 +41,9 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="text-left">
-                                                <small><h5> TODO: Address , UK</h5></small>
+                                                <small>
+                                                    <h5> TODO: Address , UK</h5>
+                                                </small>
                                             </div>
                                         </div>
                                     </div>
@@ -69,7 +64,7 @@
                         </div>
                     </div>
                     <div class="card-body" style="overflow-y:scroll;">
-                    <!-- <div class="card-body" style="overflow-y:scroll; height:calc(100% - 300px);"></div> -->
+                        <!-- <div class="card-body" style="overflow-y:scroll; height:calc(100% - 300px);"></div> -->
                         <div class="container align-items-left justify-content-left text-left py-3">
                             <h5> <i>A few words about me...</i></h5>
                             {{vendor.description}}
@@ -78,38 +73,74 @@
                         {% include 'print_preview/vendor_media.html' %}
                     </div>
                     <div class="card-footer text-muted text-left">
-                    <!-- <div class="card-footer text-muted text-left" style="height: 100px"> -->
+                        <!-- <div class="card-footer text-muted text-left" style="height: 100px"> -->
                         <div>Additional Services:</div>
-                        <div style='cursor: pointer;' data-bs-toggle="modal" data-bs-target="#cad_support_modal">
+                        <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#cad_support_modal">
                             CAD Services
                         </div>
-                        <div  style='cursor: pointer;' data-bs-toggle="modal" data-bs-target="#contact_vendor_modal">
-                            <i class="far fa-envelope"></i>Contact us</div>
+                        <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#contact_vendor_modal">
+                            <i class="far fa-envelope"></i>Contact us
                         </div>
                     </div>
                 </div>
-
             </div>
-        </div>
 
-        <div id="stl-page-col" class="col-md-7" style="height: 100%; padding-top: 4vh; padding-bottom:4vh;">
-            {% include 'print_preview/stl_viewer.html' %}
-            scene(1,1, $new_cart);
-            checkout_summary(1, $new_cart);
-    
         </div>
-
-        
     </div>
 
+    <div id="stl-page-col" class="col-md-7" style="height: 100%; padding-top: 4vh; padding-bottom:4vh;">
+        {% include 'print_preview/stl_viewer.html' %}
+        <div id="Summary-Checkout" style="height: 100px; position:absolute" class="container position-fixed-bottom my-3">
 
-    
+            <div class="row">
+                <div class="col-sm" style="text-align: right;">
+                    <h3> Total:
+                        <div id="total_price_loading" class="spinner-border" role="status"></div>
+                        <div id="total_price_value"><h3 id="total_price"> £ </h3></div>
+                    </h3>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="col-sm">
+                    <div>
+                        <button id="checkout" type="button" onclick="checkout()" class="btn btn-lg btn-primary float-right">
+                            <div id="checkout_value">Checkout</div>
+                        </button>
+                    </div>
+                    <div><img src="visa image" alt="Placeholder image" width="125" height="50" class="float-right"> </div>
+                </div>
+            </div>
+        </div>
+      
+    </div>
+
+</div>
 
 
 
-    {% include 'print_preview/cad_support_modal.html' %}
-    {% include 'print_preview/contact_us_modal.html' %}
 
 
 
+{% include 'print_preview/cad_support_modal.html' %}
+{% include 'print_preview/contact_us_modal.html' %}
+
+
+
+{% endblock %}
+
+{% block js %}
+<!-- Dropzone js -->
+<script src="{% static 'js/dropzone_5_7_0/dist/dropzone.js' %}"></script>
+<!-- STL Lib  -->
+<script src="{% static 'js/viewstl_lib/three.min.js' %}"></script>
+<script src="{% static 'js/viewstl_lib/webgl_detector.js' %}"></script>
+<script src="{% static 'js/viewstl_lib/Projector.js' %}"></script>
+<script src="{% static 'js/viewstl_lib/CanvasRenderer.js' %}"></script>
+<script src="{% static 'js/viewstl_lib/OrbitControls.js' %}"></script>
+<script src="{% static 'js/viewstl_lib/stl_viewer.min.js' %}"></script>
+<!-- Scene js -->
+<script src="{% static 'js/print_preview/scene.js' %}"></script>
+<!-- print preview js  -->
+<script src="{% static 'js/print_preview/print_preview.js' %}"></script>
 {% endblock %}

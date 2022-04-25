@@ -8,7 +8,7 @@ $("document").ready(function () {
 
 
     wm_create_dropzone();
-
+   
     // if (cart != null) {
     //     if (cart.cart.length > 0) {
     //         // wm_stl_upload_sending_callback();
@@ -65,22 +65,25 @@ function add_all_items_to_cart() {
     // Adds all items to the cart
     // by POSTing to backend. 
     request = jQuery.ajax({
-        url: ajax_object.ajax_url,
+        url: 'add_to_cart/',
         type: 'post',
-        data: {
-            stl_list: stl_list,
-            action: 'add_all_items_to_cart'
-        },
+        data:{'stl_list': JSON.stringify(stl_list)},
         success: function (response) {
             // console.log(response);
-            window.location.replace(`https://${location.hostname}/checkout/`);
+            var url = `${window.location.origin}/checkout`;
+            console.log(url)
+            // window.location.assign(url);
+
+        },
+        headers: {
+            'X-CSRFToken': csrftoken
         }
     });
 
 }
 
 function checkout() {
-    display_checkout_spinner();
+    // display_checkout_spinner();
     var error = false;
     Object.keys(stl_list).forEach(function (id) {
         if (stl_list[id]['material'] == "Select") {
