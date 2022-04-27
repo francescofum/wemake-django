@@ -26,7 +26,9 @@ urlpatterns = [
     path('vendor/printer/',include('printer.urls')),
     path('vendor/material/',include('materials.urls')),
     path('vendor/',include('vendor.urls')),
-    path('vendor/order/',include('order.urls'))
+    path('vendor/order/',include('order.urls')),
+    path('print/',include('printPreview.urls')),
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

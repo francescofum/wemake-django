@@ -47,6 +47,10 @@ class ColourForm(forms.ModelForm):
         self.fields['global_colours'].queryset = GLOBAL_COLOURS.objects.exclude(id__in=exclude)
         self.fields['global_colours'].initial = self.colour_id 
         self.fields['global_colours'].disabled = True
+
+    
+
+
       
       
 
@@ -55,3 +59,12 @@ class ColourForm(forms.ModelForm):
         fields = '__all__' 
         exclude = ['owned_by','discount']
         labels = {'global_colours':'Colour'}
+
+    def get_initial(self) -> list:
+        '''
+            TODO
+        '''
+        if self.printer is not None:
+            return [material.id for material in self.vendor.materials.all()]
+        else:
+            return []

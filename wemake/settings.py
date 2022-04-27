@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['testserver','127.0.0.1'] # Remove after debugger+unit tests wo
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'vendor_admin'
 
+SESSION_COOKIE_AGE = 86400 # One day in seconds 
+CART_SESSION_ID =  'cart'
 # Application definition
 
 
@@ -50,7 +52,10 @@ INSTALLED_APPS = [
     'order',
     'materials',    
     "crispy_forms",
-    "crispy_bootstrap5"
+    "crispy_bootstrap5",
+    'materials',
+    'printPreview',
+    'cart',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -93,6 +98,17 @@ WSGI_APPLICATION = 'wemake.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE'  : 'django.db.backends.mysql', # <-- UPDATED line 
+        'NAME'    : 'wemake',                 # <-- UPDATED line 
+        'USER'    : 'wemake',                     # <-- UPDATED line
+        'PASSWORD': 'secret',              # <-- UPDATED line
+        'HOST'    : '127.0.0.1',                # <-- UPDATED line
+        'PORT'    : '3306',
+        # 'OPTIONS': {
+        #     'read_default_file': './conf/mysql.cnf',
+        # }
+    },
+    'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
@@ -133,11 +149,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    BASE_DIR / "static",
 ]
 
+CSRF_USE_SESSIONS = False
 
 MEDIA_URL = '/media/'
 
