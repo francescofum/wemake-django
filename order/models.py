@@ -67,5 +67,6 @@ class OrderItem(models.Model):
         
     '''
 
+
     def __str__(self):
-        return self.id
+        return '%s' % self.id

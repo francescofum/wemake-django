@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'materials',    
     "crispy_forms",
     "crispy_bootstrap5",
-    'materials',
     'printPreview',
     'cart',
 ]

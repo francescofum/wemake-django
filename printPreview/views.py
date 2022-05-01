@@ -77,6 +77,8 @@ def add_to_cart(request,slug):
     
     for id in stl_list:
         cart.add(stl_list[id]['id'], data=stl_list[id], update_quantity=False)
+
+    print(cart.cart)
     return JsonResponse(response,status=200)
 
 def remove_from_cart(request,slug,):

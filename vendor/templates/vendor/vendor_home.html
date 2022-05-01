@@ -33,6 +33,8 @@
             <p class="card-text"><small class="text-muted">Since: {{ vendor.created_at }}</small></p>
           </div>
           <hr>
+          <p>Your page: <a href="{% url 'print_preview' vendor.slug %}">link</a> </p>
+          
           <p>You have X orders pending</p>
           <p>You have Y printers online</p>
           <p>You have Z materials in stock</p>
