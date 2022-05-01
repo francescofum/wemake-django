@@ -46,14 +46,16 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order= models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
-    # vendor = models.ForeignKey(Vendor, related_name='orders', on_delete=models.CASCADE)
+    vendor = models.ForeignKey(Vendor, related_name='orders', on_delete=models.CASCADE)
     vendor_has_been_paid = models.BooleanField(default=False)
     quantity = models.DecimalField(max_digits=6, decimal_places=2)
     price = models.DecimalField(max_digits=6, decimal_places=2)
 
     name = models.TextField(blank=True, null=True)
     material = models.ForeignKey(Material, related_name='materials', on_delete=models.CASCADE)
-    color = models.ForeignKey(Colour, related_name='colour', on_delete=models.CASCADE)
+    colour = models.ForeignKey(Colour, related_name='colour', on_delete=models.CASCADE)
+
+
 
     dim_x = models.DecimalField(max_digits=6, decimal_places=0)
     dim_y = models.DecimalField(max_digits=6, decimal_places=0)

@@ -2,17 +2,17 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
-from apps.cart.cart import Cart
+from cart.cart import Cart 
 
 from .models import Order, OrderItem
 
-def checkout(request, first_name, last_name, email, address, zipcode, place, phone, amount):
-    order = Order.objects.create(first_name=first_name, last_name=last_name, email=email, address=address, zipcode=zipcode, place=place, phone=phone, paid_amount=amount)
+def checkout(request, first_name, last_name, email, address, zipcode, price_total):
+    order = Order.objects.create(first_name=first_name, last_name=last_name, email=email, address=address, zipcode=zipcode, paid_amount=price_total)
 
     for item in Cart(request):
-        OrderItem.objects.create(order=order, product=item['product'], vendor=item['product'].vendor, price=item['product'].price, quantity=item['quantity'])
+        OrderItem.objects.create(order=order, vendor_id=item['vendor_id'], price=item['product'].price, material=item['material'], colour=item['colour'], quantity=item['quantity'])
     
-        order.vendors.add(item['product'].vendor)
+        order.vendors.add(item['vendor_id'])
 
     return order
 

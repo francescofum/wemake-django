@@ -74,8 +74,10 @@ def add_to_cart(request,slug):
     stl_list = json.loads(stl_list)
 
     cart = Cart(request)
+    vendor = Vendor.objects.get(slug=slug)
     
     for id in stl_list:
+        stl_list[id]['vendor_id'] = vendor.id # should be added to stl_list directly, long term
         cart.add(stl_list[id]['id'], data=stl_list[id], update_quantity=False)
 
     print(cart.cart)
