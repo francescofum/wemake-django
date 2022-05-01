@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
 
 {%block title %} Vendor Admin {% endblock %} 
 
@@ -36,14 +37,8 @@
         </div>
       </div>
 
-    <form method="POST" action="." class="form-group" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="input-group mb-3">
-            {{ form.as_p }}
-        </div>
+      {% crispy form %}
 
-        <input class='btn btn-primary' type="submit" value="Save"></input>
-    </form>
 </div>
 </div>
 {% endblock %}

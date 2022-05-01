@@ -1,7 +1,10 @@
 from django.urls import path,include
 from . import views
-# from .forms import PrinterForm
+
+# urlpatterns = [
+    # path('checkout/',views.checkout,name='checkout')
 
 urlpatterns = [
-    path('checkout/',views.checkout,name='checkout')
+    path('<int:id>/',views.order_details,name='order'),
+    path('checkout/',views.order_details,name='order'),
 ]
