@@ -9,6 +9,7 @@ import json
 
 from vendor.models import Vendor
 from cart.cart import Cart 
+from order.views import order_details
 
 from .models import STL
 
@@ -94,4 +95,12 @@ def remove_from_cart(request,slug,):
     return JsonResponse(response,status=200)
 
 
+def go_to_checkout(request):
+    response = {} 
+
+    cart = Cart(request)
     
+    print('in go_to_checkout')
+    order_details(request,cart)
+
+    return JsonResponse(response,status=500) # only arrives here if error

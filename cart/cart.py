@@ -1,9 +1,8 @@
 from django.conf import settings
 
-# Import order item model 
+from order.models import OrderItem
 
-class OrderItem():
-    pass
+
 
 class Cart(object):
     def __init__(self, request):

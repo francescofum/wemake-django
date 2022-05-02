@@ -38,6 +38,76 @@
           <p>You have X orders pending</p>
           <p>You have Y printers online</p>
           <p>You have Z materials in stock</p>
+          
+
+          <div class="my-3 p-3 bg-body rounded shadow-sm">
+            <h6 class="border-bottom pb-2 mb-0">Orders                 <span class="badge bg-primary rounded-pill">3</span>            </h6>
+
+            {% for order in orders %}
+            <div class="d-flex text-muted pt-3">
+              <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+
+              <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                <div class="d-flex justify-content-between">
+                  <strong class="text-gray-dark">{{ order.first_name }} {{ order.last_name }}</strong>
+                  <a href='#' data-bs-toggle="modal" data-bs-target="#Modal{{ order.id }}">Details</a>
+                </div>
+                <span class="d-block">{{ order.address }}</span>
+              </div>
+            </div>
+
+            
+            <!-- Modal -->
+            <div class="modal fade" id="Modal{{ order.id }}" tabindex="-1" aria-labelledby="Modal{{ order.id }}Label" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="Modal{{ order.id }}Label">{{ order.first_name }} {{ order.last_name }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <span class="d-block">Created: {{ order.created_at }}</span>
+                      <span class="d-block">{{ order.note }}</span>
+                    <hr>
+                    <h6>Address</h6>
+                      <span class="d-block">{{ order.address }}</span>
+                      <span class="d-block">{{ order.address2 }}</span>
+                      <span class="d-block">{{ order.country }}</span>
+                      <span class="d-block">{{ order.city }}</span>
+                      <span class="d-block">{{ order.zipcode }}</span>
+                      {% for item in order.items.all %}
+                        <hr>
+                        <span class="d-block">Name: {{ item.pretty_name }}</span>
+                        <span class="d-block">Material: {{ item.material }}</span>
+                        <span class="d-block">Colour: {{ item.colour }}</span>
+                        <span class="d-block">Infill: {{ item.infill }}</span>
+                        <span class="d-block">dim_x: {{ item.dim_x }}</span>
+                        <span class="d-block">dim_y: {{ item.dim_y }}</span>
+                        <span class="d-block">dim_z: {{ item.dim_z }}</span>
+                        <span class="d-block">price: {{ item.price }}</span>
+                      {% endfor %}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+            {% endfor %}
+
+
+            </div>
+
+            <small class="d-block text-end mt-3">
+              <a href="#">All suggestions</a>
+            </small>
+          </div>
+
 
         </div>
       </div>
