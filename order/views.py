@@ -15,6 +15,7 @@ from .forms import orderForm
 from cart.cart import Cart 
 from order.utilities import checkout
 
+from django.core.mail import send_mail
 
 
 def order_details(request,id:int=None): 
@@ -52,7 +53,7 @@ def order_details(request,id:int=None):
             #     description= 'WeMake 3D Printing', 
             #     source = stripe_token
             # )
-
+            
 
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
@@ -62,7 +63,50 @@ def order_details(request,id:int=None):
 
             order = checkout(request, first_name, last_name, email, address, zipcode)
 
+            
+            # row = len(cart.cart.items()[0])
+            # IF the cart array is 1D, then don't need to loop through each item
+            # if row == 1:
+            # text = [ 'Name:' , cart.cart.items().pretty_name , '\n' ] 
+            # separator = ' '
+            # email_text = separator.join(text)
+            # else: 
+            for key, value in cart.cart.items():
+                vendor_id = value['vendor_id']
+                print(value)
+                text=[ 'Name:' , value['pretty_name'] , '\n' ]
+                text+=[ 'Material:' , value['material'] , '\n' ]
+                text+=[ 'Colour:' , value['colour'] , '\n' ]
+                text+=[ 'Infill:' , str(value['infill']) , '\n' ]
+                text+=[ 'Quantity:' , str(value['quantity']) , '\n' ]
+                text+=[ 'Time to print (estimated):' , str(value['time_to_print']) , '\n' ]
+                text+=[ 'Length of filament (estimated):' , str(value['length_of_filament']) , '\n' ]
+                text+=[ 'Price:' , str(value['price']) , '\n \n \n' ]
+                separator = ' '
+                print(text)
+                email_text = separator.join(text)
+
+            print(email_text)
+
+            vendor = Vendor.objects.get(id=vendor_id)
+            # Send email to Vendor
+            send_mail(
+                'WeMake Sale!',
+                "Hi, you've got a new order: \n"+email_text,
+                'make.it.ffra@gmail.com',
+                [vendor.email],
+            )
+
+            # Send email to Customer
+            send_mail(
+                'Thank you for your order!',
+                "Hi, you've placed the order: \n"+email_text,
+                'make.it.ffra@gmail.com',
+                [email],
+            )            
+
             cart.clear()
+
 
             return redirect('success')
 
@@ -80,7 +124,6 @@ def order_details(request,id:int=None):
         # else:
         form = orderForm()
 
-    cart = Cart(request)
     # Render the form 
     context = {
         'form':form,

@@ -54,6 +54,7 @@ class Vendor(models.Model):
     created_at              = models.DateTimeField(auto_now_add=True)
     created_by              = models.OneToOneField(User,related_name='vendor', on_delete=models.CASCADE, null=True)
     store_name              = models.CharField(max_length=255,blank=True, null=True)
+    email                   = models.CharField(max_length=255)
     slug                    = models.SlugField(blank=False, null=False)
     description             = models.TextField(blank=True, null=True)
     store_logo_raw          = models.ImageField(null=True, blank=True)
