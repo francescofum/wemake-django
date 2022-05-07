@@ -1,6 +1,8 @@
 import json
 import os
+import re
 
+from django.conf import settings
 from django.shortcuts import redirect, render,get_object_or_404
 from django.urls import reverse
 from django.http import JsonResponse
@@ -43,6 +45,8 @@ def upload(request,slug):
     
     response = {
         'id': stl.id,
+        'filename':stl.file.name,
+        'path':stl.file.path,
         'url':stl.file.url,
         'pretty_name': stl.pretty_name,
     }
@@ -51,10 +55,13 @@ def upload(request,slug):
 def get_available_printers(request,slug):
     '''
         Gets availabe printers
+        TODO: Dont slice all the time, only if the printer has changed 
     '''
     if request.method == 'POST':
         dims={}
         stl_name = request.POST.get('name')
+        stl_filename = request.POST.get('filename')
+        stl_id = request.POST.get('id')
         material = request.POST.get('material')
         colour = request.POST.get('colour')
         if (stl_name is None or material == "Select" or colour == "Select"):
@@ -65,8 +72,24 @@ def get_available_printers(request,slug):
 
         vendor = Vendor.objects.get(slug=slug)
         compatible_printers = vendor.get_compatible_printers(material,colour,dims)
-        response = {'printers':compatible_printers}
-    return JsonResponse(response,status=200)
+        
+        if len(compatible_printers) > 0:
+            # select the first TODO: select the cheapest
+            printer = compatible_printers[0]
+            cura_data = printer.slice(stl_filename)
+
+            stl_data  = {'material':material, 'colour': colour}
+            
+            price = printer.quote(cura_data,stl_data)
+            price = "{:.2f}".format(price)
+           
+
+        response = {'printer_id':compatible_printers[0].id,
+                    'stl_id':stl_id,
+                    'cura_data':cura_data,
+                    'price':price}
+                    
+    return JsonResponse(response,status=200,safe=False)
 
 def add_to_cart(request,slug):
     response = {}

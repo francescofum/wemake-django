@@ -2,6 +2,9 @@ from django.db import models
 
 # Create your models here.
 
+
+
+
 class STL(models.Model):
 
     url = models.URLField(max_length=500)
@@ -11,3 +14,5 @@ class STL(models.Model):
 
     def __str__(self):
         return self.pretty_name
+
+

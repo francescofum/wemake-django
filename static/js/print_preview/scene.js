@@ -198,7 +198,7 @@ function wm_stl_uploaded_success_callback(file, response) {
         stl_list[id]['pretty_name'] = response['pretty_name']
         stl_list[id]['copies'] = 1;
         stl_list[id]['url'] = response["url"];
-        stl_list[id]['filename'] = filename = stl_list[id]['url'].replace(/^.*[\\\/]/, '');
+        stl_list[id]['filename'] = response['filename'];
         stl_list[id]['material'] = material;
         stl_list[id]['colour'] = colour;
         stl_list[id]['file_size'] = Number((file.size / 1000000).toFixed(3)); // Convert size from kb to mb and round to 3dp
@@ -445,6 +445,7 @@ function material_selection_changed(id,printer_id) {
 
     }
     // get_available_printers();
+
     get_available_printer(id);
     
 }
@@ -881,6 +882,10 @@ function get_available_printers() {
 // STLs are present but not all have colours (not the most elegant way, we should change the backend isntead.)
 function get_available_printer(id) {
     
+    if (stl_list[id]['material'] == "Select" || stl_list[id]['colour'] == "Select")
+    {
+        return;
+    }
     vendor_id = 1;
     //console.log("Getting available printers")
     //console.log(stl_list);
@@ -930,25 +935,20 @@ function get_available_printer(id) {
 
 function get_available_printer_success_callback(response) {
 
-    
-    response = JSON.parse(response);
-    // var total_price = 0
-    // for (var id of Object.keys(response)) {
-    //     console.log(id + " -> " + response[id]['printer_id'])
-    //     console.log(response);
-    //     old_stl_printer = stl_list[id]['printer']
-    //     stl_list[id]['printer'] = parseFloat(response[id]['printer_id']);
-    //     if(old_stl_printer != stl_list[id]['printer']){
-    //         analyse_stl(id);
-    //     }
-    //     else{
-    //         get_stl_price(id); // just get the price no need to analyse
+    console.log(response)
 
-    //     }
-        
-	    
-    // }
-    update_total_price();
+    id = response['stl_id']
+    
+    stl_list[id]['price'] = response['price']
+
+    stl_list[id]['printer'] = response['printer_id']
+    stl_list[id]['volume'] = response['cura_data']['fil_volume']
+    stl_list[id]['length_of_filament'] = response['cura_data']['fil_len']
+    stl_list[id]['time_to_print'] = response['cura_data']['print_s']
+
+    $(`#stl_${id}_price_value`).html(`<small>${stl_list[id]['price'] }</small>`)
+
+    // update_total_price();
 }
 
 
