@@ -7,6 +7,4 @@ def frontpage(request):
     print(response.text)
     return render(request,'core/frontpage.html')
 
-def checkout(request):
-    return render(request,'core/checkout.html')
 

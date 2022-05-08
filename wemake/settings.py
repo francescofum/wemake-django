@@ -28,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['testserver','127.0.0.1'] # Remove after debugger+unit tests work
 
+STRIPE_PUB_KEY = 'pk_test_51Kv4U8IlOvAv8ugQFNL6N309ErDWv3SL1AQ0NhRbQnu58UUW0HOHAqIlsraeYQtShTFDuZA1eIllVl6KJZCgn9om003wzjYKon'
+STRIPE_SECRET_KEY = 'sk_test_51Kv4U8IlOvAv8ugQLGkBd0mrWBUCkLSouNJ3yJzDmzvtkBN7QDLFQaX8dduQqeOMR6Mfpup0CGKnuyC0KcYvck9800YxixiKz0'
+
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'vendor_admin'
 

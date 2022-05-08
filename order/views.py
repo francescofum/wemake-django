@@ -1,18 +1,8 @@
-from django.shortcuts import render
+import stripe
 
-# Create your views here.
-
-# def checkout(request):
-#     '''
-#         Main entry point for checkout
-#     '''
-
-#     if(request.method == 'GET'):
-#         context = {
-#             # 'vendor':vendor,
-#             # 'printers':printers
-#         }        
-#         return render(request,'checkout.html', context)
+from django.conf import settings 
+from django.contrib import messages
+from django.shortcuts import redirect, render
 
 from django.db.models import Q
 
@@ -22,6 +12,9 @@ from materials.models import Colour
 from .models import Order
 from vendor.models import Vendor
 from .forms import orderForm
+from cart.cart import Cart 
+from order.utilities import checkout
+
 
 
 def order_details(request,id:int=None): 
@@ -33,6 +26,8 @@ def order_details(request,id:int=None):
         @param[id] The id of a order, defaults to 'None' which
         means a new order.
     '''
+
+    cart = Cart(request)
 
     # # Something like this?? from the Cart @Francesco?
     # product = request.cart.product
@@ -47,13 +42,30 @@ def order_details(request,id:int=None):
 
         if form.is_valid():
             # TODO: Enable editing order once created 
-        
+            # stripe.api_key = settings.STRIPE_SECRET.KEY
             
-            # if id is not None:  
-            # else:
-            order = form.save(commit=False)
-            # order.vendor = vendor
-            order.save()
+            # stripe_token = form.cleaned_data['stripe_token']
+
+            # charge = stripe.Charge.create(
+            #     amount = 12,
+            #     currency = 'GBP',
+            #     description= 'WeMake 3D Printing', 
+            #     source = stripe_token
+            # )
+
+
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            address = form.cleaned_data['address']
+            zipcode = form.cleaned_data['zipcode']
+
+            order = checkout(request, first_name, last_name, email, address, zipcode)
+
+            cart.clear()
+
+            return redirect('success')
+
         else:
             # TODO: Handle not valid form.
             print("NOT OK")
@@ -68,8 +80,14 @@ def order_details(request,id:int=None):
         # else:
         form = orderForm()
 
+    cart = Cart(request)
     # Render the form 
-    context = {'form':form}
+    context = {
+        'form':form,
+        'cart':cart.cart.items(), 
+        }
     return render(request,'order/order_form.html',context)
 
 
+def success(request):
+    return render(request,'order/success.html')
