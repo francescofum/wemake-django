@@ -9,3 +9,4 @@ pymysql==1.0.2
 django-crispy-forms==1.14.0
 crispy-bootstrap5==0.6
 requests==2.22.0
+stripe==2.76
