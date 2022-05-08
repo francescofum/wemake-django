@@ -69,16 +69,12 @@ function add_all_items_to_cart() {
         type: 'post',
         data:{'stl_list': JSON.stringify(stl_list)},
         success: function (response) {
-            console.log('here');
-            var url = `${window.location.origin}/checkout`;
-            console.log(url)
-            // window.location.assign(url);
-
+            window.location.replace('/vendor/order/checkout');
         },
         error: function (response) {
             console.log('error');
             console.log(url)
-        }
+        },
         headers: {
             'X-CSRFToken': csrftoken
         }
