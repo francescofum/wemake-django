@@ -9,7 +9,6 @@ import json
 
 from vendor.models import Vendor
 from cart.cart import Cart 
-from order.views import order_details
 
 from .models import STL
 

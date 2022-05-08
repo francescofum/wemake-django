@@ -4,8 +4,7 @@ from django.template.loader import render_to_string
 
 from cart.cart import Cart 
 
-from .models import Order, OrderItem
-from vendor.models import Vendor
+from .models import Order, OrderItem, Vendor
 
 def checkout(request, first_name, last_name, email, address, zipcode, note):
 

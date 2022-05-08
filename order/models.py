@@ -35,7 +35,10 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     vendor = models.ForeignKey(Vendor, related_name='orders', on_delete=models.CASCADE)
 
-    note = models.TextField(blank=False, null=False)
+    note = models.TextField(blank=True, null=True)
+    # price fields
+    price_total = models.DecimalField(max_digits=6, decimal_places=2)
+
 
     class Meta: 
         ordering = ['-created_at']
@@ -49,22 +52,17 @@ class OrderItem(models.Model):
     quantity = models.DecimalField(max_digits=6, decimal_places=2)
     price = models.DecimalField(max_digits=6, decimal_places=2)
 
-    pretty_name = models.TextField(blank=True, null=True)
-    material = models.CharField(max_length=255)
-    colour = models.CharField(max_length=255)
+    name = models.TextField(blank=True, null=True)
+    material = models.ForeignKey(Material, related_name='materials', on_delete=models.CASCADE)
+    colour = models.ForeignKey(Colour, related_name='colour', on_delete=models.CASCADE)
 
-    dim_x = models.DecimalField(max_digits=6, decimal_places=0, default=0)
-    dim_y = models.DecimalField(max_digits=6, decimal_places=0, default=0)
-    dim_z = models.DecimalField(max_digits=6, decimal_places=0, default=0)
 
     infill = models.DecimalField(max_digits=6, decimal_places=0, default=0)
     url = models.CharField(max_length=255)
 
-    def __str__(self):
-        return '%s' % self.id
-
-    def get_total_price(self):
-        return self.price * self.quantity
+    dim_x = models.DecimalField(max_digits=6, decimal_places=0)
+    dim_y = models.DecimalField(max_digits=6, decimal_places=0)
+    dim_z = models.DecimalField(max_digits=6, decimal_places=0)
 
     '''
     TODO: 
@@ -73,3 +71,7 @@ class OrderItem(models.Model):
         - Finishing
         
     '''
+
+
+    def __str__(self):
+        return '%s' % self.id

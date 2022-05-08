@@ -28,9 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['testserver','127.0.0.1'] # Remove after debugger+unit tests work
 
-STRIPE_PUB_KEY = 'pk_test_51Kv4U8IlOvAv8ugQFNL6N309ErDWv3SL1AQ0NhRbQnu58UUW0HOHAqIlsraeYQtShTFDuZA1eIllVl6KJZCgn9om003wzjYKon'
-STRIPE_SECRET_KEY = 'sk_test_51Kv4U8IlOvAv8ugQLGkBd0mrWBUCkLSouNJ3yJzDmzvtkBN7QDLFQaX8dduQqeOMR6Mfpup0CGKnuyC0KcYvck9800YxixiKz0'
-
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'vendor_admin'
 
@@ -100,15 +97,12 @@ WSGI_APPLICATION = 'wemake.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE'  : 'django.db.backends.mysql', # <-- UPDATED line 
-        'NAME'    : 'wemake',                 # <-- UPDATED line 
-        'USER'    : 'wemake',                     # <-- UPDATED line
-        'PASSWORD': 'secret',              # <-- UPDATED line
-        'HOST'    : '127.0.0.1',                # <-- UPDATED line
-        'PORT'    : '3306',
-        # 'OPTIONS': {
-        #     'read_default_file': './conf/mysql.cnf',
-        # }
+        'ENGINE'  : 'django.db.backends.mysql',  
+        'NAME'    : os.environ['DATABASE_NAME'],                  
+        'USER'    : os.environ['DATABASE_USER'],                     
+        'PASSWORD': os.environ['DATABASE_PASS'],              
+        'HOST'    : os.environ['DATABASE_HOST'],                
+        'PORT'    : os.environ['DATABASE_PORT'],
     },
     'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',

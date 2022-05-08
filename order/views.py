@@ -1,8 +1,18 @@
-import stripe
+from django.shortcuts import render, redirect
 
-from django.conf import settings 
-from django.contrib import messages
-from django.shortcuts import redirect, render
+# Create your views here.
+
+# def checkout(request):
+#     '''
+#         Main entry point for checkout
+#     '''
+
+#     if(request.method == 'GET'):
+#         context = {
+#             # 'vendor':vendor,
+#             # 'printers':printers
+#         }        
+#         return render(request,'checkout.html', context)
 
 from django.db.models import Q
 
@@ -12,10 +22,10 @@ from materials.models import Colour
 from .models import Order
 from vendor.models import Vendor
 from .forms import orderForm
+
 from cart.cart import Cart 
-from order.utilities import checkout
 
-
+from utilities import checkout
 
 def order_details(request,id:int=None): 
     '''
@@ -27,8 +37,6 @@ def order_details(request,id:int=None):
         means a new order.
     '''
 
-    cart = Cart(request)
-
     # # Something like this?? from the Cart @Francesco?
     # product = request.cart.product
     # vendor = request.cart.vendor??? 
@@ -39,6 +47,8 @@ def order_details(request,id:int=None):
     # If an id has been specified then we are editing one.
     if request.method == 'POST':
         form = orderForm(request.POST)
+
+        cart = Cart(request)
 
         if form.is_valid():
             # TODO: 
@@ -72,14 +82,8 @@ def order_details(request,id:int=None):
         # else:
         form = orderForm()
 
-    cart = Cart(request)
     # Render the form 
-    context = {
-        'form':form,
-        'cart':cart.cart.items(), 
-        }
+    context = {'form':form}
     return render(request,'order/order_form.html',context)
 
 
-def success(request):
-    return render(request,'order/success.html')
