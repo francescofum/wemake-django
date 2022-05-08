@@ -25,7 +25,7 @@ from .forms import orderForm
 
 from cart.cart import Cart 
 
-from utilities import checkout
+from .utilities import checkout
 
 def order_details(request,id:int=None): 
     '''
