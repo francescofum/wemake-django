@@ -3,8 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from .forms import VendorSettingsForm
-from .models import Vendor
-from order.models import Order
+from .models import Vendor 
 
 
 @login_required
@@ -45,15 +44,10 @@ def vendor_home(request):
 
     vendor = request.user.vendor
     
-    print('vendor::')
-    orders = vendor.orders.all()
-
-
     if(request.method == 'GET'):
         form = VendorSettingsForm(instance=vendor)
         context = {
             'form':form,
             'vendor':vendor,
-            'orders':orders
         }        
         return render(request,'vendor/vendor_home.html',context)
