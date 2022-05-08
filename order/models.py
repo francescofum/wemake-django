@@ -33,7 +33,7 @@ class Order(models.Model):
     status = models.BooleanField(default=False)
     slug = models.SlugField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
-    vendors = models.ManyToManyField(Vendor, related_name='orders')
+    vendor = models.ForeignKey(Vendor, related_name='orders', on_delete=models.CASCADE)
 
     note = models.TextField(blank=False, null=False)
 
@@ -45,7 +45,6 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
-    vendor = models.ForeignKey(Vendor, related_name='items', on_delete=models.CASCADE)
     vendor_has_been_paid = models.BooleanField(default=False)
     quantity = models.DecimalField(max_digits=6, decimal_places=2)
     price = models.DecimalField(max_digits=6, decimal_places=2)
@@ -59,6 +58,7 @@ class OrderItem(models.Model):
     dim_z = models.DecimalField(max_digits=6, decimal_places=0, default=0)
 
     infill = models.DecimalField(max_digits=6, decimal_places=0, default=0)
+    url = models.CharField(max_length=255)
 
     def __str__(self):
         return '%s' % self.id

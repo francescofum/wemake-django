@@ -100,7 +100,6 @@ def go_to_checkout(request):
 
     cart = Cart(request)
     
-    print('in go_to_checkout')
     order_details(request,cart)
 
     return JsonResponse(response,status=500) # only arrives here if error

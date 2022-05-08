@@ -7,16 +7,19 @@ from cart.cart import Cart
 from .models import Order, OrderItem
 from vendor.models import Vendor
 
-def checkout(request, first_name, last_name, email, address, zipcode):
-    order = Order.objects.create(first_name=first_name, last_name=last_name, email=email, address=address, zipcode=zipcode)
+def checkout(request, first_name, last_name, email, address, zipcode, note):
 
     cart = Cart(request)
-
     for key, value in cart.cart.items():
         vendor = Vendor.objects.get(id=value['vendor_id'])
+        break
 
-        print(float(value['dims']['x']))
-        OrderItem.objects.create(order=order, vendor=vendor, quantity=value['quantity'], price=value['price'], pretty_name=value['pretty_name'], material=value['material'], colour=value['colour'], dim_x=float(value['dims']['x']), dim_y=float(value['dims']['y']), dim_z=float(value['dims']['z']), infill=float(value['infill'])) #, time_to_print=float(value['time_to_print']), length_of_filament=float(value['length_of_filament']) )
+    order = Order.objects.create(first_name=first_name, last_name=last_name, email=email, address=address, zipcode=zipcode, note=note)
+
+
+    for key, value in cart.cart.items():
+
+        OrderItem.objects.create(order=order, quantity=value['quantity'], price=value['price'], pretty_name=value['pretty_name'], material=value['material'], colour=value['colour'], dim_x=float(value['dims']['x']), dim_y=float(value['dims']['y']), dim_z=float(value['dims']['z']), infill=float(value['infill']),  url=value['url']) #, time_to_print=float(value['time_to_print']), length_of_filament=float(value['length_of_filament']) )
         order.vendors.add(value['vendor_id'])
 
     return order

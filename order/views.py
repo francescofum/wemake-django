@@ -41,26 +41,18 @@ def order_details(request,id:int=None):
         form = orderForm(request.POST)
 
         if form.is_valid():
-            # TODO: Enable editing order once created 
-            # stripe.api_key = settings.STRIPE_SECRET.KEY
-            
-            # stripe_token = form.cleaned_data['stripe_token']
-
-            # charge = stripe.Charge.create(
-            #     amount = 12,
-            #     currency = 'GBP',
-            #     description= 'WeMake 3D Printing', 
-            #     source = stripe_token
-            # )
-
+            # TODO: 
+            # Stripe
+            # Enable editing order once created 
 
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             email = form.cleaned_data['email']
             address = form.cleaned_data['address']
             zipcode = form.cleaned_data['zipcode']
+            zipcode = form.cleaned_data['note']
 
-            order = checkout(request, first_name, last_name, email, address, zipcode)
+            order = checkout(request, first_name, last_name, email, address, zipcode, note)
 
             cart.clear()
 

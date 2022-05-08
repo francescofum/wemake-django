@@ -44,16 +44,11 @@ def vendor_home(request):
     '''
 
     vendor = request.user.vendor
-    
-    print('vendor::')
-    orders = vendor.orders.all()
-
 
     if(request.method == 'GET'):
         form = VendorSettingsForm(instance=vendor)
         context = {
             'form':form,
-            'vendor':vendor,
-            'orders':orders
-        }        
+            'vendor':vendor
+            }        
         return render(request,'vendor/vendor_home.html',context)
