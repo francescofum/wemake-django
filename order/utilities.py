@@ -6,14 +6,14 @@ from cart.cart import Cart
 
 from .models import Order, OrderItem, Vendor
 
-def checkout(request, first_name, last_name, email, address, zipcode, note):
+def checkout(request, first_name, last_name, email, address, zipcode, note, price_total):
 
     cart = Cart(request)
     for key, value in cart.cart.items():
         vendor = Vendor.objects.get(id=value['vendor_id'])
         break
 
-    order = Order.objects.create(vendor= vendor, first_name=first_name, last_name=last_name, email=email, address=address, zipcode=zipcode, note=note)
+    order = Order.objects.create(vendor= vendor, first_name=first_name, last_name=last_name, email=email, address=address, zipcode=zipcode, note=note, price_total=price_total)
 
 
     for key, value in cart.cart.items():

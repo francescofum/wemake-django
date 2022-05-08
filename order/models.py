@@ -52,9 +52,9 @@ class OrderItem(models.Model):
     quantity = models.DecimalField(max_digits=6, decimal_places=2)
     price = models.DecimalField(max_digits=6, decimal_places=2)
 
-    name = models.TextField(blank=True, null=True)
-    material = models.ForeignKey(Material, related_name='materials', on_delete=models.CASCADE)
-    colour = models.ForeignKey(Colour, related_name='colour', on_delete=models.CASCADE)
+    pretty_name = models.TextField(blank=True, null=True)
+    material = models.CharField(max_length=255)
+    colour = models.CharField(max_length=255)
 
 
     infill = models.DecimalField(max_digits=6, decimal_places=0, default=0)

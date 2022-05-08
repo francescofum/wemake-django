@@ -61,8 +61,9 @@ def order_details(request,id:int=None):
             address = form.cleaned_data['address']
             zipcode = form.cleaned_data['zipcode']
             note = form.cleaned_data['note']
+            price_total = 3 
 
-            order = checkout(request, first_name, last_name, email, address, zipcode, note)
+            order = checkout(request, first_name, last_name, email, address, zipcode, note, price_total)
 
             cart.clear()
 
