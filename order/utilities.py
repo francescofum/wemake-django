@@ -14,13 +14,12 @@ def checkout(request, first_name, last_name, email, address, zipcode, note):
         vendor = Vendor.objects.get(id=value['vendor_id'])
         break
 
-    order = Order.objects.create(first_name=first_name, last_name=last_name, email=email, address=address, zipcode=zipcode, note=note)
+    order = Order.objects.create(vendor= vendor, first_name=first_name, last_name=last_name, email=email, address=address, zipcode=zipcode, note=note)
 
 
     for key, value in cart.cart.items():
 
         OrderItem.objects.create(order=order, quantity=value['quantity'], price=value['price'], pretty_name=value['pretty_name'], material=value['material'], colour=value['colour'], dim_x=float(value['dims']['x']), dim_y=float(value['dims']['y']), dim_z=float(value['dims']['z']), infill=float(value['infill']),  url=value['url']) #, time_to_print=float(value['time_to_print']), length_of_filament=float(value['length_of_filament']) )
-        order.vendors.add(value['vendor_id'])
 
     return order
 

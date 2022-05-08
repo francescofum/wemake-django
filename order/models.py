@@ -23,7 +23,7 @@ class Order(models.Model):
     '''
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255)
     address = models.CharField(max_length=255)
     address2 = models.CharField(max_length=255)
     country = models.CharField(max_length=255)

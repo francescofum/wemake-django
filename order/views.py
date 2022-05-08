@@ -50,7 +50,7 @@ def order_details(request,id:int=None):
             email = form.cleaned_data['email']
             address = form.cleaned_data['address']
             zipcode = form.cleaned_data['zipcode']
-            zipcode = form.cleaned_data['note']
+            note = form.cleaned_data['note']
 
             order = checkout(request, first_name, last_name, email, address, zipcode, note)
 
