@@ -69,19 +69,22 @@ function add_all_items_to_cart() {
         type: 'post',
         data:{'stl_list': JSON.stringify(stl_list)},
         success: function (response) {
-            window.location.replace('/vendor/order/checkout');
+            console.log('here');
+            var url = `${window.location.origin}/checkout`;
+            console.log(url)
+            // window.location.assign(url);
+
         },
         error: function (response) {
-            alert(response);
-        },
+            console.log('error');
+            console.log(url)
+        }
         headers: {
             'X-CSRFToken': csrftoken
         }
     });
 
 }
-
-
 
 function checkout() {
     // display_checkout_spinner();
@@ -105,6 +108,7 @@ function checkout() {
     if(!error){
         // Add all items to cart
         add_all_items_to_cart();
+        // Redirect to checkout page
 
     }
 
