@@ -72,13 +72,11 @@ function add_all_items_to_cart() {
             console.log('here');
             var url = `${window.location.origin}/checkout`;
             console.log(url)
-            // window.location.assign(url);
-
         },
         error: function (response) {
             console.log('error');
-            console.log(url)
-        }
+            console.log(url);
+        },
         headers: {
             'X-CSRFToken': csrftoken
         }
