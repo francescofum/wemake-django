@@ -11,7 +11,7 @@ from vendor.models import Vendor
 from cart.cart import Cart 
 
 from .models import STL
-
+from order.views import order_details
 
 def print_preview(request,slug):
     materials = {}

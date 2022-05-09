@@ -88,3 +88,5 @@ def order_details(request,id:int=None):
     return render(request,'order/order_form.html',context)
 
 
+def success(request):
+    return render(request,'order/success.html')
