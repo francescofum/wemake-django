@@ -25,13 +25,20 @@ class Order(models.Model):
     last_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
     address = models.CharField(max_length=255)
-    address2 = models.CharField(max_length=255)
-    country = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
+    address2 = models.CharField(max_length=255, blank=True)
+    country = models.CharField(max_length=255, blank=True)
+    city = models.CharField(max_length=255, blank=True)
     zipcode = models.CharField(max_length=255)
 
-    status = models.BooleanField(default=False)
-    slug = models.SlugField(max_length=255)
+    CHOICES = (('Received', 'Received'),
+            ('Scheduled', 'Scheduled'), 
+            ('Shipped', 'Shipped'),
+            ('In Progress','In Progress'),
+            )
+    status = models.CharField(max_length = 100, choices = CHOICES, default="In Progress")
+
+
+    slug = models.SlugField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     vendor = models.ForeignKey(Vendor, related_name='orders', on_delete=models.CASCADE)
 

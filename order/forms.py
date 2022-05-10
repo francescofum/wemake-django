@@ -12,13 +12,35 @@ class orderForm(forms.ModelForm):
     '''
     class Meta:
         model = Order 
-        fields = ['first_name', 'last_name', 'email', 'address', 'address2', 'country', 'city', 'zipcode', 'note' ]
+        fields = ['email', 'first_name', 'last_name','address', 'address2', 'city', 'country', 'zipcode' ,  'note',  ] 
 
     @property
     def helper(self):
         helper = FormHelper()
         helper.layout = Layout(
             HTML('<h2>Checkout</h2>')
+        )
+        for field in self.Meta().fields:
+            helper.layout.append(
+                Field(field)
+            )
+        helper.layout.append(Submit('submit','Save',css_class='btn-primary'))
+        return helper
+
+
+class orderForm_Vendor(forms.ModelForm):
+    '''
+        @brief TODO
+    '''
+    class Meta:
+        model = Order 
+        fields = ['status','price_total',  'slug', 'address', 'address2', 'city', 'country', 'zipcode' , 'email', 'first_name', 'last_name', 'note',  ] 
+
+    @property
+    def helper(self):
+        helper = FormHelper()
+        helper.layout = Layout(
+            HTML('<h2>Order</h2>')
         )
         for field in self.Meta().fields:
             helper.layout.append(

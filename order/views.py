@@ -27,7 +27,7 @@ from cart.cart import Cart
 
 from .utilities import checkout
 
-def order_details(request,id:int=None): 
+def checkout_details(request,id:int=None): 
     '''
         @brief Renders a order form. The order form
         allows the user to either add  new order or 
@@ -76,12 +76,11 @@ def order_details(request,id:int=None):
     # Either display an existing order,
     # or a blank form for a new order.
     if request.method == "GET":
-        # if id is not None:
-        #     order = order.objects.get(pk=id)
-        #     form = orderForm(instance = order,prefix="order")
-        #     material_form = MaterialForm(vendor=vendor,order=order,prefix="material")
-        # else:
-        form = orderForm()
+        if id is not None:
+            order = Order.objects.get(pk=id)
+            form = orderForm(instance = order)
+        else:
+            form = orderForm()
 
     # Render the form 
     context = {'form':form}
@@ -90,3 +89,5 @@ def order_details(request,id:int=None):
 
 def success(request):
     return render(request,'order/success.html')
+
+

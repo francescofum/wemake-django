@@ -11,7 +11,7 @@ from vendor.models import Vendor
 from cart.cart import Cart 
 
 from .models import STL
-from order.views import order_details
+from order.views import checkout_details
 
 def print_preview(request,slug):
     materials = {}
@@ -99,6 +99,6 @@ def go_to_checkout(request):
 
     cart = Cart(request)
     
-    order_details(request,cart)
+    checkout_details(request,cart)
 
     return JsonResponse(response,status=500) # only arrives here if error
