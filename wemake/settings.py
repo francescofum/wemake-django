@@ -97,12 +97,15 @@ WSGI_APPLICATION = 'wemake.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE'  : 'django.db.backends.mysql',  
-        'NAME'    : os.environ['DATABASE_NAME'],                  
-        'USER'    : os.environ['DATABASE_USER'],                     
-        'PASSWORD': os.environ['DATABASE_PASS'],              
-        'HOST'    : os.environ['DATABASE_HOST'],                
-        'PORT'    : os.environ['DATABASE_PORT'],
+        'ENGINE'  : 'django.db.backends.mysql', # <-- UPDATED line 
+        'NAME'    : 'wemake',                 # <-- UPDATED line 
+        'USER'    : 'wemake',                     # <-- UPDATED line
+        'PASSWORD': 'secret',              # <-- UPDATED line
+        'HOST'    : '127.0.0.1',                # <-- UPDATED line
+        'PORT'    : '3306',
+        # 'OPTIONS': {
+        #     'read_default_file': './conf/mysql.cnf',
+        # }
     },
     'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -160,3 +163,7 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STRIPE_PUBLIC_KEY = "pk_test_51Ia2C5HJurPRv8eSyWlNZ36WmDNj6hFvbuvtVQ6ZzYvPyTn7XrJXcoJeTTxPxzv9NeBSbcV8GIMajn4rbbUW00u300bQN63mbf"
+STRIPE_SECRET_KEY = "sk_test_51Ia2C5HJurPRv8eSqT5eKKQaNMmhNfPTy5IUVfzuFWAEw3Hb9M9B6DR6ObJ3EBhZaKuQJNT4zdGv5lbaqFnPsGqj00hPpG7AT4"
+STRIPE_WEBHOOK_SECRET = None

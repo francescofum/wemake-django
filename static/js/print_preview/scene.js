@@ -880,39 +880,39 @@ function get_available_printers() {
 // This fixes the bug where the price isn't displayed when multiple
 // STLs are present but not all have colours (not the most elegant way, we should change the backend isntead.)
 function get_available_printer(id) {
-    
-    vendor_id = 1;
-    //console.log("Getting available printers")
-    //console.log(stl_list);
-    ;
-    var stl_to_send = {};
-    stl_to_send[id] = stl_list[id];
+
     display_price_spinner(id);
+    if (stl_list[id]['material'] == "Select" || stl_list[id]['colour'] == "Select")
+    {
+        return;
+    }
+    json_data = JSON.stringify(stl_list[id]); 
     // POST to backend.
     response = $.ajax({
         url: "get_available_printers/",
         type: 'POST',
         success: get_available_printer_success_callback,
         data: {
-            id:stl_list[id]['id'],
-            name:stl_list[id]['pretty_name'],
-            url:stl_list[id]['url'],
-            filename:stl_list[id]['filename'],
-            material:stl_list[id]['material'],
-            colour:stl_list[id]['colour'],
-            file_size:stl_list[id]['file_size'],
-            size_x:stl_list[id]['dims']['x'],
-            size_y:stl_list[id]['dims']['y'],
-            size_z:stl_list[id]['dims']['z'],
-            volume:stl_list[id]['volume'],
-            scale:stl_list[id]['scale'],
-            infill:stl_list[id]['infill'],
-            price:stl_list[id]['price'],
-            printer:stl_list[id]['printer'],
-            units:stl_list[id]['units'],
-            quantity:stl_list[id]['quantity'],
-            ttp:stl_list[id]['time_to_print'],
-            lof:stl_list[id]['length_of_filament']
+            stl_data:json_data
+            // id:stl_list[id]['id'],
+            // name:stl_list[id]['pretty_name'],
+            // url:stl_list[id]['url'],
+            // filename:stl_list[id]['filename'],
+            // material:stl_list[id]['material'],
+            // colour:stl_list[id]['colour'],
+            // file_size:stl_list[id]['file_size'],
+            // size_x:stl_list[id]['dims']['x'],
+            // size_y:stl_list[id]['dims']['y'],
+            // size_z:stl_list[id]['dims']['z'],
+            // volume:stl_list[id]['volume'],
+            // scale:stl_list[id]['scale'],
+            // infill:stl_list[id]['infill'],
+            // price:stl_list[id]['price'],
+            // printer:stl_list[id]['printer'],
+            // units:stl_list[id]['units'],
+            // quantity:stl_list[id]['quantity'],
+            // ttp:stl_list[id]['time_to_print'],
+            // lof:stl_list[id]['length_of_filament']
         },
         // data: {
         //     action: 'get_available_printers',
