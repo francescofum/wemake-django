@@ -15,19 +15,23 @@ from django.shortcuts import render, redirect
 #         return render(request,'checkout.html', context)
 
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 from materials.models import Material
 from materials.models import Colour
 
 from .models import Order
 from vendor.models import Vendor
-from .forms import orderForm
+from .forms import orderForm, orderForm_Vendor
+from order.utilities import notify_customer_recieved, notify_customer_inprogress, notify_customer_shipped, notify_customer_scheduled
+
+
 
 from cart.cart import Cart 
 
 from .utilities import checkout
 
-def checkout_details(request,id:int=None): 
+def checkout_details(request,  id:int=None): 
     '''
         @brief Renders a order form. The order form
         allows the user to either add  new order or 
@@ -84,10 +88,88 @@ def checkout_details(request,id:int=None):
 
     # Render the form 
     context = {'form':form}
-    return render(request,'order/order_form.html',context)
+    return render(request,'order/checkout_form.html',context)
 
 
 def success(request):
     return render(request,'order/success.html')
 
 
+
+@login_required
+def order_details(request, id:int=None):
+    '''
+        Main entry point for vendor home
+    '''
+
+    vendor = request.user.vendor
+    if request.method == 'GET':
+
+        if id is not None:
+            order = Order.objects.get(pk=id)
+            form = orderForm_Vendor(instance = order)
+        else:
+            form = orderForm_Vendor()
+
+        FIELD_NAMES = ['price_total',  'slug', 'address', 'address2', 'city', 'country', 'zipcode' , 'email', 'first_name', 'last_name', 'note',  ] 
+        for field in FIELD_NAMES: 
+            form.fields[field].disabled = True
+
+        context = {
+            'form':form,
+            'vendor':vendor
+            }      
+        return render(request,'order/order_form.html',context)
+                
+    if request.method == 'POST':
+        if id is not None:
+            order = Order.objects.get(pk=id)
+            form = orderForm_Vendor(request.POST, instance = order)
+        else:
+            form = orderForm_Vendor()
+
+        FIELD_NAMES = ['price_total',  'slug', 'address', 'address2', 'city', 'country', 'zipcode' , 'email', 'first_name', 'last_name', 'note',  ] 
+        for field in FIELD_NAMES: 
+            form.fields[field].disabled = True
+        
+
+        if form.is_valid():
+            form.save()
+
+            if form.fields['status'] == 'In Progress': 
+                notify_customer_inprogress(order)
+
+            if form.fields['status'] == 'Scheduled': 
+                notify_customer_scheduled(order)
+
+            if form.fields['status'] == 'Shipped': 
+                notify_customer_shipped(order)
+
+            context = {
+                'vendor':vendor
+                }      
+
+        else:
+            print(form.errors.as_data()) 
+
+        return redirect('order_dashboard')     # form.save
+            # print('notify customer')
+            # return redirect('order_dashboard')
+
+
+
+
+
+@login_required
+def order_dashboard(request):
+    '''
+        Main entry point for vendor (dashboards/orders etc)
+    '''
+
+    vendor = request.user.vendor
+
+    if(request.method == 'GET'):
+        context = {
+            'vendor':vendor,
+        }        
+        return render(request,'order/order_dashboard.html',context)

@@ -8,7 +8,7 @@
 <div class="container">
   <header class="d-flex justify-content-center py-3">
     <ul class="nav nav-pills">
-      <li class="nav-item"><a href="{% url 'vendor_home' %}" class="nav-link active" aria-current="page">Home</a></li>
+      <li class="nav-item"><a href="{% url 'order_dashboard' %}" class="nav-link active" aria-current="page">Orders</a></li>
       <li class="nav-item"><a href="{% url 'printer_dashboard' %}" class="nav-link">Printers</a></li>
       <li class="nav-item"><a href="{% url 'material_dashboard' %}" class="nav-link">Materials</a></li>
       <li class="nav-item"><a href="{% url 'vendor_admin' %}" class="nav-link">Admin</a></li>
@@ -29,8 +29,8 @@
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h2 class="card-title">Vendor Home - {{ vendor.created_by.username }}</h2>
-            <p class="card-text">This is your home.</p>
+            <h2 class="card-title">Order Dashboard - {{ vendor.created_by.username }}</h2>
+            <p class="card-text">Display the orders you have </p>
             <p class="card-text"><small class="text-muted">Since: {{ vendor.created_at }}</small></p>
           </div>
           <hr>
@@ -51,7 +51,7 @@
               <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                 <div class="d-flex justify-content-between">
                   <strong class="text-gray-dark">{{ order.first_name }} {{ order.last_name }}</strong>
-                  <a href='#' data-bs-toggle="modal" data-bs-target="#Modal{{ order.id }}">Details</a>
+                  <a href="{% url 'order'  order.id %}" >Details</a>
                 </div>
                 <span class="d-block">{{ order.address }}</span>
               </div>
@@ -99,7 +99,6 @@
                       {% endfor %}
                   </div>
                   <div class="col-md-7 col-lg-8">
-                    {% crispy form %}
                   </div>
                   
                   <div class="modal-footer">

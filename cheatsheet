@@ -1,3 +1,7 @@
 
 ➜ 
 docker-compose up --build
+
+
+
+{% include "printer/printer_form.html"  with id=printer.id %}

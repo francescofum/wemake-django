@@ -35,14 +35,51 @@ def notify_vendor(order):
         msg.attach_alternative(html_content, 'text/html')
         msg.send()
 
-def notify_customer(order):
+def notify_customer_recieved(order):
     from_email = settings.DEFAULT_EMAIL_FROM
 
     to_email = order.email
     subject = 'Order confirmation'
     text_content = 'Thank you for the order!'
-    html_content = render_to_string('order/email_notify_customer.html', {'order': order})
+    html_content = render_to_string('order/email_notify_customer_recieved.html', {'order': order})
 
     msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
     msg.attach_alternative(html_content, 'text/html')
     msg.send()
+
+def notify_customer_inprogress(order):
+    from_email = settings.DEFAULT_EMAIL_FROM
+
+    to_email = order.email
+    subject = 'Order in progress'
+    text_content = 'Your order is in progress'
+    html_content = render_to_string('order/email_notify_customer_recieved.html', {'order': order})
+
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+    msg.attach_alternative(html_content, 'text/html')
+    msg.send()
+
+def notify_customer_shipped(order):
+    from_email = settings.DEFAULT_EMAIL_FROM
+
+    to_email = order.email
+    subject = 'Order Shipped'
+    text_content = 'Your order is on its way '
+    html_content = render_to_string('order/email_notify_customer_shipped.html', {'order': order})
+
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+    msg.attach_alternative(html_content, 'text/html')
+    msg.send()
+
+def notify_customer_scheduled(order):
+    from_email = settings.DEFAULT_EMAIL_FROM
+
+    to_email = order.email
+    subject = 'Order Scheduled'
+    text_content = 'Your order is scheduled to arrive!'
+    html_content = render_to_string('order/email_notify_customer_scheduled.html', {'order': order})
+
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+    msg.attach_alternative(html_content, 'text/html')
+    msg.send()
+
