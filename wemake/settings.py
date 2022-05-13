@@ -163,3 +163,30 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+# Email Settings:
+
+######## basic python server 
+# command (in terimal of development server):  
+# python -m smtpd -n -c DebuggingServer 127.0.0.1:1025
+
+# settings:
+# EMAIL_HOST = '127.0.0.1'
+# EMAIL_PORT = '1025'
+# EMAIL_HOST_USER = ''
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_USE_TLS = False
+
+
+
+########'proper' GMail - WeMake server
+# settings:
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'make.it.ffra@gmail.com'
+EMAIL_HOST_PASSWORD = 'chafhyxogylgnbrg'        # password: 'chafhyxogylgnbrg'  Generated at: https://myaccount.google.com/apppasswords, account: make.it.ffra@gmail.com using 2-factor Authentication. Requires to establish server.connect
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False

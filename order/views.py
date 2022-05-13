@@ -23,7 +23,7 @@ from materials.models import Colour
 from .models import Order
 from vendor.models import Vendor
 from .forms import orderForm, orderForm_Vendor
-from order.utilities import notify_customer_recieved, notify_customer_inprogress, notify_customer_shipped, notify_customer_scheduled
+from order.utilities import notify_vendor, notify_customer_recieved, notify_customer_inprogress, notify_customer_shipped, notify_customer_scheduled
 
 
 
@@ -68,7 +68,10 @@ def checkout_details(request,  id:int=None):
             price_total = 3 
 
             order = checkout(request, first_name, last_name, email, address, zipcode, note, price_total)
-
+            
+            notify_customer_recieved(order)
+            notify_vendor(order)
+            
             cart.clear()
 
             return redirect('success')
@@ -132,18 +135,20 @@ def order_details(request, id:int=None):
         for field in FIELD_NAMES: 
             form.fields[field].disabled = True
         
-
         if form.is_valid():
-            form.save()
+            # Order status
+            status= form.cleaned_data.get("status")
 
-            if form.fields['status'] == 'In Progress': 
+            if status == 'In Progress': 
                 notify_customer_inprogress(order)
 
-            if form.fields['status'] == 'Scheduled': 
+            if status == 'Scheduled': 
                 notify_customer_scheduled(order)
 
-            if form.fields['status'] == 'Shipped': 
+            if status == 'Shipped': 
                 notify_customer_shipped(order)
+
+            form.save()
 
             context = {
                 'vendor':vendor
