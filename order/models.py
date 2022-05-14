@@ -21,32 +21,41 @@ class Order(models.Model):
         -  Or all the materials... 
         p.materials.all()
     '''
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255)
-    address = models.CharField(max_length=255)
-    address2 = models.CharField(max_length=255, blank=True)
-    country = models.CharField(max_length=255, blank=True)
-    city = models.CharField(max_length=255, blank=True)
-    zipcode = models.CharField(max_length=255)
+    STATUS_CHOICES = (
+        ('PEND', "Pending"),
+        ('RECV', "Received"),
+        ('PRINT', "Printing"),
+        ('FINISHING', "Finishing"),
+        ('CMPLT', "Complete"),
+        ('DELIV', "Sent")
+    )
 
-    CHOICES = (('Received', 'Received'),
-            ('Scheduled', 'Scheduled'), 
-            ('Shipped', 'Shipped'),
-            ('In Progress','In Progress'),
-            )
-    status = models.CharField(max_length = 100, choices = CHOICES, default="In Progress")
+    VENDOR_PAID_CHOICES = (
+        ('NO', "Unpaid"),
+        ('REQ', "Requested"),
+        ('CMPLT', "Complete"),
+    )
 
+    first_name = models.CharField(max_length=255,null=True,blank=True)
+    last_name = models.CharField(max_length=255,null=True,blank=True)
+    email = models.EmailField(max_length=255,null=True,blank=True)
+    address = models.CharField(max_length=255,null=True,blank=True)
+    address2 = models.CharField(max_length=255,null=True,blank=True)
+    country = models.CharField(max_length=255,null=True,blank=True)
+    city = models.CharField(max_length=255,null=True,blank=True)
+    zipcode = models.CharField(max_length=255,null=True,blank=True)
 
-    slug = models.SlugField(max_length=255, blank=True)
+    status = models.CharField(choices=STATUS_CHOICES,max_length=50,default='PEND')
+    vendor_paid = models.CharField(choices=STATUS_CHOICES,max_length=50,default='NO')
     created_at = models.DateTimeField(auto_now_add=True)
     vendor = models.ForeignKey(Vendor, related_name='orders', on_delete=models.CASCADE)
-
+    
     note = models.TextField(blank=True, null=True)
     # price fields
-    price_total = models.DecimalField(max_digits=6, decimal_places=2)
-
-
+    price_total = models.DecimalField(max_digits=6, decimal_places=2,null=True,blank=True)
+    price_shipping = models.DecimalField(max_digits=6, decimal_places=2,null=True,blank=True)
+    shipping_type = models.CharField(max_length=255,null=True,blank=True) # Make these options when we have them completely defined.
+                                                                          # Currently not used. 
     class Meta: 
         ordering = ['-created_at']
 
@@ -55,7 +64,7 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
-    vendor_has_been_paid = models.BooleanField(default=False)
+    
     quantity = models.DecimalField(max_digits=6, decimal_places=2)
     price = models.DecimalField(max_digits=6, decimal_places=2)
 

@@ -190,3 +190,11 @@ EMAIL_HOST_USER = 'make.it.ffra@gmail.com'
 EMAIL_HOST_PASSWORD = 'chafhyxogylgnbrg'        # password: 'chafhyxogylgnbrg'  Generated at: https://myaccount.google.com/apppasswords, account: make.it.ffra@gmail.com using 2-factor Authentication. Requires to establish server.connect
 EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = False
+
+
+
+# Stripe Settings:
+
+STRIPE_PUBLIC_KEY = "pk_test_51Ia2C5HJurPRv8eSyWlNZ36WmDNj6hFvbuvtVQ6ZzYvPyTn7XrJXcoJeTTxPxzv9NeBSbcV8GIMajn4rbbUW00u300bQN63mbf"
+STRIPE_SECRET_KEY = "sk_test_51Ia2C5HJurPRv8eSqT5eKKQaNMmhNfPTy5IUVfzuFWAEw3Hb9M9B6DR6ObJ3EBhZaKuQJNT4zdGv5lbaqFnPsGqj00hPpG7AT4"
+STRIPE_WEBHOOK_SECRET = None
