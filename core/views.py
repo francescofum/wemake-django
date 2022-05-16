@@ -4,6 +4,8 @@ import stripe
 from order.models import Order, OrderItem
 from vendor.models import Vendor
 from cart.cart import Cart
+from order.utilities import notify_vendor, notify_customer_recieved, notify_customer_inprogress, notify_customer_shipped, notify_customer_scheduled
+
 
 def frontpage(request):
     return render(request, 'core/frontpage.html')
@@ -43,11 +45,16 @@ def checkout_success(request):
 
     # Retrieve the Order obj that was created earlier
     # and update it. 
-    order = Order.objects.filter(pk=order_id).update(first_name=name, last_name="", email=email, address=addr_ln_1,
+    order_update_result = Order.objects.filter(pk=order_id).update(first_name=name, last_name="", email=email, address=addr_ln_1,
                                  address2=addr_ln_2,zipcode=zipcode,country=country,city=city,price_total=subtotal,price_shipping=shipping_cost,shipping_type=selected_shipping)
 
+    if order_update_result: 
+        order = Order.objects.get(pk=order_id)
 
-    cart = Cart(request)
-    cart.clear()
+        cart = Cart(request)
+        cart.clear()
+
+        notify_customer_recieved(order)
+        notify_vendor(order)
 
     return render(request, 'core/checkout_success.html')
