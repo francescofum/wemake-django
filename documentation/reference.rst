@@ -14,7 +14,7 @@ WeMake Implementation
 ---------------------
 #. In order to add modules:
 .. code-block:: console
-    sphinx-apidoc -o . ../src/       
+    sphinx-apidoc -o . ../    
 
 #. In order to update html:
 .. code-block:: console
