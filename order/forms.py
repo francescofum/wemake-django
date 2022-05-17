@@ -34,7 +34,7 @@ class orderForm_Vendor(forms.ModelForm):
     '''
     class Meta:
         model = Order 
-        fields = ['status','price_total', 'address', 'address2', 'city', 'country', 'zipcode' , 'email', 'first_name', 'last_name', 'note',  ] 
+        fields = ['status','price_total',  'slug', 'address', 'address2', 'city', 'country', 'zipcode' , 'email', 'first_name', 'last_name', 'note',  ] 
 
     @property
     def helper(self):

@@ -114,7 +114,7 @@ def order_details(request, id:int=None):
         else:
             form = orderForm_Vendor()
 
-        FIELD_NAMES = ['price_total', 'address', 'address2', 'city', 'country', 'zipcode' , 'email', 'first_name', 'last_name', 'note',  ] 
+        FIELD_NAMES = ['price_total',  'slug', 'address', 'address2', 'city', 'country', 'zipcode' , 'email', 'first_name', 'last_name', 'note',  ] 
         for field in FIELD_NAMES: 
             form.fields[field].disabled = True
 
@@ -128,7 +128,7 @@ def order_details(request, id:int=None):
         order = Order.objects.get(pk=id)
         form = orderForm_Vendor(request.POST, instance = order)
 
-        FIELD_NAMES = ['price_total',  'address', 'address2', 'city', 'country', 'zipcode' , 'email', 'first_name', 'last_name', 'note',  ] 
+        FIELD_NAMES = ['price_total',  'slug', 'address', 'address2', 'city', 'country', 'zipcode' , 'email', 'first_name', 'last_name', 'note',  ] 
         for field in FIELD_NAMES: 
             form.fields[field].disabled = True
         
