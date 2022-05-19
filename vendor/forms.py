@@ -8,7 +8,10 @@ class VendorSettingsForm(forms.ModelForm):
 
     class Meta:
         model = Vendor
-        fields = ['store_name', 'slug', 'description', 'store_logo_raw']
+        detail_fields = ['store_name', 'slug', 'description', 'store_logo_raw' ]
+        shipping_fields = ['lead_time']
+        address_fields =  [ 'address_line1', 'address_line2', 'city', 'postal_code', 'country']
+        fields = detail_fields + shipping_fields + address_fields
         # exclude = ['user','created_by','store_logo_thumbnail']
         labels = {        
             'store_logo_raw': 'Change Logo',         
@@ -18,11 +21,26 @@ class VendorSettingsForm(forms.ModelForm):
     def helper(self):
         helper = FormHelper()
         helper.layout = Layout(
-            HTML('<h2></h2>')
+            HTML('<h3>Store Details</h3>')
         )
-        for field in self.Meta().fields:
+        for field in self.Meta().detail_fields:
             helper.layout.append(
                 Field(field)
             )
+        helper.layout.append(
+            HTML('<h3>Shipping Info</h3>')
+        )
+        for field in self.Meta().shipping_fields:
+            helper.layout.append(
+                Field(field)
+            )
+        helper.layout.append(
+            HTML('<h3>Store Address</h3>')
+        )
+        for field in self.Meta().address_fields:
+            helper.layout.append(
+                Field(field)
+            )
+            
         helper.layout.append(Submit('submit','Save',css_class='btn-primary'))
         return helper

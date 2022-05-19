@@ -1,32 +1,31 @@
 '''
-TODO:
+Model description
 
-    Store:
-        - Store Name 
-        - Store Slug 
-        - Store Phone (later)
+Store:
+* Store Name 
+* Store Slug 
+* Store Phone (later)
+* Store gallery (imgages )
+* Store logo 
+* Store Description 
 
-        - Store gallery (imgages )
-        - Store logo 
-        - Store Description 
-    
-    Location:
-        - Street
-        - Street 2
-        - City/Town 
-        - Postcode/Zip
-        - Country 
-        - State/Country 
+Location:
+- Street
+- Street 2
+- City/Town 
+- Postcode/Zip
+- Country 
+- State/Country 
 
-    Payment:
-        - more though required.. (later)
-    
-    Shipping: ... this requires a bit of thought (later)
-        - Processing time 
-        - Shipping Type ?
+Payment:
+- more though required.. (later)
 
-    Store Policies: (later)
-        - TODO
+Shipping: ... this requires a bit of thought (later)
+- Processing time 
+- Shipping Type ?
+
+Store Policies: (later)
+        
 '''
 
 
@@ -51,13 +50,29 @@ class Vendor(models.Model):
         User case: you need to identify all the printers
         of a given vendor which can PLA BLUE
     '''
-    created_at              = models.DateTimeField(auto_now_add=True)
-    created_by              = models.OneToOneField(User,related_name='vendor', on_delete=models.CASCADE, null=True)
-    store_name              = models.CharField(max_length=255,blank=True, null=True)
-    slug                    = models.SlugField(blank=False, null=False)
-    description             = models.TextField(blank=True, null=True)
-    store_logo_raw          = models.ImageField(null=True, blank=True)
-    store_logo_thumbnail    = models.ImageField(null=True, blank=True)
+    created_at                  = models.DateTimeField(auto_now_add=True)
+    created_by                  = models.OneToOneField(User,related_name='vendor', on_delete=models.CASCADE, null=True)
+    store_name                  = models.CharField(max_length=255,blank=True, null=True)
+    slug                        = models.SlugField(blank=False, null=False)
+    description                 = models.TextField(blank=True, null=True)
+    store_logo_raw              = models.ImageField(null=True, blank=True)
+    store_logo_thumbnail        = models.ImageField(null=True, blank=True)
+
+    DELIVERY_CHOICES = (
+        ('NEXTDAY', "Next day delivery"),
+        ('1TO3BUS', "1-3 business days"),
+        ('WEEK', "7 business days")
+    )
+
+    lead_time = models.CharField(choices=DELIVERY_CHOICES,max_length=50,default='WEEK')
+
+    # All this could be in a seperate "address" model
+    address_line1       = models.CharField(max_length=255,blank=True, null=True)
+    address_line2       = models.CharField(max_length=255,blank=True, null=True)
+    city                = models.CharField(max_length=255,blank=True, null=True)
+    postal_code         = models.CharField(max_length=255,blank=True, null=True)
+    country             = models.CharField(max_length=255,blank=True, null=True)
+    
     # TODO store gallery
 
     class Meta:
@@ -165,26 +180,29 @@ class Vendor(models.Model):
 
     def serialize_materials_for_print_preview(self):
         '''
-            For a given vendor will return a json with materials and colours
-            {1: {'colours': 
-                    {1: 'RED',
-                    2: 'BLUE',
-                    3: 'PURPLE',
-                    4: 'ORANGE',
-                    5: 'WHITE',
-                    6: 'BLACK'},
-                'name': 'PLA'},
-            3: {'colours': 
-                    {7: 'RED',
-                    8: 'BLUE',
-                    9: 'PURPLE',
-                    10: 'ORANGE',
-                    11: 'WHITE',
-                    12: 'BLACK'},
-                'name': 'ABS'}}
+        For a given vendor will return a json with materials and colours
+            ::
+                {1: {'colours': 
+                        {1: 'RED',
+                        2: 'BLUE',
+                        3: 'PURPLE',
+                        4: 'ORANGE',
+                        5: 'WHITE',
+                        6: 'BLACK'},
+                        'name': 'PLA'},
+                3: {'colours': 
+                        {7: 'RED',
+                        8: 'BLUE',
+                        9: 'PURPLE',
+                        10: 'ORANGE',
+                        11: 'WHITE',
+                        12: 'BLACK'},
+                        'name': 'ABS'}}
+
         This could be achieved with an inner join, but this was faster to implement. 
         Currently this is used in order to make the python wemake compatible
         with print preview, but could change in the future. 
+
         '''
         materials_json = {}
         materials = self.materials.all()
