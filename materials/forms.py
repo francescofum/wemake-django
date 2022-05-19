@@ -44,6 +44,10 @@ class ColourForm(forms.ModelForm):
         # Exclude all colours apart from the selected one.
         exclude = [str(colour.id) for colour in GLOBAL_COLOURS.objects.all() if colour.id is not self.colour_id]
 
+        # material = Material.objects.get(pk=id)
+        # for colour in material.colours.all():
+
+
         self.fields['global_colours'].queryset = GLOBAL_COLOURS.objects.exclude(id__in=exclude)
         self.fields['global_colours'].initial = self.colour_id 
         self.fields['global_colours'].disabled = True
