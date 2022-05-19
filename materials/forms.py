@@ -41,7 +41,7 @@ class ColourForm(forms.ModelForm):
         self.colour_id = kwargs.pop('colour_id', None)
 
         super().__init__(*args, **kwargs)
-        # Exclude all colours apart from the selected one.
+        # Exclude all colours apart from the selected one in the dropdown
         exclude = [str(colour.id) for colour in GLOBAL_COLOURS.objects.all() if colour.id is not self.colour_id]
 
         # material = Material.objects.get(pk=id)
