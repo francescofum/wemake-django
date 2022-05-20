@@ -15,7 +15,7 @@
             "name": "Python: Test Vendor",
             "type": "python",
             "request": "launch",
-            "program": "/home/francesco/Projects/wemake-django/src/manage.py",
+            "program": "/home/francesco/Projects/tsrc_test/django/manage.py",
             "args": [
                 "test",
                 "vendor"
@@ -27,7 +27,7 @@
             "name": "Python: Django",
             "type": "python",
             "request": "launch",           
-            "program": "/home/francesco/Projects/wemake-django/src/manage.py",
+            "program": "/home/francesco/Projects/tsrc_test/django/manage.py",
             "args": [
                 "runserver",
                 "8000"
@@ -39,8 +39,8 @@
             "name": "snipets",
             "type": "python",
             "request": "launch",           
-            "program": "/home/francesco/Projects/wemake-django/src/manage.py",
-            "cwd":"/home/francesco/Projects/wemake-django/src/",
+            "program": "/home/francesco/Projects/tsrc_test/django/manage.py",
+            "cwd":"/home/francesco/Projects/tsrc_test/django/",
             "args": [
                 "runscript",
                 "snippets"
