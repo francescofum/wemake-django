@@ -14,6 +14,12 @@ class Cart(object):
             cart = self.session[settings.CART_SESSION_ID] = {}
         
         self.cart = cart
+    
+    def __setitem__(self,product,data):
+        self.cart[product] = data
+    
+    def __getitem__(self,product):
+        return self.cart[product]
 
     def __iter__(self):
         for p in self.cart.keys():
@@ -29,16 +35,7 @@ class Cart(object):
     
     def add(self, product_id,data, update_quantity=False):
         product_id = str(product_id)
-        
-        if product_id not in self.cart:
-            self.cart[product_id] = data
-        
-        if update_quantity:
-            self.cart[product_id]['quantity'] = self.cart[product_id]['quantity']
-
-            if self.cart[product_id]['quantity'] == 0:
-                self.remove(product_id)
-                        
+        self.cart[product_id] = data                        
         self.save()
     
     def remove(self, product_id):

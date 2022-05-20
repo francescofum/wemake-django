@@ -1,5 +1,6 @@
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
+import smtplib
+from django.core.mail import EmailMultiAlternatives, send_mail
 from django.template.loader import render_to_string
 
 from cart.cart import Cart 
@@ -23,26 +24,64 @@ def checkout(request, first_name, last_name, email, address, zipcode, note, pric
     return order
 
 def notify_vendor(order):
-    from_email = settings.DEFAULT_EMAIL_FROM
+    from_email = settings.EMAIL_HOST_USER
+    to_email = order.vendor.created_by.email
 
-    for vendor in order.vendors.all():
-        to_email = vendor.created_by.email
-        subject = 'New order'
-        text_content = 'You have a new order!'
-        html_content = render_to_string('order/email_notify_vendor.html', {'order': order, 'vendor': vendor})
+    subject = 'New Order'
+    text_content = 'You have a new order'
+    html_content = render_to_string('order/email_notify_vendor.html', {'order': order, 'vendor': order.vendor})
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
 
-        msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
-        msg.attach_alternative(html_content, 'text/html')
-        msg.send()
 
-def notify_customer(order):
-    from_email = settings.DEFAULT_EMAIL_FROM
+def notify_customer_recieved(order):
+    from_email = settings.EMAIL_HOST_USER
 
     to_email = order.email
     subject = 'Order confirmation'
     text_content = 'Thank you for the order!'
-    html_content = render_to_string('order/email_notify_customer.html', {'order': order})
+    html_content = render_to_string('order/email_notify_customer_recieved.html', {'order': order})
 
     msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
     msg.attach_alternative(html_content, 'text/html')
     msg.send()
+
+
+
+def notify_customer_inprogress(order):
+    from_email = settings.EMAIL_HOST_USER
+
+    to_email = order.email
+    subject = 'Order in progress'
+    text_content = 'Your order is in progress'
+    html_content = render_to_string('order/email_notify_customer_inprogress.html', {'order': order})
+
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+    msg.attach_alternative(html_content, 'text/html')
+    msg.send()
+
+def notify_customer_shipped(order):
+    from_email = settings.EMAIL_HOST_USER
+
+    to_email = order.email
+    subject = 'Order Shipped'
+    text_content = 'Your order is on its way '
+    html_content = render_to_string('order/email_notify_customer_shipped.html', {'order': order})
+
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+    msg.attach_alternative(html_content, 'text/html')
+    msg.send()
+
+def notify_customer_scheduled(order):
+    from_email = settings.EMAIL_HOST_USER
+
+    to_email = order.email
+    subject = 'Order Scheduled'
+    text_content = 'Your order is scheduled to arrive!'
+    html_content = render_to_string('order/email_notify_customer_scheduled.html', {'order': order})
+
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+    msg.attach_alternative(html_content, 'text/html')
+    msg.send()
+

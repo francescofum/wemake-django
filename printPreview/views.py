@@ -11,7 +11,7 @@ from vendor.models import Vendor
 from cart.cart import Cart 
 
 from .models import STL
-from order.views import order_details
+from order.views import checkout_details
 
 def print_preview(request,slug):
     materials = {}
@@ -50,38 +50,49 @@ def upload(request,slug):
 
 def get_available_printers(request,slug):
     '''
-        Gets availabe printers
+        Gets availabe printers, this is called whenever a change is made
+        to the stl row. 
+        TODO: update the cart with new items. 
     '''
     if request.method == 'POST':
-        dims={}
-        stl_name = request.POST.get('name')
-        material = request.POST.get('material')
-        colour = request.POST.get('colour')
-        if (stl_name is None or material == "Select" or colour == "Select"):
-            return JsonResponse(response,status=200) 
-        dims['x'] = float(request.POST.get('size_x'))
-        dims['y'] = float(request.POST.get('size_y'))
-        dims['z'] = float(request.POST.get('size_z'))
+        response = {}
+        # Update the cart 
+        cart = Cart(request)
+        stl_data = json.loads(request.POST.get('stl_data'))
+        product_id = stl_data['id']
+        cart.add(product_id,stl_data)
+   
+        
+        # stl_name = request.POST.get('name')
+        # material = request.POST.get('material')
+        # colour = request.POST.get('colour')
+        # if (stl_name is None or material == "Select" or colour == "Select"):
+        #     return JsonResponse(response,status=200) 
+        # dims={}
+        # dims['x'] = float(request.POST.get('size_x'))
+        # dims['y'] = float(request.POST.get('size_y'))
+        # dims['z'] = float(request.POST.get('size_z'))
 
-        vendor = Vendor.objects.get(slug=slug)
-        compatible_printers = vendor.get_compatible_printers(material,colour,dims)
-        response = {'printers':compatible_printers}
+        # vendor = Vendor.objects.get(slug=slug)
+        # compatible_printers = vendor.get_compatible_printers(material,colour,dims)
+        # response = {'printers':compatible_printers}
     return JsonResponse(response,status=200)
 
-def add_to_cart(request,slug):
-    response = {}
-    stl_list = request.POST.get('stl_list')
-    stl_list = json.loads(stl_list)
+# This is old, stripe handles that now. 
+# def add_to_cart(request,slug):
+#     response = {}
+#     stl_list = request.POST.get('stl_list')
+#     stl_list = json.loads(stl_list)
 
-    cart = Cart(request)
-    vendor = Vendor.objects.get(slug=slug)
+#     cart = Cart(request)
+#     vendor = Vendor.objects.get(slug=slug)
     
-    for id in stl_list:
-        stl_list[id]['vendor_id'] = vendor.id # should be added to stl_list directly, long term
-        cart.add(stl_list[id]['id'], data=stl_list[id], update_quantity=False)
+#     for id in stl_list:
+#         stl_list[id]['vendor_id'] = vendor.id # should be added to stl_list directly, long term
+#         cart.add(stl_list[id]['id'], data=stl_list[id], update_quantity=False)
 
-    print(cart.cart)
-    return JsonResponse(response,status=200)
+#     print(cart.cart)
+#     return JsonResponse(response,status=200)
 
 def remove_from_cart(request,slug,):
     response = {}
@@ -99,6 +110,6 @@ def go_to_checkout(request):
 
     cart = Cart(request)
     
-    order_details(request,cart)
+    checkout_details(request,cart)
 
     return JsonResponse(response,status=500) # only arrives here if error

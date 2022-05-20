@@ -63,6 +63,7 @@ def printer_details(request,id:int=None):
     # Either display an existing printer,
     # or a blank form for a new printer.
     if request.method == "GET":
+        print('in GET request')
         if id is not None:
             printer = Printer.objects.get(pk=id)
             printer_form = PrinterForm(instance = printer,prefix="printer")

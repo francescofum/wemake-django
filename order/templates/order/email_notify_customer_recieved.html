@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
-        <title>Interiorshop</title>
+        <title>WeMake</title>
 
         <style type="text/css">
             html {
@@ -34,7 +34,6 @@
                     <b>Address:</b> {{ order.address }}<br>
                     <b>Zip and place:</b> {{ order.zipcode }} {{ order.place }}<br>
                     <b>E-mail:</b> {{ order.email }}<br>
-                    <b>Phone:</b> {{ order.phone }}
                 </td>
             </tr>
 
@@ -44,18 +43,22 @@
 
                     <table width="100%" cellspacing="0" cellpadding="0">
                         <tr>
-                            <td><b>Product</b></td>
+                            <td><b>File</b></td>
+                            <td><b>Material</b></td>
+                            <td><b>Colour</b></td>
                             <td><b>Price</b></td>
                             <td><b>Quantity</b></td>
-                            <td><b>Total</b></td>
+                            <td><b></b></td>
                         </tr>
                         
                         {% for item in order.items.all %}
                             <tr>
-                                <td>{{ item.product.title }}</td>
-                                <td>${{ item.product.price }}</td>
+                                <td>{{ item.pretty_name }}</td>
+                                <td>{{ item.material }}</td>
+                                <td>{{ item.colour }}</td>
+                                <td>{{ item.price }}£</td>
                                 <td>{{ item.quantity }}</td>
-                                <td>${{ item.get_total_price }}</td>
+                                <td><a href='{{ item.url }}'>Download stl</a>                                </td>
                             </tr>
                         {% endfor %}
                     </table>
