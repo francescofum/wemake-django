@@ -1,6 +1,8 @@
 import json
 import os
+import re
 
+from django.conf import settings
 from django.shortcuts import redirect, render,get_object_or_404
 from django.urls import reverse
 from django.http import JsonResponse
@@ -43,6 +45,8 @@ def upload(request,slug):
     
     response = {
         'id': stl.id,
+        'filename':stl.file.name,
+        'path':stl.file.path,
         'url':stl.file.url,
         'pretty_name': stl.pretty_name,
     }
@@ -62,37 +66,38 @@ def get_available_printers(request,slug):
         product_id = stl_data['id']
         cart.add(product_id,stl_data)
    
+        dims={}
+        stl_name = request.POST.get('name')
+        stl_filename = request.POST.get('filename')
+        stl_id = request.POST.get('id')
+        material = request.POST.get('material')
+        colour = request.POST.get('colour')
+        if (stl_name is None or material == "Select" or colour == "Select"):
+            return JsonResponse(response,status=200) 
+        dims['x'] = float(request.POST.get('size_x'))
+        dims['y'] = float(request.POST.get('size_y'))
+        dims['z'] = float(request.POST.get('size_z'))
+
+        vendor = Vendor.objects.get(slug=slug)
+        compatible_printers = vendor.get_compatible_printers(material,colour,dims)
         
-        # stl_name = request.POST.get('name')
-        # material = request.POST.get('material')
-        # colour = request.POST.get('colour')
-        # if (stl_name is None or material == "Select" or colour == "Select"):
-        #     return JsonResponse(response,status=200) 
-        # dims={}
-        # dims['x'] = float(request.POST.get('size_x'))
-        # dims['y'] = float(request.POST.get('size_y'))
-        # dims['z'] = float(request.POST.get('size_z'))
+        if len(compatible_printers) > 0:
+            # select the first TODO: select the cheapest
+            printer = compatible_printers[0]
+            cura_data = printer.slice(stl_filename)
 
-        # vendor = Vendor.objects.get(slug=slug)
-        # compatible_printers = vendor.get_compatible_printers(material,colour,dims)
-        # response = {'printers':compatible_printers}
-    return JsonResponse(response,status=200)
+            stl_data  = {'material':material, 'colour': colour}
+            
+            price = printer.quote(cura_data,stl_data)
+            price = "{:.2f}".format(price)
+           
 
-# This is old, stripe handles that now. 
-# def add_to_cart(request,slug):
-#     response = {}
-#     stl_list = request.POST.get('stl_list')
-#     stl_list = json.loads(stl_list)
-
-#     cart = Cart(request)
-#     vendor = Vendor.objects.get(slug=slug)
-    
-#     for id in stl_list:
-#         stl_list[id]['vendor_id'] = vendor.id # should be added to stl_list directly, long term
-#         cart.add(stl_list[id]['id'], data=stl_list[id], update_quantity=False)
-
-#     print(cart.cart)
-#     return JsonResponse(response,status=200)
+        response = {'printer_id':compatible_printers[0].id,
+                    'stl_id':stl_id,
+                    'cura_data':cura_data,
+                    'price':price}
+                    
+    return JsonResponse(response,status=200,safe=False)
 
 def remove_from_cart(request,slug,):
     response = {}
