@@ -24,12 +24,15 @@ def material_details(request,id:int=None):
     if request.method == "GET":
         colour_forms = []
         if id is not None:
-            materialOption = Material.objects.get(pk=id)
-            material_form = MaterialForm(instance=materialOption)
+            material = Material.objects.get(pk=id)
+            material_form = MaterialForm(instance=material)
             # Create a list of colour forms, one for each colour in GLOBAL_COLOURS
-            for global_colour in GLOBAL_COLOURS.objects.all():
-                colour = Material.objects.get(pk=id).colours.get(global_colours__pk__iexact=global_colour.id)
-                colour_forms.append(ColourForm(colour_id=global_colour.id,instance=colour,prefix=f"colour-{global_colour.id}"))
+            colours = []
+            for colour in material.colours.all():
+                colours.append(colour)
+                # colour = material.colours.get(global_colours__pk__iexact=global_colour.id)
+                global_colour_id = colour.global_colours.id
+                colour_forms.append(ColourForm(colour_id=global_colour_id,instance=colour,prefix=f"colour-{global_colour_id}"))
         else:
             material_form = MaterialForm()
             for colour in GLOBAL_COLOURS.objects.all():
