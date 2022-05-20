@@ -14,7 +14,7 @@ WeMake Implementation
 ---------------------
 #. In order to add modules:
 .. code-block:: console
-    sphinx-apidoc -o . ../    
+    sphinx-apidoc -o . ../src/       
 
 #. In order to update html:
 .. code-block:: console
@@ -23,11 +23,7 @@ WeMake Implementation
 #. In order to comment in code:
 .. code-block:: console
     ''' make helpful comment ''' 
-<<<<<<< HEAD
- 
-=======
 
->>>>>>> WP-49
 Creating New Articles
 ---------------------
 

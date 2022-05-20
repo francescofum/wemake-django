@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>vendor package &#8212; WeMake 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="wemake package" href="wemake.html" />
+    <link rel="prev" title="scripts package" href="scripts.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="vendor-package">
+<h1>vendor package<a class="headerlink" href="#vendor-package" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-vendor.admin">
+<span id="vendor-admin-module"></span><h2>vendor.admin module<a class="headerlink" href="#module-vendor.admin" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-vendor.apps">
+<span id="vendor-apps-module"></span><h2>vendor.apps module<a class="headerlink" href="#module-vendor.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="vendor.apps.VendorConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vendor.apps.</span></span><span class="sig-name descname"><span class="pre">VendorConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vendor.apps.VendorConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.apps.VendorConfig.default_auto_field">
+<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django.db.models.BigAutoField'</span></em><a class="headerlink" href="#vendor.apps.VendorConfig.default_auto_field" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.apps.VendorConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'vendor'</span></em><a class="headerlink" href="#vendor.apps.VendorConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-vendor.forms">
+<span id="vendor-forms-module"></span><h2>vendor.forms module<a class="headerlink" href="#module-vendor.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="vendor.forms.VendorSettingsForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vendor.forms.</span></span><span class="sig-name descname"><span class="pre">VendorSettingsForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vendor.forms.VendorSettingsForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="vendor.forms.VendorSettingsForm.helper">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">helper</span></span><a class="headerlink" href="#vendor.forms.VendorSettingsForm.helper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="vendor.forms.VendorSettingsForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#vendor.forms.VendorSettingsForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-vendor.models">
+<span id="vendor-models-module"></span><h2>vendor.models module<a class="headerlink" href="#module-vendor.models" title="Permalink to this headline">¶</a></h2>
+<p>Model description</p>
+<p>Store:
+* Store Name 
+* Store Slug 
+* Store Phone (later)
+* Store gallery (imgages )
+* Store logo 
+* Store Description</p>
+<p>Location:
+- Street
+- Street 2
+- City/Town 
+- Postcode/Zip
+- Country 
+- State/Country</p>
+<p>Payment:
+- more though required.. (later)</p>
+<p>Shipping: … this requires a bit of thought (later)
+- Processing time 
+- Shipping Type ?</p>
+<p>Store Policies: (later)</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="vendor.models.Vendor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vendor.models.</span></span><span class="sig-name descname"><span class="pre">Vendor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vendor.models.Vendor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>How to query as a vendor:
+User case: you need to identify all the printers
+of a given vendor which can PLA BLUE</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>BigAutoField</em>) – Id</p></li>
+<li><p><strong>created_at</strong> (<em>DateTimeField</em>) – Created at</p></li>
+<li><p><strong>created_by</strong> (OneToOneField to <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code>) – Created by</p></li>
+<li><p><strong>store_name</strong> (<em>CharField</em>) – Store name</p></li>
+<li><p><strong>slug</strong> (<em>SlugField</em>) – Slug</p></li>
+<li><p><strong>description</strong> (<em>TextField</em>) – Description</p></li>
+<li><p><strong>store_logo_raw</strong> (<em>ImageField</em>) – Store logo raw</p></li>
+<li><p><strong>store_logo_thumbnail</strong> (<em>ImageField</em>) – Store logo thumbnail</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="vendor.models.Vendor.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#vendor.models.Vendor.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="vendor.models.Vendor.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#vendor.models.Vendor.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.models.Vendor.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#vendor.models.Vendor.created_at" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> created at</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.models.Vendor.created_by">
+<span class="sig-name descname"><span class="pre">created_by</span></span><a class="headerlink" href="#vendor.models.Vendor.created_by" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> created by, accesses the <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code> model.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.models.Vendor.created_by_id">
+<span class="sig-name descname"><span class="pre">created_by_id</span></span><a class="headerlink" href="#vendor.models.Vendor.created_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> created by</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.models.Vendor.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#vendor.models.Vendor.description" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> description</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vendor.models.Vendor.get_compatible_printers">
+<span class="sig-name descname"><span class="pre">get_compatible_printers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sel_material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sel_colour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#vendor.models.Vendor.get_compatible_printers" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>&#64;brief: Returns a list of compatible printers based on:</dt><dd><ul class="simple">
+<li><p>Colour</p></li>
+<li><p>Material</p></li>
+<li><p>Model dimensions</p></li>
+</ul>
+</dd>
+</dl>
+<p>&#64;parm[material] : The material, in string format. 
+&#64;parm[colour]   : The colour, in string format. 
+&#64;parm[size]     : The dimensions of the model {‘x’: , ‘y’: , ‘z’}
+&#64;return: A list of printer objects</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vendor.models.Vendor.get_materials">
+<span class="sig-name descname"><span class="pre">get_materials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vendor.models.Vendor.get_materials" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;brief: Returns the all the material options based on a 
+given material. 
+i.e material=”ABS” will return all the abs colours.
+&#64;param[material]: A string representing the material name . 
+&#64;return: A list of QuerySet Material objects.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vendor.models.Vendor.get_next_by_created_at">
+<span class="sig-name descname"><span class="pre">get_next_by_created_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">created_at&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vendor.models.Vendor.get_next_by_created_at" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Finds next instance based on <a class="reference internal" href="#vendor.models.Vendor.created_at" title="vendor.models.Vendor.created_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">created_at</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vendor.models.Vendor.get_previous_by_created_at">
+<span class="sig-name descname"><span class="pre">get_previous_by_created_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">created_at&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vendor.models.Vendor.get_previous_by_created_at" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Finds previous instance based on <a class="reference internal" href="#vendor.models.Vendor.created_at" title="vendor.models.Vendor.created_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">created_at</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vendor.models.Vendor.get_thumbnail">
+<span class="sig-name descname"><span class="pre">get_thumbnail</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vendor.models.Vendor.get_thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vendor.models.Vendor.get_unique_materials">
+<span class="sig-name descname"><span class="pre">get_unique_materials</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#vendor.models.Vendor.get_unique_materials" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;brief: Get all the materials of a given vendor. 
+&#64;return: a list of strings, each string is a material name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.models.Vendor.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#vendor.models.Vendor.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> ID</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vendor.models.Vendor.make_thumbnail">
+<span class="sig-name descname"><span class="pre">make_thumbnail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(300,</span> <span class="pre">200)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vendor.models.Vendor.make_thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.models.Vendor.materials">
+<span class="sig-name descname"><span class="pre">materials</span></span><a class="headerlink" href="#vendor.models.Vendor.materials" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> vendor, accesses the M2M <a class="reference internal" href="materials.html#materials.models.Material" title="materials.models.Material"><code class="xref py py-class docutils literal notranslate"><span class="pre">Material</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.models.Vendor.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#vendor.models.Vendor.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.models.Vendor.orders">
+<span class="sig-name descname"><span class="pre">orders</span></span><a class="headerlink" href="#vendor.models.Vendor.orders" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> vendor, accesses the M2M <a class="reference internal" href="order.html#order.models.Order" title="order.models.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.models.Vendor.printers">
+<span class="sig-name descname"><span class="pre">printers</span></span><a class="headerlink" href="#vendor.models.Vendor.printers" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> vendor, accesses the M2M <a class="reference internal" href="printer.html#printer.models.Printer" title="printer.models.Printer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Printer</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vendor.models.Vendor.serialize_materials_for_print_preview">
+<span class="sig-name descname"><span class="pre">serialize_materials_for_print_preview</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vendor.models.Vendor.serialize_materials_for_print_preview" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>For a given vendor will return a json with materials and colours</dt><dd><dl class="simple">
+<dt>::</dt><dd><dl class="simple">
+<dt>{1: {‘colours’: </dt><dd><p>{1: ‘RED’,
+2: ‘BLUE’,
+3: ‘PURPLE’,
+4: ‘ORANGE’,
+5: ‘WHITE’,
+6: ‘BLACK’},
+‘name’: ‘PLA’},</p>
+</dd>
+<dt>3: {‘colours’: </dt><dd><p>{7: ‘RED’,
+8: ‘BLUE’,
+9: ‘PURPLE’,
+10: ‘ORANGE’,
+11: ‘WHITE’,
+12: ‘BLACK’},
+‘name’: ‘ABS’}}</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>This could be achieved with an inner join, but this was faster to implement. 
+Currently this is used in order to make the python wemake compatible
+with print preview, but could change in the future.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.models.Vendor.slug">
+<span class="sig-name descname"><span class="pre">slug</span></span><a class="headerlink" href="#vendor.models.Vendor.slug" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> slug</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.models.Vendor.store_logo_raw">
+<span class="sig-name descname"><span class="pre">store_logo_raw</span></span><a class="headerlink" href="#vendor.models.Vendor.store_logo_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> store logo raw</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.models.Vendor.store_logo_thumbnail">
+<span class="sig-name descname"><span class="pre">store_logo_thumbnail</span></span><a class="headerlink" href="#vendor.models.Vendor.store_logo_thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> store logo thumbnail</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vendor.models.Vendor.store_name">
+<span class="sig-name descname"><span class="pre">store_name</span></span><a class="headerlink" href="#vendor.models.Vendor.store_name" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> store name</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-vendor.tests">
+<span id="vendor-tests-module"></span><h2>vendor.tests module<a class="headerlink" href="#module-vendor.tests" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="vendor.tests.TestViews">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vendor.tests.</span></span><span class="sig-name descname"><span class="pre">TestViews</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vendor.tests.TestViews" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.test.testcases.TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vendor.tests.TestViews.setUp">
+<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vendor.tests.TestViews.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vendor.tests.TestViews.test_update_name">
+<span class="sig-name descname"><span class="pre">test_update_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#vendor.tests.TestViews.test_update_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-vendor.urls">
+<span id="vendor-urls-module"></span><h2>vendor.urls module<a class="headerlink" href="#module-vendor.urls" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-vendor.views">
+<span id="vendor-views-module"></span><h2>vendor.views module<a class="headerlink" href="#module-vendor.views" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="vendor.views.vendor_admin">
+<span class="sig-prename descclassname"><span class="pre">vendor.views.</span></span><span class="sig-name descname"><span class="pre">vendor_admin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vendor.views.vendor_admin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main entry point for vendor (dashboards/orders etc)</p>
+</dd></dl>
+
+</section>
+<section id="module-vendor">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-vendor" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">WeMake</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Sphinx Quickstart Template</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cart.html">cart package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="materials.html">materials package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="order.html">order package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="printPreview.html">printPreview package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="printer.html">printer package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scripts.html">scripts package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">vendor package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wemake.html">wemake package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">src</a><ul>
+      <li>Previous: <a href="scripts.html" title="previous chapter">scripts package</a></li>
+      <li>Next: <a href="wemake.html" title="next chapter">wemake package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Raul&Francesco.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/vendor.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

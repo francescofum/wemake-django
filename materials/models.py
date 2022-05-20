@@ -20,8 +20,7 @@ class Material(models.Model):
 
    
     # Foreign keys to relate to global material and colour tables.
-    global_material = models.ForeignKey(GLOBAL_MATERIALS, related_name='material',\
-        blank=False,null=False, on_delete=models.DO_NOTHING) # On delete no cascade?    
+    global_material = models.ForeignKey(GLOBAL_MATERIALS, related_name='material',blank=False,null=False, on_delete=models.DO_NOTHING) # On delete no cascade?    
     # Materials
     price_length      = models.DecimalField(max_digits=3, decimal_places=2,default=1.0)
     printers = models.ManyToManyField(to='printer.Printer',related_name="materials",blank=True)
