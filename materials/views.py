@@ -1,7 +1,8 @@
 
 
 from django.db import IntegrityError
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
+from django.core.exceptions import ObjectDoesNotExist
 
 from materials.models import Material, Colour
 from core.models import GLOBAL_MATERIALS, GLOBAL_COLOURS
@@ -24,15 +25,18 @@ def material_details(request,id:int=None):
     if request.method == "GET":
         colour_forms = []
         if id is not None:
-            material = Material.objects.get(pk=id)
-            material_form = MaterialForm(instance=material)
+            materialOption = Material.objects.get(pk=id)
+            material_form = MaterialForm(instance=materialOption)
             # Create a list of colour forms, one for each colour in GLOBAL_COLOURS
-            colours = []
-            for colour in material.colours.all():
-                colours.append(colour)
-                # colour = material.colours.get(global_colours__pk__iexact=global_colour.id)
-                global_colour_id = colour.global_colours.id
-                colour_forms.append(ColourForm(colour_id=global_colour_id,instance=colour,prefix=f"colour-{global_colour_id}"))
+            for global_colour in GLOBAL_COLOURS.objects.all():
+                try:
+                    colour = materialOption.colours.get(global_colours__pk__iexact=global_colour.id)
+                    colour_forms.append(ColourForm(colour_id=global_colour.id,instance=colour,prefix=f"colour-{global_colour.id}"))
+                except ObjectDoesNotExist:
+                    # Colour does not exists so no instance is passed 
+                    colour_forms.append(ColourForm(colour_id=global_colour.id,prefix=f"colour-{global_colour.id}"))
+
+
         else:
             material_form = MaterialForm()
             for colour in GLOBAL_COLOURS.objects.all():
@@ -60,6 +64,7 @@ def material_details(request,id:int=None):
                 if 'delete' in request.POST:
                     materialOption.delete()
                     material_form = MaterialForm()
+                    return redirect("material_dashboard")
             # Add a new material option
             else: 
                 try:
@@ -77,24 +82,40 @@ def material_details(request,id:int=None):
     # -----------------------------------
     
     if request.method == "POST":
-        colour_forms = []
-        for idx, colour in enumerate(GLOBAL_COLOURS.objects.all()):
-            # Create the form for this colour 
-            colour_inst = Material.objects.get(pk=id).colours.get(global_colours__pk__iexact=colour.id)
-            form = ColourForm(request.POST,instance=colour_inst,colour_id=colour.id,prefix=f"colour-{colour.id}")
-            # Check if we're updating 
-            if id is not None:
+        # Add colours
+        # if id is None:
+        if "add" in request.POST:
+            colour_forms = [ColourForm(request.POST,colour_id=colour.id,prefix=f"colour-{colour.id}") for colour in GLOBAL_COLOURS.objects.all()]
+            for form in colour_forms:   
                 if not form.is_valid():
-                    return HttpResponse(f"Form {colour.name} not valid.\nError:{form.errors.as_data}")
+                    print(f"Error:{form.errors.as_data}")
+                    return HttpResponse(f"\nError:{form.errors.as_data}")
+                    # return HttpResponse(f"Form {colour.name} not valid.\nError:{form.errors.as_data}")
+                colour = form.save(commit=False)
+                colour.owned_by = materialOption
+                colour.save()
+                
+
+        if "update" in request.POST:
+            colour_forms = []
+            for global_colour in GLOBAL_COLOURS.objects.all():
+                inst = Material.objects.get(pk=id).colours.get(global_colours__pk__iexact=global_colour.id)
+                form = ColourForm(request.POST,instance=inst,colour_id=global_colour.id,prefix=f"colour-{global_colour.id}")
                 form.save()
                 colour_forms.append(form)
+        
+        return redirect("material_dashboard")
 
-        colour_forms = [ColourForm(colour_id=colour.id,prefix=f"colour-{colour.id}") for colour in GLOBAL_COLOURS.objects.all()]
-        for form in colour_forms:
-            print(form)
+ 
+
+             
+
+            
+
+
 
     # Render the view
-    context = {'material_form':material_form}
+    context = {'material_form':material_form,'colour_forms':colour_forms}
     return render(request,'material/material_form.html',context)
 
 @login_required
