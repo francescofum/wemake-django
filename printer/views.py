@@ -49,11 +49,14 @@ def printer_details(request,id:int=None):
         if material_form.is_valid():
 
             material_ids = material_form.cleaned_data.get("materials")
-            materials = Material.objects.filter(global_material__pk__in=material_ids, vendor__pk__iexact=vendor.pk)
+            # materials = Material.objects.filter(global_material__pk__in=material_ids, vendor__pk__iexact=vendor.pk)
             for material in printer.materials.all():
                 printer.materials.remove(material)
-            for material in materials:
+            for id in material_ids:
+                material = Material.objects.get(pk=id)
+                printer.materials.remove(material)
                 printer.materials.add(material)
+                
         else:
             print(material_form.errors.as_data()) 
 

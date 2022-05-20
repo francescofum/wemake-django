@@ -67,16 +67,16 @@ def get_available_printers(request,slug):
         cart.add(product_id,stl_data)
    
         dims={}
-        stl_name = request.POST.get('name')
-        stl_filename = request.POST.get('filename')
-        stl_id = request.POST.get('id')
-        material = request.POST.get('material')
-        colour = request.POST.get('colour')
+        stl_name = stl_data['pretty_name']
+        stl_filename = "/" + stl_data['filename']
+        stl_id = stl_data['id']
+        material = stl_data['material']
+        colour = stl_data['colour']
         if (stl_name is None or material == "Select" or colour == "Select"):
             return JsonResponse(response,status=200) 
-        dims['x'] = float(request.POST.get('size_x'))
-        dims['y'] = float(request.POST.get('size_y'))
-        dims['z'] = float(request.POST.get('size_z'))
+        dims['x'] = float(stl_data['dims']['x'])
+        dims['y'] = float(stl_data['dims']['y'])
+        dims['z'] = float(stl_data['dims']['z'])
 
         vendor = Vendor.objects.get(slug=slug)
         compatible_printers = vendor.get_compatible_printers(material,colour,dims)
@@ -90,6 +90,9 @@ def get_available_printers(request,slug):
             
             price = printer.quote(cura_data,stl_data)
             price = "{:.2f}".format(price)
+        else:
+            # Hanlde no compatible printers, display some error. 
+            pass
            
 
         response = {'printer_id':compatible_printers[0].id,

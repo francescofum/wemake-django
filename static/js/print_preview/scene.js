@@ -488,19 +488,9 @@ function colour_selection_changed(id,printer_id) {
     stl_obj_list[id].set_color(id, colour_lookup[colour]);
     // Update stl_list with the new colour 
     stl_list[id]['colour']                      = colour;
-    // stl_list[id]['color-id']                    = getKeyByValue(material_colours[stl_list[id]['material-id']]['colours'],colour);
-    // stl_list[id]['material-color-coefficient']  = material_colours[stl_list[id]['material-id']][stl_list[id]['color-id'] ]['coefficient'];
 
-    //get_available_printers();
-    if (flag_printer_setup_page == 1){
-        try {
-            update_price_summary(id, parseInt(printer_id));
-        } catch (error) {
-        }
-    }
-    else{
         get_available_printer(id);
-    }
+    
 }
 
 function getKeyByValue(object, value) {
@@ -851,45 +841,12 @@ function model_loaded_callback(id) {
 
 /********** Right side of the screen functions  ******************/
 
-/** Dummy function, used for testing.
- *  This function will send the list of stls and their options to the backend
- *  The backend will then return all compatible materials + their price.
-*/
-function get_available_printers() {
-    // stl_list_string = JSON.stringify(stl_list)
-    // ////console.log(stl_list_string)
-    // Slice the obj to remove the stl viewer 
-
-    // end of slice
-    //console.log("Getting available printers")
-    //console.log(stl_list);
-    // POST to backend.
-
-    response = $.ajax({
-        url: ajax_object.ajax_url,
-        type: 'POST',
-        success: display_available_printers_success_callback,
-        data: {
-            action: 'get_available_printers',
-            vendor_id: vendor_id,
-            stl_list_string: stl_list
-        }
-    });
-}
-
 // Similar to get_avaialble_printers but for a single STL.
 // This fixes the bug where the price isn't displayed when multiple
 // STLs are present but not all have colours (not the most elegant way, we should change the backend isntead.)
 function get_available_printer(id) {
     
-    if (stl_list[id]['material'] == "Select" || stl_list[id]['colour'] == "Select")
-    {
-        return;
-    }
-    vendor_id = 1;
-    //console.log("Getting available printers")
-    //console.log(stl_list);
-    ;
+
     var stl_to_send = {};
     stl_to_send[id] = stl_list[id];
     display_price_spinner(id);
@@ -905,31 +862,7 @@ function get_available_printer(id) {
         success: get_available_printer_success_callback,
         data: {
             stl_data:json_data
-            // id:stl_list[id]['id'],
-            // name:stl_list[id]['pretty_name'],
-            // url:stl_list[id]['url'],
-            // filename:stl_list[id]['filename'],
-            // material:stl_list[id]['material'],
-            // colour:stl_list[id]['colour'],
-            // file_size:stl_list[id]['file_size'],
-            // size_x:stl_list[id]['dims']['x'],
-            // size_y:stl_list[id]['dims']['y'],
-            // size_z:stl_list[id]['dims']['z'],
-            // volume:stl_list[id]['volume'],
-            // scale:stl_list[id]['scale'],
-            // infill:stl_list[id]['infill'],
-            // price:stl_list[id]['price'],
-            // printer:stl_list[id]['printer'],
-            // units:stl_list[id]['units'],
-            // quantity:stl_list[id]['quantity'],
-            // ttp:stl_list[id]['time_to_print'],
-            // lof:stl_list[id]['length_of_filament']
         },
-        // data: {
-        //     action: 'get_available_printers',
-        //     vendor_id: vendor_id,
-        //     body: JSON.stringify({stl: stl_to_send})
-        // },
         headers: {
             'X-CSRFToken': csrftoken
         }
