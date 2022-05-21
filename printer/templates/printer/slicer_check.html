@@ -1,0 +1,69 @@
+{% extends 'core/base.html' %}
+
+{%block title %} CURA CHECK {% endblock %} 
+
+{% block content %}
+<!-- Javascript for 3D stuff -->
+<!-- {% load static %} -->
+{% csrf_token %}
+
+<h1 class="title">CURA check</h1>
+
+<!-- Dropzone div -->
+<div style="cursor: pointer;" id="user_dropzone"
+    class="w-100 container align-items-center justify-content-center large">
+    <button id="dropzone-button" type="button" class="btn btn-primary">Add files </button>
+</div>
+
+
+
+
+<!-- Table Headers -->
+<div id="stl_table">
+
+    <div id="stl_table_headers" style="height:30px" class="w-100 container">
+        <div class="row py-md-1 ">
+            <div id="Copies-header" class="col-2 text-left Copies-header">
+                <h6 style="font-weight: bold; display: inline-flex;">Copies</h6>
+            </div>
+            <div id="Filename-header" class="col-2 text-left Filename-header">
+                <h6 style="font-weight: bold; display: inline-flex;">Filename</h6>
+            </div>
+            <div id="SizeMb-header" class="col-1 text-left Size-header">
+                <h6 style="font-weight: bold; display: inline-flex;">Size </h6>
+            </div>
+            <div id="Materials-header" class="col-2 text-left Materials-header">
+                <h6 style="font-weight: bold; display: inline-flex;">Time to Print</h6>
+            </div>
+            <div id="Colours-header" class="col-2 text-left Colours-header">
+                <h6 style="font-weight: bold; display: inline-flex;">Filament Length</h6>
+            </div>
+            <div id="Size-header" class="col-1 text-left Size-header">
+                <h6 style="font-weight: bold; display: inline-flex;">Size</h6>
+            </div>
+            <div id="Colour-header" class="col-1 text-left Colour-header">
+                <h6 style="font-weight: bold; display: inline-flex;">Option </h6>
+            </div>
+            <div id="Price-header" class="col-1 text-left Price-header">
+                <h6 style="font-weight: bold; display: inline-flex;">Price</h6>
+            </div>
+
+        </div>
+    </div>
+    <!-- div where rows of stls will appear -->
+    <div id="stl_div" 
+        class="container vertical-scrollable overflow-auto"> 
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+<!-- Dropzone js -->
+<script src="{% static 'js/dropzone_5_7_0/dist/dropzone.js' %}"></script>
+<!-- Scene js -->
+<script src="{% static 'js/slicer_check/slicer_check.js' %}"></script>
+<!-- print preview js  -->
+<script src="{% static 'js/print_preview/print_preview.js' %}"></script>
+{% endblock %}

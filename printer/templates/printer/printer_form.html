@@ -8,8 +8,7 @@
     {% csrf_token %}
     {{ printer_form.as_p}}
     {{ material_form.as_p}}
-    
-  
+
 
     <div class="field">
         <div class="control">
@@ -17,6 +16,7 @@
         </div>
     </div>
 </form>
-
+    
+<a class="button" href="{% url 'slicer_check' %}"> Slicer </a>
 {% endblock %}
 
