@@ -4,7 +4,7 @@
 
 {% block content %}
 <!-- Javascript for 3D stuff -->
-<!-- {% load static %} -->
+{% load static %}
 {% csrf_token %}
 
 <h1 class="title">CURA check</h1>
@@ -54,6 +54,5 @@
 <script src="{% static 'js/dropzone_5_7_0/dist/dropzone.js' %}"></script>
 <!-- Scene js -->
 <script src="{% static 'js/slicer_check/slicer_check.js' %}"></script>
-<!-- print preview js  -->
-<script src="{% static 'js/print_preview/print_preview.js' %}"></script>
+
 {% endblock %}

@@ -27,6 +27,13 @@ var price_counter=0;
 const csrftoken = getCookie('csrftoken');
 string_mess = "Click Here";
 
+
+$("document").ready(function () {
+    wm_create_dropzone();
+   
+});
+
+
 function wm_create_dropzone() {
     
     Dropzone.autoDiscover = false;
@@ -191,7 +198,7 @@ function create_row_html(id,printer_id=1) {
                 <!-- 'Time to print' -->
                 <div id="stl_${id}_time_to_print" class="col-sm-2">
                     <small>
-                        ${stl_list[id]['time_to_print']}sec
+                        ${stl_list[id]['print_hms']}
                     </small>
                 </div>
                 <!-- end of 'Time to print' -->
@@ -334,18 +341,13 @@ function get_available_printer_success_callback(response) {
     stl_list[id]['volume']              = response['cura_data']['fil_volume']
     stl_list[id]['length_of_filament']  = response['cura_data']['fil_len']
     stl_list[id]['time_to_print']       = response['cura_data']['print_s']
+    stl_list[id]['print_hms']           = response['cura_data']['print_hms']
+
     
     create_row_html(id,1);
 
 
 }
-
-
-
-
-
-
-
 
 
 // ************************* Cura function *********************************
