@@ -9,6 +9,7 @@ class Cart(object):
     def __init__(self, request):
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
+ 
 
         if not cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
@@ -34,10 +35,16 @@ class Cart(object):
         return sum(item['quantity'] for item in self.cart.values())
     
     def add(self, product_id,data, update_quantity=False):
-        product_id = str(product_id)
+        product_id = str(product_id) 
         self.cart[product_id] = data                        
         self.save()
     
+    def update(self,product_id,new_data):
+        product_id = str(product_id) 
+        if product_id in self.cart.keys():
+            self.cart[product_id] = new_data 
+            self.save()
+
     def remove(self, product_id):
         if product_id in self.cart:
             del self.cart[product_id]

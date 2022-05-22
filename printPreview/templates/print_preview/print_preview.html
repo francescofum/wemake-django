@@ -87,34 +87,41 @@
 
         </div>
     </div>
-
+    <!-- Right side of the page: stl viewer, rows, checkout ... -->
     <div id="stl-page-col" class="col-md-7" style="height: 100%; padding-top: 4vh; padding-bottom:4vh;">
         {% include 'print_preview/stl_viewer.html' %}
-        <div id="Summary-Checkout" style="height: 100px; position:absolute" class="container position-fixed-bottom my-3">
 
-            <div class="row">
-                <div class="col-sm" style="text-align: right;">
-                    <h3> Total:
-                        <div id="total_price_loading" class="spinner-border" role="status"></div>
-                        <div id="total_price_value"><h3 id="total_price"> £ </h3></div>
-                    </h3>
+        <div id="Summary-Checkout" style="height: 100px; position:absolute"
+            class="container position-fixed-bottom my-4 ">
+            <div class="row ">
+                <div class="col-sm ">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <h3>Total:</h3>
+                        </div>
+                        <div class="col-md-11">
+                            <div id="total_price_value">
+                                <div class="spinner-border" role="status"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        
+
             <div class="row">
                 <div class="col-sm">
                     <div>
-                        <button id="checkout" type="button" onclick="checkout()" class="btn btn-lg btn-primary float-right">
+                        <button id="checkout" type="button" onclick="checkout()"
+                            class="btn btn-lg btn-primary float-right">
                             <div id="checkout_value">Checkout</div>
                         </button>
                     </div>
-                    <div><img src="visa image" alt="Placeholder image" width="125" height="50" class="float-right"> </div>
                 </div>
             </div>
         </div>
-      
-    </div>
 
+
+    </div>
 </div>
 
 
@@ -140,7 +147,7 @@
 <script src="{% static 'js/viewstl_lib/OrbitControls.js' %}"></script>
 <script src="{% static 'js/viewstl_lib/stl_viewer.min.js' %}"></script>
 <!-- Scene js -->
-<script src="{% static 'js/print_preview/scene.js' %}"></script>
+<!-- <script src="{% static 'js/print_preview/scene.js' %}"></script> -->
 <!-- print preview js  -->
 <script src="{% static 'js/print_preview/print_preview.js' %}"></script>
 {% endblock %}

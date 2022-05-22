@@ -50,6 +50,10 @@ def upload(request,slug):
         'url':stl.file.url,
         'pretty_name': stl.pretty_name,
     }
+
+    cart = Cart(request)
+    cart.add(stl.id,response)
+
     return JsonResponse(response,status=200)
 
 def get_available_printers(request,slug):
@@ -60,11 +64,10 @@ def get_available_printers(request,slug):
     '''
     if request.method == 'POST':
         response = {}
-        # Update the cart 
-        cart = Cart(request)
+
         stl_data = json.loads(request.POST.get('stl_data'))
         product_id = stl_data['id']
-        cart.add(product_id,stl_data)
+
    
         dims={}
         stl_name = stl_data['pretty_name']
@@ -86,10 +89,11 @@ def get_available_printers(request,slug):
             printer = compatible_printers[0]
             cura_data = printer.slice(stl_filename)
 
-            stl_data  = {'material':material, 'colour': colour}
+            stl_material_colour  = {'material':material, 'colour': colour}
             
-            price = printer.quote(cura_data,stl_data)
+            price = printer.quote(cura_data,stl_material_colour)
             price = "{:.2f}".format(price)
+
         else:
             # Hanlde no compatible printers, display some error. 
             pass
@@ -99,6 +103,14 @@ def get_available_printers(request,slug):
                     'stl_id':stl_id,
                     'cura_data':cura_data,
                     'price':price}
+    
+    # Update the cart 
+    cart = Cart(request)
+    stl_data['price'] = price
+    stl_data['printer'] = response['printer_id']
+    stl_data['cura_data'] = response['cura_data']
+
+    cart.update(product_id,stl_data)
                     
     return JsonResponse(response,status=200,safe=False)
 
