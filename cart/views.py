@@ -37,7 +37,7 @@ class CreateCheckoutSession(View):
                             'order_item_id': product_id
                         }
                     },
-                    'unit_amount': data['price'],
+                    'unit_amount': int(float(data['price'])*100),
                 },
                 'quantity': data['quantity'],
             })
