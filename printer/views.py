@@ -80,7 +80,7 @@ def printer_details(request,id:int=None):
             material_form = MaterialForm(vendor=vendor,prefix="material")
 
         # Render the form 
-        context = {'printer_form':printer_form, 'material_form':material_form}
+        context = {'printer_form':printer_form, 'material_form':material_form, 'printer':printer}
         return render(request,'printer/printer_form.html',context)
 
 @login_required
@@ -100,7 +100,7 @@ def printer_dashboard(request):
         return render(request,'printer/printer_dashboard.html', context)
 
 
-def slicer_check(request):
+def slicer_check(request, id:int=None):
     '''
         slicer_check: takes (1) Upload single stl, then (2) Slices stl (3) Return → table with CURA output      
         if upload new file, delete old one
@@ -113,11 +113,12 @@ def slicer_check(request):
     '''
     print('here**************')
     if(request.method == 'GET'):
-        # context = {
-        #     'vendor':vendor,
-        #     'printers':printers
-        # }        
-        return render(request,'printer/slicer_check.html') #context
+        id = 1
+        printer = Printer.objects.get(pk=id)
+        context = {
+            'printer':printer
+        }        
+        return render(request,'printer/slicer_check.html', context) #context
 
     if(request.method == 'POST'):
         stl_data = json.loads(request.POST.get('stl_data'))
@@ -168,7 +169,7 @@ def get_available_printers(request,slug):
         stl_filename    = "/" + stl_data['filename']
         stl_id          = stl_data['id']
 
-        id = 1 
+        id = stl_data['printer']
         printer = Printer.objects.get(pk=id)
         cura_data = printer.slice(stl_filename)
 

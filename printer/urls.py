@@ -9,5 +9,4 @@ urlpatterns = [
     path('printer_dashboard/',views.printer_dashboard,name='printer_dashboard'), 
     path('slicer_check/',views.slicer_check,name='slicer_check'),
     path('<slug:slug>/get_available_printers/',views.get_available_printers,name='get_available_printers'),
-
 ]
