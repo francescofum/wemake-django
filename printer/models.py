@@ -68,10 +68,10 @@ class Printer(models.Model):
             # TODO: response should be a dictionary of numbers, 
             # not a dictionary of lists with one element.
             # Indexing a 1-element list looks bad and is confusing.
-            data['fil_len'] = float(data['fil_len'][0])
-            data['fil_vol'] = int(data['fil_vol'][0])
-            data['print_s'] = int(data['print_s'][0])
-            data['print_hms'] = data['print_hms'][0]
+            data['fil_len'] = float(data['fil_len'])
+            data['fil_vol'] = int(data['fil_vol'])
+            data['print_s'] = int(data['print_s'])
+            data['print_hms'] = data['print_hms']
 
             return data
 
