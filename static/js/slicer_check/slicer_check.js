@@ -1,22 +1,4 @@
 
-/**
- * Global variables
- * stl_list : An array containing the details of stl files the user has submitted
- *            This includes: 
- *              - id
- *              - STL url 
- *              - STL name
- *              - material 
- *              - colour
- *              - infill
- *              - unit
- *  
- * dropzone obj   : The dropzone object 
- *  
- * stl viewer obj : The stl viewer object 
- */
-
-// TODO: Actually get an id (add to db, return id etc)
 
 units = {};
 stl_list = {};
@@ -48,20 +30,6 @@ function wm_create_dropzone() {
         success: wm_stl_uploaded_success_callback,       // Callback function for when a file has been uploaded successfully. This will create a new row in the table.   
         sending: wm_stl_upload_sending_callback,  // Callback function for when dropzone starts to send. All the callback does is remove the thumbnail (I havent found another way of doing it).
         createImageThumbnails: false,
-
-        uploadprogress: function (file, progress, bytesSent) {
-            if (file.previewElement) {
-                var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
-                progressElement.style.width = progress + "%";
-        
-                $("#nav-prog-bar").attr('aria-valuenow', progress).css('width', progress + '%');
-                //console.log('data-dz-uploadprogress:')
-                //console.log(progress);
-            }
-        },
-        totaluploadprogress(progress) {
-            total_loading_progress(progress, -1);
-        },
         headers: {
             'X-CSRFToken': csrftoken
         }
@@ -88,24 +56,6 @@ function getCookie(name) {
     return cookieValue;
 }
 
-
-
-function create_new_div(id,printer_id=1) {
-
-    // $("#stl_carousel_inner").next();
-    $(`#stl_carousel_inner_${printer_id}`).append(`<div id="stl_cont_${printer_id}_${id}" class="w-100 h-100" ></div> `)
-
-    stl_obj_list[id] = new StlViewer(document.getElementById(`stl_cont_${printer_id}_${id}`), {
-        model_loaded_callback: model_loaded_callback,
-        loading_progress_callback: stl_load_prog,
-        models: [{ id: id, filename: stl_list[id]['url'] }],
-        // canvas_height: "100%"
-
-    });
-    //console.log(stl_obj_list)
-    stl_obj_list[id].set_grid(true, 50, 50);
-    //console.log(stl_obj_list[id]);
-}
 
 
 function wm_stl_upload_sending_callback() {
@@ -236,67 +186,6 @@ function delete_stl(id,printer_id=1) {
 }
 
 
-
-
-function stl_load_prog(load_status, load_session) {
-    var loaded = 0;
-    var total = 0;
-
-    //go over all models that are/were loaded
-    Object.keys(load_status).forEach(function (id) {
-        if (load_status[id].load_session == load_session) //need to make sure we're on the last loading session (not counting previous loaded models)
-        {
-            loaded += load_status[id].loaded;
-            total += load_status[id].total;
-
-            newprogress = (load_status[id].loaded / load_status[id].total) * 100
-
-            // Render the Progress on each row of the table
-            //console.log(`For Model ${id} loaded: ${load_status[id].loaded} total: ${load_status[id].total} %: ${newprogress}`)
-            $(`#render_progress_${id}`).attr('aria-valuenow', newprogress).css('width', newprogress + '%');
-
-            // //console.log(load_status[id].loaded/load_status[id].total)
-            //set the relevant model's progress bar
-            // document.getElementById("pb"+id).value=load_status[id].loaded/load_status[id].total;
-        }
-    });
-
-    total_loading_progress(-1, 100 * (loaded / total));
-
-}
-
-function total_loading_progress(dz_progress, stl_viewer_progress) {
-
-    stl_total_progress = 0;
-    // Uploading into the database first
-    if (stl_viewer_progress == -1) {
-        stl_viewer_progress = 0;
-    }
-    // Then loading into the stl_viewer
-    if (dz_progress == -1) {
-        dz_progress = 100;
-
-
-        count = 0;
-        Object.keys(stl_obj_list).forEach(function (id) {
-            if (stl_obj_list[id].load_session == 0) { count += 1 };
-        });
-
-        files_uploaded = (Object.keys(stl_obj_list).length - count) + 1;
-        fractional_progress = 100 * (files_uploaded / Object.keys(stl_obj_list).length);
-        current_progress = stl_viewer_progress / Object.keys(stl_obj_list).length;
-        stl_total_progress = fractional_progress + current_progress;
-    }
-
-    total_progress = 0.5 * (dz_progress + stl_total_progress);
-    $('#nav-progressbar').css({ 'width': total_progress + '%' });
-
-    if (total_progress >= 100) {
-        $('#nav-progressbar').css({ 'display': 'none' });
-        $('#nav-progressbar').css({ 'width': 0 + '%' });
-        $('#nav-progressbar').css({ 'display': 'block' });
-    }
-}
 
 
 

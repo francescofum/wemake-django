@@ -3,20 +3,26 @@
 {%block title %} Printer {% endblock %} 
 
 {% block content %}
-<h1 class="title">Printer</h1>
-<form method="post" action=".">
-    {% csrf_token %}
-    {{ printer_form.as_p}}
-    {{ material_form.as_p}}
+
+<div>
+    <form method="post" action=".">
+        {% csrf_token %}
+        {{ printer_form.as_p}}
+        {{ material_form.as_p}}
 
 
-    <div class="field">
-        <div class="control">
-            <button class="button">Add</button>
+        <div class="field">
+            <div class="control">
+                <button class="button">Add</button>
+            </div>
         </div>
-    </div>
-</form>
-    
-<a class="button" href="{% url 'slicer_check' %}"> Slicer </a>
+
+    </form>
+        
+
+</div>
+{% if not printer_id == None %}
+    <a class="" href="{% url 'slicer_check' printer_id %}">test slicer</a>    
+{% endif %}
 {% endblock %}
 

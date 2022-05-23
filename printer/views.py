@@ -80,7 +80,7 @@ def printer_details(request,id:int=None):
             material_form = MaterialForm(vendor=vendor,prefix="material")
 
         # Render the form 
-        context = {'printer_form':printer_form, 'material_form':material_form, 'printer':printer}
+        context = {'printer_form':printer_form, 'material_form':material_form, 'printer_id':id}
         return render(request,'printer/printer_form.html',context)
 
 @login_required
@@ -113,7 +113,6 @@ def slicer_check(request, id:int=None):
     '''
     print('here**************')
     if(request.method == 'GET'):
-        id = 1
         printer = Printer.objects.get(pk=id)
         context = {
             'printer':printer
@@ -127,7 +126,7 @@ def slicer_check(request, id:int=None):
 
         return render(request,'printer/slicer_check.html') #context
 
-def upload(request,slug):
+def upload(request,id:int=None):
     '''
         FROM: 
     '''
@@ -153,7 +152,7 @@ def upload(request,slug):
 
 
 
-def get_available_printers(request,slug):
+def get_available_printers(request,id:int=None ):
     '''
         Gets availabe printers, this is called whenever a change is made
         to the stl row. 
