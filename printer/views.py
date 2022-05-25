@@ -118,7 +118,7 @@ def slicer_check(request, id:int=None):
             'printer':printer
         }        
         return render(request,'printer/slicer_check.html', context) #context
-
+    
     if(request.method == 'POST'):
         stl_data = json.loads(request.POST.get('stl_data'))
         print('stl_data:')

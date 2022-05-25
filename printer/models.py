@@ -96,11 +96,33 @@ class Printer(models.Model):
         material_colour_coefficient = colour.price_coefficient 
         
         price_pre_margin = (  float(price_time_to_print)      \
-                            + float(total_margin_coefficient) \
                             + float(price_length_of_filament) \
                             + float(price_energy_use)         \
                             ) * float(material_colour_coefficient)  
         
+        print('QUOTE:')
+
+        print('time hours')
+        print((cura_data['print_s'] / 3600))
+        print('cost hours')
+        print(float(self.price_hour))
+        print('energy_use')
+        print(energy_use)
+        print('self.price_energy')
+        print(self.price_energy)
+
+        print('price_pre_margin')
+        print(price_pre_margin)
+        print('price_time_to_print')
+
+        print(price_time_to_print)
+        print('price_length_of_filament')
+        print(price_length_of_filament)
+        print('total_margin_coefficient')
+        print(total_margin_coefficient)
+        print('price_energy_use')
+        print(price_energy_use)       
+
         price_total = float(price_pre_margin) * float(total_margin_coefficient)
 
         if price_total < self.price_min:

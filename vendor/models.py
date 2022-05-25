@@ -130,8 +130,12 @@ class Vendor(models.Model):
         printers = set()
         # Get the printers which can do the material and colour
         for printer in vendor.printers.all():
+            # Check if printer is active, if not, skip this printer
+            if not printer.is_active :
+                continue
+
+
             # Check if printer can handle colour and material
-            
             # get all the materials 
             materials = printer.materials.all()
             # loo over each material and get the colour 
