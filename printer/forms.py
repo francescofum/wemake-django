@@ -18,7 +18,6 @@ class PrinterForm(forms.ModelForm):
             'slug',
             'description',
             'price_energy',
-            'price_length',
             'price_min',
             'price_hour',
             'price_margin',

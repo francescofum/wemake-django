@@ -20,7 +20,8 @@ def print_preview(request,slug):
     # vendor = Vendor.objects.filter(slug=slug)
     vendor = get_object_or_404(Vendor,slug=slug)
     materials_json = vendor.serialize_materials_for_print_preview()
-
+    print('materials_json:')
+    print(materials_json)
 
     context = {'vendor':vendor,'materials_json':json.dumps(materials_json)}
     import pprint

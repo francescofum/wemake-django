@@ -22,9 +22,10 @@ class Material(models.Model):
     # Foreign keys to relate to global material and colour tables.
     global_material = models.ForeignKey(GLOBAL_MATERIALS, related_name='material',blank=False,null=False, on_delete=models.DO_NOTHING) # On delete no cascade?    
     # Materials
-    price_length      = models.DecimalField(max_digits=3, decimal_places=2,default=1.0)
-    printers = models.ManyToManyField(to='printer.Printer',related_name="materials",blank=True)
-    vendor = models.ForeignKey(Vendor,related_name='materials',on_delete=models.CASCADE)
+    stock           = models.BooleanField(default=True)
+    price_length    = models.DecimalField(max_digits=3, decimal_places=2,default=1.0)
+    printers        = models.ManyToManyField(to='printer.Printer',related_name="materials",blank=True)
+    vendor      = models.ForeignKey(Vendor,related_name='materials',on_delete=models.CASCADE)
     
     class Meta:
         unique_together = ['global_material', 'vendor']
@@ -34,7 +35,7 @@ class Material(models.Model):
 
 class Colour(models.Model):
     
-    stock = models.BooleanField(default=False)
+    stock = models.BooleanField(default=True)
     owned_by = models.ForeignKey(Material, related_name='colours',on_delete=models.CASCADE) # On delete no cascade?
     global_colours = models.ForeignKey(GLOBAL_COLOURS, related_name='colour_global',on_delete=models.DO_NOTHING) # On delete no cascade?
     price_coefficient = models.DecimalField(max_digits=3,decimal_places=2,default=1.0)

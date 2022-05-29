@@ -31,7 +31,6 @@ class Printer(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     # price fields
     price_energy = models.DecimalField(max_digits=6, decimal_places=2)
-    price_length = models.DecimalField(max_digits=6, decimal_places=2) #TODO we have a price lenght in material. 
     price_min    = models.DecimalField(max_digits=6, decimal_places=2)
     price_hour   = models.DecimalField(max_digits=6, decimal_places=2)
     price_margin = models.DecimalField(max_digits=6, decimal_places=2)
