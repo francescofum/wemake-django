@@ -87,11 +87,16 @@ class Printer(models.Model):
         material = printer.materials.get(global_material__name__iexact=stl_data['material'])
         colour = material.colours.get(global_colours__name__iexact=stl_data['colour'])
  
+        print('material price length:')
+        print(material.price_length)
+
+        print('Color coefficient:')
+        print(colour.price_coefficient)
 
         energy_use = (cura_data['print_s'] / 3600) * self.power
         price_time_to_print = float(self.price_hour) * (cura_data['print_s'] / 3600)
         total_margin_coefficient = (self.price_margin / 100 ) + 1
-        price_length_of_filament = float(cura_data['fil_len']) * float(self.price_length)
+        price_length_of_filament = float(cura_data['fil_len']) * float(material.price_length)
         price_energy_use = float(energy_use) * float(self.price_energy)
         material_colour_coefficient = colour.price_coefficient 
         
