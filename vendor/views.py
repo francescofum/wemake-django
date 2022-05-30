@@ -38,3 +38,16 @@ def vendor_admin(request):
 
         return redirect('order_dashboard')
 
+
+@login_required
+def faq(request):
+    '''
+        Vendor FAQ's page entry point
+    '''
+
+    vendor = request.user.vendor
+
+    context = {
+        'vendor':vendor
+    }        
+    return render(request,'vendor/faq.html',context)

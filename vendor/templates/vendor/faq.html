@@ -1,0 +1,252 @@
+{% extends 'core/base.html' %}
+
+{%block title %} Vendor Admin {% endblock %}
+
+{% block content %}
+<hb>
+
+  <div class="container">
+    <header class="d-flex justify-content-center py-3">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="{% url 'order_dashboard' %}" class="nav-link" aria-current="page">Orders</a></li>
+        <li class="nav-item"><a href="{% url 'printer_dashboard' %}" class="nav-link">Printers</a></li>
+        <li class="nav-item"><a href="{% url 'material_dashboard' %}" class="nav-link">Materials</a></li>
+        <li class="nav-item"><a href="{% url 'vendor_admin' %}" class="nav-link">Admin</a></li>
+        <li class="nav-item"><a href="{% url 'faq' %}" class="nav-link active">FAQs</a></li>
+      </ul>
+    </header>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class='col-8'>
+
+      <hr>
+
+      <div class="card mb-3 border-0" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4 image-container">
+            <img src="{{ vendor.get_thumbnail }}" alt="store-logo" class="profile-pic">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h2 class="card-title">Vendor Admin - {{ vendor.created_by.username }}</h2>
+              <p class="card-text">This is the space where you can edit your personal store settings. </p>
+              <p class="card-text"><small class="text-muted">Since: {{ vendor.created_at }}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <hr>
+
+      <div>
+        
+        
+        
+        <p></p>
+        
+        
+        
+        <h2>What is 3D printing?<a href="https://web.archive.org/web/20160203033436/https://www.3dhubs.com/faq#top"></a></h2>
+        
+        
+        
+        <p>3D printing is a manufacturing technology that lets you create solid three-dimensional objects from digital models. 3D prints are created by adding layers of material on top of each other – a process otherwise known as “additive manufacturing.”</p>
+        
+        
+        
+        <p>You can think of a 3D printer as a micro-factory that can help you produce a variety of products in a fast and environmentally-friendly way. Keep an eye on our blog for product samples and 3D printing ideas!</p>
+        
+        
+        
+        <h2>How does this work?</h2>
+        
+        
+        
+        <p><strong>1. Upload File</strong></p>
+        
+        
+        
+        <p>It always starts with a 3D model. If you have your 3D file (.stl), you can upload directly. Don’t have a model yet? and need inspiration? Check out&nbsp;<a rel="noreferrer noopener" href="http://www.thingiverse.com/" target="_blank">Thingiverse</a>, they feature an awesome collection of designs for 3D printing.</p>
+        
+        
+        
+        <p>You can only upload STL-files, these are the standard files used in the 3D printing industry.&nbsp;</p>
+        
+        
+        
+        <p><strong>2. Settings</strong></p>
+        
+        
+        
+        <p>Select the specifics like what material and colour you would like the object to be printed in. </p>
+        
+        
+        
+        <p><strong>3. Checkout </strong></p>
+        
+        
+        
+        <p>Enter your address and payment details </p>
+        
+        
+        
+        <p><strong>That’s it! </strong>Really that simple. </p>
+        
+        
+        
+        <p>Now just have to wait for your delivery man to knock on your door. </p>
+        
+        
+        
+        <h2>Can I join with my 3D printer?<a href="https://web.archive.org/web/20160203033436/https://www.3dhubs.com/faq#top"></a></h2>
+        
+        
+        
+        <p>Yep! We’re the fast growing 3D printing community in the UK, register <a href="mailto:make.it.ffra@gmail.com?subject=Sign up to WeMake">here</a>, and we’ll add you to the Vendor waiting list. </p>
+        
+        
+        
+        <p></p>
+        
+        
+        
+        <h2>How to I sync my Cura Engine? </h2>
+        
+        
+        
+        <p>These are the steps to set up a new printer, syncing the slicing you do on your desktop to the WeMake price prediction.</p>
+        
+        
+        
+        <figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-4-3 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+        <iframe loading="lazy" title="Sync Cura with WeMake" width="500" height="375" src="https://www.youtube.com/embed/RSvOL1JyPCM?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+        </div></figure>
+        
+        
+        
+        <ol><li><strong>Delete the Cura GUI log file.</strong></li></ol>
+        
+        
+        
+        <p>Open a ‘explorer’ or ‘finder’ window on your computer, and navigate to the folder located at:</p>
+        
+        
+        
+        <ul><li>Windows:<code>%APPDATA%\cura\&lt;Cura version&gt;\cura.log</code>, or<br><code>C:\Users\&lt;your username&gt;\AppData\Roaming\cura\&lt;Cura version&gt;\cura.log</code><br><br>Note:&nbsp;The folder AppData is hidden! Ensure to ‘view hidden folders’.</li><li>OSX: <code>$HOME/Library/Application Support/cura/&lt;Cura version&gt;/cura.log</code><br><br>Note:&nbsp;The folder ‘Library’ is hidden! In finder select ‘Go’ and hold the ‘option’ key, to easily view the library folder.</li><li>Ubuntu / Linux:<code>$HOME/.local/share/cura/&lt;Cura version&gt;/cura.log</code></li></ul>
+        
+        
+        
+        <p></p>
+        
+        
+        
+        <p>2. <strong>Load Benchy in Ultimaker CURA</strong></p>
+        
+        
+        
+        <p>Open Ultimaker Cura</p>
+        
+        
+        
+        <p>Open <a href="http://www.wemake.network/"><u>www.wemake.network</u></a> <code>&gt; Printers &gt; [ printer to sync ] &gt; Price &gt; Benchy.stl</code></p>
+        
+        
+        
+        <p>Load Benchy.stl in Ultimaker CURA</p>
+        
+        
+        
+        <p></p>
+        
+        
+        
+        <p></p>
+        
+        
+        
+        <p>3. <strong>Create a “WeMake” Custom Profile</strong></p>
+        
+        
+        
+        <p>In CURA: <code>Print Settings &gt; Profile &gt; Manage Profiles</code> and select the profile you’d like to use for WeMake slicing</p>
+        
+        
+        
+        <p>Duplicate the profile, and save as “WeMake”</p>
+        
+        
+        
+        <p></p>
+        
+        
+        
+        <p></p>
+        
+        
+        
+        <p>4. <strong>Slice with new profile</strong></p>
+        
+        
+        
+        <p>Slice the Benchy.stl with the new “WeMake” profile. Remember to have the profile selected.</p>
+        
+        
+        
+        <p></p>
+        
+        
+        
+        <p></p>
+        
+        
+        
+        <p>5. <strong>Send new cura.log</strong></p>
+        
+        
+        
+        <p>Open a ‘explorer’ or ‘finder’ window on your computer, and navigate to the folder located at:</p>
+        
+        
+        
+        <ul><li>Windows:<code>%APPDATA%\cura\&lt;Cura version&gt;\cura.log</code>, or<br><code>C:\Users\&lt;your username&gt;\AppData\Roaming\cura\&lt;Cura version&gt;\cura.log</code>Note:&nbsp;The folder AppData is hidden! Ensure to ‘view hidden folders’.</li><li>OSX: <code>$HOME/Library/Application Support/cura/&lt;Cura version&gt;/cura.log</code>Note:&nbsp;The folder ‘Library’ is hidden! In finder select ‘Go’ and hold the ‘option’ key, to easily view the library folder.</li><li>Ubuntu / Linux<strong>:</strong><code>$HOME/.local/share/cura/&lt;Cura version&gt;/cura.log</code></li></ul>
+        
+        
+        
+        <p>Send the cura.log file to (<a href="mailto:info@wemake.network">info@wemake.network</a>)</p>
+        
+        
+        
+        <p></p>
+        
+        
+        
+        <p>That’s it! We’ll have you set up shortly.</p>
+        
+        
+        
+        <p></p>
+        
+        
+        
+        <h2>How does WeMake earn money?</h2>
+        
+        
+        
+        <p>WeMake is free to use for Vendors putting their 3D printers online. Vendors do not get charged for signing up or recurring charges. WeMake charges a small fee to the customer in order to cover for the payment handling and running the servers.</p>
+        
+        
+        
+        <h2>How do I get in touch?</h2>
+        
+        
+        
+        <p>You can send us a message <a href="mailto:make.it.ffra@gmail.com?subject=Get in touch">here</a>, with feedback, suggestions, or any further questions you may have. We’ll try to get back to you as soon as possible! </p>
+        
+        
+        
+        </div>
+
+    </div>
+  </div>
+  {% endblock %}
