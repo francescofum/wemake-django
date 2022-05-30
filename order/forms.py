@@ -12,7 +12,16 @@ class orderForm(forms.ModelForm):
     '''
     class Meta:
         model = Order 
-        fields = ['email', 'first_name', 'last_name','address', 'address2', 'city', 'country', 'zipcode' ,  'note',  ] 
+        fields = ['email', 
+                'first_name', 
+                'last_name',
+                'address', 
+                'address2', 
+                'city', 
+                'country', 
+                'zipcode' ,  
+                'note',  
+                ] 
 
     @property
     def helper(self):

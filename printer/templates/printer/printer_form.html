@@ -1,24 +1,22 @@
 {% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
 
 {%block title %} Printer {% endblock %} 
 
 {% block content %}
 
-<div>
-    <form method="post" action=".">
-        {% csrf_token %}
-        {{ printer_form.as_p}}
-        {{ material_form.as_p}}
-
-
-        <div class="field">
-            <div class="control">
-                <button class="button">Add</button>
+<div class="row align-items-start">
+    <form action="." class="uniForm" method="post">
+        <div class="row">
+            <div class="col">
+                {% crispy printer_form %}
+            </div>
+            <div class="col">
+                {% crispy material_form %}
             </div>
         </div>
 
-    </form>
-        
+    </form>      
 
 </div>
 {% if not printer_id == None %}
