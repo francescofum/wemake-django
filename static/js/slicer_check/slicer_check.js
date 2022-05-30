@@ -21,7 +21,7 @@ function wm_create_dropzone() {
     Dropzone.autoDiscover = false;
     var dropzoneOptions = { // Make the whole body a dropzone
         dictDefaultMessage: "Drop files here to upload",
-        url: `upload/`,
+        url: `upload_vendor/`,
         maxfilesize: 5000,
         parallelUploads: 10,
         clickable: '#user_dropzone',
@@ -203,7 +203,7 @@ function get_available_printer(id) {
     json_data = JSON.stringify(stl_list[id]); 
     // POST to backend.
     response = $.ajax({
-        url: "get_available_printers/",
+        url: "get_available_printers_vendor/",
         type: 'POST',
         success: get_available_printer_success_callback,
         data: {

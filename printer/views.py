@@ -126,7 +126,7 @@ def slicer_check(request, id:int=None):
 
         return render(request,'printer/slicer_check.html') #context
 
-def upload(request,id:int=None):
+def upload_vendor(request,id:int=None):
     '''
         FROM: 
     '''
@@ -152,7 +152,7 @@ def upload(request,id:int=None):
 
 
 
-def get_available_printers(request,id:int=None ):
+def get_available_printers_vendor(request,id:int=None ):
     '''
         Gets availabe printers, this is called whenever a change is made
         to the stl row. 
