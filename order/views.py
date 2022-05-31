@@ -123,7 +123,7 @@ def order_details(request, id:int=None):
             'vendor':vendor
             }      
         return render(request,'order/order_form.html',context)
-                
+        
     if request.method == 'POST':
         order = Order.objects.get(pk=id)
         form = orderForm_Vendor(request.POST, instance = order)

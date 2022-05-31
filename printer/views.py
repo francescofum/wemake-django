@@ -8,6 +8,10 @@ from .models import Printer
 from vendor.models import Vendor
 from .forms import PrinterForm, MaterialForm
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from printPreview.models import STL
+import json
+from cart.cart import Cart 
 
 
 def printer_details(request,id:int=None): 
@@ -76,7 +80,7 @@ def printer_details(request,id:int=None):
             material_form = MaterialForm(vendor=vendor,prefix="material")
 
         # Render the form 
-        context = {'printer_form':printer_form, 'material_form':material_form}
+        context = {'printer_form':printer_form, 'material_form':material_form, 'printer_id':id}
         return render(request,'printer/printer_form.html',context)
 
 @login_required
@@ -94,3 +98,83 @@ def printer_dashboard(request):
             'printers':printers
         }        
         return render(request,'printer/printer_dashboard.html', context)
+
+
+def slicer_check(request, id:int=None):
+    '''
+        slicer_check: takes (1) Upload single stl, then (2) Slices stl (3) Return → table with CURA output      
+        if upload new file, delete old one
+
+        request:    POST/GET request from the website
+        id:         printer ID, that is used to slice the stl 
+
+        table:      table of the CURA output (time to print, filament length, etc)
+
+    '''
+    print('here**************')
+    if(request.method == 'GET'):
+        printer = Printer.objects.get(pk=id)
+        context = {
+            'printer':printer
+        }        
+        return render(request,'printer/slicer_check.html', context) #context
+    
+    if(request.method == 'POST'):
+        stl_data = json.loads(request.POST.get('stl_data'))
+        print('stl_data:')
+        print(stl_data)
+
+        return render(request,'printer/slicer_check.html') #context
+
+def upload_vendor(request,id:int=None):
+    '''
+        FROM: 
+    '''
+    
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        title = file.name
+        stl = STL(file=file,pretty_name=title)
+        try:
+            stl.save()
+        except Exception as e:
+            print(e)
+    
+    response = {
+        'id': stl.id,
+        'filename':stl.file.name,
+        'path':stl.file.path,
+        'url':stl.file.url,
+        'pretty_name': stl.pretty_name,
+    }
+    return JsonResponse(response,status=200)
+
+
+
+
+def get_available_printers_vendor(request,id:int=None ):
+    '''
+        Gets availabe printers, this is called whenever a change is made
+        to the stl row. 
+        TODO: update the cart with new items. 
+    '''
+    if request.method == 'POST':
+        response = {}
+        # Read stl_data
+        stl_data = json.loads(request.POST.get('stl_data'))
+   
+        dims={}
+        stl_name        = stl_data['pretty_name']
+        stl_filename    = "/" + stl_data['filename']
+        stl_id          = stl_data['id']
+
+        id = stl_data['printer']
+        printer = Printer.objects.get(pk=id)
+        cura_data = printer.slice(stl_filename)
+
+        response = {
+                    'stl_id':stl_id,
+                    'cura_data':cura_data,
+                    }
+                    
+    return JsonResponse(response,status=200,safe=False)

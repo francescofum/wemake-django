@@ -39,7 +39,6 @@ from django.db.models import Q
 
 
 
-
 # User model 
 
 
@@ -130,8 +129,12 @@ class Vendor(models.Model):
         printers = set()
         # Get the printers which can do the material and colour
         for printer in vendor.printers.all():
+            # Check if printer is active, if not, skip this printer
+            if not printer.is_active :
+                continue
+
+
             # Check if printer can handle colour and material
-            
             # get all the materials 
             materials = printer.materials.all()
             # loo over each material and get the colour 
@@ -146,9 +149,9 @@ class Vendor(models.Model):
                                 (size['z'] < printer.tray_height * scale )): 
                                 compatible_printers.append(printer)
 
-                    printers.add(printer)
+                        
 
-        return list(printers)
+        return list(compatible_printers)
 
 
     # def get_unique_materials(self) -> list:
@@ -173,10 +176,30 @@ class Vendor(models.Model):
         vendor = Vendor.objects.get(id=self.id)
         materials = list()
         for material in vendor.materials.all():
-            if material.material.id not in materials:
-                materials.append((material.material.id,material.material.name))
+            if material.global_material.id not in materials:
+                materials.append((material.global_material.id,material.global_material.name))
 
         return list(set(materials))
+    
+    def get_unique_materials_active(self) -> list:
+        '''
+            @brief: Get all the materials of a given vendor. 
+            @return: a list of strings, each string is a material name. 
+        '''
+        vendor      = Vendor.objects.get(id=self.id)
+        printers    = vendor.printers.all()
+        materials = list()
+
+        for printer in printers:
+            if not printer.is_active :
+                continue
+
+            for material in printer.materials.all():
+                if material.global_material.id not in materials:
+                    materials.append((material.global_material.id,material.global_material.name))
+
+        return list(set(materials))
+
 
     def serialize_materials_for_print_preview(self):
         '''
@@ -204,16 +227,33 @@ class Vendor(models.Model):
         with print preview, but could change in the future. 
 
         '''
+        materials_all = []
+
+
+        vendor = Vendor.objects.get(id=self.id)
+        materials = vendor.get_unique_materials_active()
+
         materials_json = {}
-        materials = self.materials.all()
         for material in materials:
-            materials_json[material.global_material.id] = {}
-            materials_json[material.global_material.id]['name'] = material.global_material.name
-            materials_json[material.global_material.id]['colours'] = {}
-            for colour in material.colours.all():
+            material_id     = material[0]
+            material_name   = material[0]
+
+            get_material = vendor.materials.filter(global_material__id__iexact=material_id)[0]
+
+            materials_json[material_id] = {}
+            materials_json[material_id]['name'] = material[1]
+            materials_json[material_id]['colours'] = {}
+            for colour in get_material.colours.all():
                 if(colour.stock):
-                    materials_json[material.global_material.id]['colours'][colour.id] = colour.global_colours.name
-    
+                    materials_json[material_id]['colours'][colour.id] = colour.global_colours.name
+        
+        # Loop over the materials and remve any that have no colours 
+        to_remove = []
+        for material_id, material_data in materials_json.items():
+            if len(material_data['colours']) == 0:
+                to_remove.append(material_id)
+        for item in to_remove:
+            del materials_json[item]
         return materials_json
     
     def get_materials(self,material:str):

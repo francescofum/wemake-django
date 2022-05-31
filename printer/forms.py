@@ -1,5 +1,7 @@
 from django import forms
 from django.forms.widgets import CheckboxSelectMultiple
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Field, HTML, Submit, Div
 
 from .models import Printer
 from vendor.models import Vendor
@@ -18,7 +20,6 @@ class PrinterForm(forms.ModelForm):
             'slug',
             'description',
             'price_energy',
-            'price_length',
             'price_min',
             'price_hour',
             'price_margin',
@@ -31,6 +32,20 @@ class PrinterForm(forms.ModelForm):
         labels = {
         'is_active': 'Status',
         }
+
+    @property
+    def helper(self):
+        helper = FormHelper()
+        helper.layout = Layout(
+            HTML('<h2>Printer Settings</h2>')
+        )
+        for field in self.Meta().fields:
+            helper.layout.append(
+                Field(field)
+            )
+        helper.layout.append(Submit('submit','Save',css_class='btn-primary'))
+        helper.form_tag = False
+        return helper
 
 
 class MaterialForm(forms.Form):

@@ -5,17 +5,16 @@ from .models import Material, Colour
 from core.models import GLOBAL_MATERIALS
 from core.models import GLOBAL_COLOURS
 
-
 class MaterialForm(forms.ModelForm):
     '''
         @brief TODO
     '''
     class Meta:
         model = Material
-        fields = '__all__' 
+        fields = '__all__'
         exclude = ['printers','vendor']
-        labels = {'quantity': 'In stock',
-                  'global_material':'Material'}
+        labels = {'global_material':'Material'}
+
 
 
 
@@ -52,15 +51,13 @@ class ColourForm(forms.ModelForm):
         self.fields['global_colours'].initial = self.colour_id 
         self.fields['global_colours'].disabled = True
 
-    
-
-
-      
+        
       
 
     class Meta:
         model = Colour
-        fields = '__all__' 
+        fields = '__all__'
+
         exclude = ['owned_by','discount']
         labels = {'global_colours':'Colour'}
 
@@ -72,3 +69,4 @@ class ColourForm(forms.ModelForm):
             return [material.id for material in self.vendor.materials.all()]
         else:
             return []
+

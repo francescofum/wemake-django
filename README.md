@@ -9,6 +9,7 @@
   <li> Activate your virtual environment <code>source wm-env/bin/activate</code> </li>
   <li> Install required modules <code>pip install -r src/requirements.txt</code> </li>
   <li> Run django server <code>cd src && python manage.py runserver</code> </li>
+  <li> Set up Environment Variables <code> source ../../docker-compose/setupEnv.sh  </code> </li>
 </ol>
 
 <strong>Note:</strong> If you install any modules make sure to generate a new requirements.txt by running <code>pip freeze>requirements.txt</code>

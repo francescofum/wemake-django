@@ -31,7 +31,6 @@ class Printer(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     # price fields
     price_energy = models.DecimalField(max_digits=6, decimal_places=2)
-    price_length = models.DecimalField(max_digits=6, decimal_places=2) #TODO we have a price lenght in material. 
     price_min    = models.DecimalField(max_digits=6, decimal_places=2)
     price_hour   = models.DecimalField(max_digits=6, decimal_places=2)
     price_margin = models.DecimalField(max_digits=6, decimal_places=2)
@@ -69,8 +68,8 @@ class Printer(models.Model):
             # not a dictionary of lists with one element.
             # Indexing a 1-element list looks bad and is confusing.
             data['fil_len'] = float(data['fil_len'])
-            data['fil_vol'] = int(data['fil_vol'])
-            data['print_s'] = int(data['print_s'])
+            data['fil_vol'] = float(data['fil_vol'])
+            data['print_s'] = float(data['print_s'])
             data['print_hms'] = data['print_hms']
 
             return data
@@ -87,20 +86,25 @@ class Printer(models.Model):
         material = printer.materials.get(global_material__name__iexact=stl_data['material'])
         colour = material.colours.get(global_colours__name__iexact=stl_data['colour'])
  
+        print('material price length:')
+        print(material.price_length)
+
+        print('Color coefficient:')
+        print(colour.price_coefficient)
 
         energy_use = (cura_data['print_s'] / 3600) * self.power
         price_time_to_print = float(self.price_hour) * (cura_data['print_s'] / 3600)
         total_margin_coefficient = (self.price_margin / 100 ) + 1
-        price_length_of_filament = float(cura_data['fil_len']) * float(self.price_length)
+        price_length_of_filament = float(cura_data['fil_len']) * float(material.price_length)
         price_energy_use = float(energy_use) * float(self.price_energy)
         material_colour_coefficient = colour.price_coefficient 
         
         price_pre_margin = (  float(price_time_to_print)      \
-                            + float(total_margin_coefficient) \
                             + float(price_length_of_filament) \
                             + float(price_energy_use)         \
                             ) * float(material_colour_coefficient)  
-        
+  
+
         price_total = float(price_pre_margin) * float(total_margin_coefficient)
 
         if price_total < self.price_min:

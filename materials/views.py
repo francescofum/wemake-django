@@ -22,7 +22,7 @@ def material_details(request,id:int=None):
 
     # Either display an existing material,
     # or a blank form for a new material.
-    if request.method == "GET":
+    if request.method == "GET": 
         colour_forms = []
         if id is not None:
             materialOption = Material.objects.get(pk=id)
@@ -54,11 +54,15 @@ def material_details(request,id:int=None):
         material_form = MaterialForm(request.POST)
         
         if material_form.is_valid():
+            print('material form is valid')
+            print('id')
+            print(id)
             # Update or delete an existing material option
             if id is not None:  
                 # TODO: Check that the material actually exists.
                 materialOption = Material.objects.get(pk=id) 
                 if 'update' in request.POST:
+                    print('update')
                     material_form = MaterialForm(request.POST,instance=materialOption) 
                     material_form.save()
                 if 'delete' in request.POST:
@@ -75,6 +79,8 @@ def material_details(request,id:int=None):
                     return HttpResponse(f"Error combination already exists\n{e}.")
         else:
             # TODO: Handle not valid form.
+            print('Material NOK')
+
             pass
 
     # -----------------------------------
@@ -105,13 +111,6 @@ def material_details(request,id:int=None):
                 colour_forms.append(form)
         
         return redirect("material_dashboard")
-
- 
-
-             
-
-            
-
 
 
     # Render the view

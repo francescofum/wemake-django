@@ -20,7 +20,8 @@ def print_preview(request,slug):
     # vendor = Vendor.objects.filter(slug=slug)
     vendor = get_object_or_404(Vendor,slug=slug)
     materials_json = vendor.serialize_materials_for_print_preview()
-
+    print('materials_json:')
+    print(materials_json)
 
     context = {'vendor':vendor,'materials_json':json.dumps(materials_json)}
     import pprint
@@ -94,23 +95,32 @@ def get_available_printers(request,slug):
             price = printer.quote(cura_data,stl_material_colour)
             price = "{:.2f}".format(price)
 
+            response = {'printer_id':compatible_printers[0].id,
+            'stl_id':stl_id,
+            'cura_data':cura_data,
+            'price':price}
+
+            # Update the cart 
+            cart = Cart(request)
+            stl_data['price'] = price
+            stl_data['printer'] = response['printer_id']
+            stl_data['cura_data'] = response['cura_data']
+
+            cart.update(product_id,stl_data)
+
+
         else:
             # Hanlde no compatible printers, display some error. 
-            pass
+            response = {'printer_id':"KO",
+            'stl_id':"KO",
+            'cura_data':"KO",
+            'price':"KO"}
            
 
-        response = {'printer_id':compatible_printers[0].id,
-                    'stl_id':stl_id,
-                    'cura_data':cura_data,
-                    'price':price}
-    
-    # Update the cart 
-    cart = Cart(request)
-    stl_data['price'] = price
-    stl_data['printer'] = response['printer_id']
-    stl_data['cura_data'] = response['cura_data']
 
-    cart.update(product_id,stl_data)
+    
+
+    
                     
     return JsonResponse(response,status=200,safe=False)
 

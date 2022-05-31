@@ -30,6 +30,8 @@ ALLOWED_HOSTS = ['testserver','127.0.0.1'] # Remove after debugger+unit tests wo
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'vendor_admin'
+LOGOUT_REDIRECT_URL = "vendor_login"
+
 
 SESSION_COOKIE_AGE = 86400 # One day in seconds 
 CART_SESSION_ID =  'cart'
