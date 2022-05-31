@@ -149,9 +149,9 @@ class Vendor(models.Model):
                                 (size['z'] < printer.tray_height * scale )): 
                                 compatible_printers.append(printer)
 
-                    printers.add(printer)
+                        
 
-        return list(printers)
+        return list(compatible_printers)
 
 
     # def get_unique_materials(self) -> list:
@@ -239,9 +239,6 @@ class Vendor(models.Model):
             material_name   = material[0]
 
             get_material = vendor.materials.filter(global_material__id__iexact=material_id)[0]
-            print('get_material2')
-            print(get_material)
-            print(get_material.colours.all())
 
             materials_json[material_id] = {}
             materials_json[material_id]['name'] = material[1]
@@ -249,7 +246,14 @@ class Vendor(models.Model):
             for colour in get_material.colours.all():
                 if(colour.stock):
                     materials_json[material_id]['colours'][colour.id] = colour.global_colours.name
-    
+        
+        # Loop over the materials and remve any that have no colours 
+        to_remove = []
+        for material_id, material_data in materials_json.items():
+            if len(material_data['colours']) == 0:
+                to_remove.append(material_id)
+        for item in to_remove:
+            del materials_json[item]
         return materials_json
     
     def get_materials(self,material:str):

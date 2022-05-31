@@ -13,8 +13,7 @@ class MaterialForm(forms.ModelForm):
         model = Material
         fields = '__all__'
         exclude = ['printers','vendor']
-        labels = {'quantity': 'In stock',
-                  'global_material':'Material'}
+        labels = {'global_material':'Material'}
 
 
 

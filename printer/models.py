@@ -60,7 +60,7 @@ class Printer(models.Model):
     def slice(self,stl_id):
         # TODO: put wm_slicer_cura in the env, don't hardcode.
         # TOOD: put port in env, don't hardcode.
-        response = requests.post('http://wm_slicer_cura:5555/analyse_stl', json={"stl_id": stl_id,'printe_id':self.id})
+        response = requests.post('http://127.0.0.1:5555/analyse_stl', json={"stl_id": stl_id,'printe_id':self.id})
     
         if response.status_code == 200:
             data = json.loads(response.text)
@@ -68,8 +68,8 @@ class Printer(models.Model):
             # not a dictionary of lists with one element.
             # Indexing a 1-element list looks bad and is confusing.
             data['fil_len'] = float(data['fil_len'])
-            data['fil_vol'] = int(data['fil_vol'])
-            data['print_s'] = int(data['print_s'])
+            data['fil_vol'] = float(data['fil_vol'])
+            data['print_s'] = float(data['print_s'])
             data['print_hms'] = data['print_hms']
 
             return data
@@ -103,29 +103,7 @@ class Printer(models.Model):
                             + float(price_length_of_filament) \
                             + float(price_energy_use)         \
                             ) * float(material_colour_coefficient)  
-        
-        print('QUOTE:')
-
-        print('time hours')
-        print((cura_data['print_s'] / 3600))
-        print('cost hours')
-        print(float(self.price_hour))
-        print('energy_use')
-        print(energy_use)
-        print('self.price_energy')
-        print(self.price_energy)
-
-        print('price_pre_margin')
-        print(price_pre_margin)
-        print('price_time_to_print')
-
-        print(price_time_to_print)
-        print('price_length_of_filament')
-        print(price_length_of_filament)
-        print('total_margin_coefficient')
-        print(total_margin_coefficient)
-        print('price_energy_use')
-        print(price_energy_use)       
+  
 
         price_total = float(price_pre_margin) * float(total_margin_coefficient)
 

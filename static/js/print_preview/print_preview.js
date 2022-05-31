@@ -584,6 +584,11 @@ function get_available_printer(id) {
 function get_available_printer_success_callback(response) {
 
     console.log(response)
+    if (response['stl_id'] == "KO"){
+        alert("No available printers found with these settings.")
+        return
+    }
+    
     id = response['stl_id']
     stl_list[id]['price'] = response['price']
     stl_list[id]['printer'] = response['printer_id']
