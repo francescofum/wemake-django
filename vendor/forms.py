@@ -2,7 +2,8 @@
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, HTML, Submit
-from .models import Vendor
+from .models import Vendor, VendorGallery
+from django.urls import reverse
 
 class VendorSettingsForm(forms.ModelForm):
 
@@ -41,6 +42,22 @@ class VendorSettingsForm(forms.ModelForm):
             helper.layout.append(
                 Field(field)
             )
-            
-        helper.layout.append(Submit('submit','Save',css_class='btn-primary'))
+        helper.form_tag = False
+        return helper
+
+class VendorGalleryForm(forms.ModelForm):
+    class Meta:
+        model = VendorGallery
+        fields = ['description', 'gallery_img' ]
+        labels = {        
+            'gallery_img': '',         
+            }
+
+    @property
+    def helper(self):
+        helper = FormHelper()
+        helper.layout = Layout()
+        # helper.form_action = reverse("vendor_admin_store_gallery")
+        helper.form_tag = False
+
         return helper

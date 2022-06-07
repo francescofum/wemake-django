@@ -258,7 +258,7 @@ class VendorGallery(models.Model):
     vendor      = models.ForeignKey(Vendor,related_name='gallery',on_delete=models.CASCADE)
     gallery_img = models.ImageField(null=True, blank=True)
     gallery_img_resized = models.ImageField(null=True, blank=True)
-    description = models.CharField(max_length=255,blank=True, null=True)
+    description = models.CharField(max_length=255,blank=True, null=True,default=" ")
 
     def get_thumbnail(self):
         if self.gallery_img_resized:
@@ -285,6 +285,13 @@ class VendorGallery(models.Model):
         thumbnail = File(thumb_io, name=image.name)
 
         return thumbnail
+
+    @property
+    def get_img_url(self):
+        if self.gallery_img and hasattr(self.gallery_img, 'url'):
+            return self.gallery_img.url
+        else:
+            return None
 
 
 

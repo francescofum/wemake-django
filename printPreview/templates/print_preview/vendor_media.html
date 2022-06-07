@@ -4,7 +4,7 @@
 
 
         {% for img in vendor.gallery.all %}
-    
+        {% if img.get_img_url is not None %}
         {% if forloop.first %}
         <!-- If first round, display "active" carousel  -->
         <div class="carousel-item active">
@@ -23,23 +23,24 @@
             <div class="row">
                 {% endif %}
                 <!-- Image -->
+
                 <div class="col-4">
                     <div class="card bg-light">
-                        <img class=""
-                            src="{{ img.gallery_img.url }}" style="height:150px; width:160px; ">
+                        <img class="" src="{{ img.gallery_img.url }}" style="height:150px; width:160px; ">
 
                         <div class="card-footer">
                             <p class="card-text text-center">{{img.description}}</p>
                         </div>
                     </div>
                 </div>
+
                 {% if forloop.last %}
                 <!-- close ROW div-->
             </div>
             <!-- close CAROUSEL div-->
         </div>
         {% endif %}
-
+        {% endif %}
         {% endfor %}
 
 
