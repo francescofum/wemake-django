@@ -39,6 +39,7 @@ from django.db.models import Q
 
 
 
+
 # User model 
 
 
@@ -72,8 +73,6 @@ class Vendor(models.Model):
     postal_code         = models.CharField(max_length=255,blank=True, null=True)
     country             = models.CharField(max_length=255,blank=True, null=True)
     
-    # TODO store gallery
-
     class Meta:
         ordering = (['created_by'])
 
@@ -153,20 +152,6 @@ class Vendor(models.Model):
 
         return list(compatible_printers)
 
-
-    # def get_unique_materials(self) -> list:
-    #     '''
-    #         @brief: Get all the materials of a given vendor. 
-    #         @return: a list of strings, each string is a material name. 
-    #     '''
-    #     vendor = Vendor.objects.get(id=self.id)
-    #     materials = list()
-    #     for material in vendor.materials.all():
-    #         if material.material.id not in materials:
-    #             materials.append((material.material.id,material.material.name))
-
-    #     return list(set(materials))
-        return list(compatible_printers)
     
     def get_unique_materials(self) -> list:
         '''
@@ -266,7 +251,40 @@ class Vendor(models.Model):
         '''
         vendor = Vendor.objects.get(id=self.id)
         return vendor.materials.filter(material__name__iexact=material) 
-    
+
+
+# Vendor gallery 
+class VendorGallery(models.Model):
+    vendor      = models.ForeignKey(Vendor,related_name='gallery',on_delete=models.CASCADE)
+    gallery_img = models.ImageField(null=True, blank=True)
+    gallery_img_resized = models.ImageField(null=True, blank=True)
+    description = models.CharField(max_length=255,blank=True, null=True)
+
+    def get_thumbnail(self):
+        if self.gallery_img_resized:
+            return self.gallery_img_resized.url
+        else:
+            if self.gallery_img: 
+                self.gallery_img_resized = self.make_thumbnail()
+                self.save()
+
+                return self.gallery_img_resized.url
+            else: 
+                return 'https://via.placeholder.com/240x240.jpg'
+
+
+    def make_thumbnail(self, size=(50,50)):
+        image = self.gallery_img 
+        img = Image.open(image)
+        img.convert('RGB')
+        img.thumbnail(size)
+
+        thumb_io = BytesIO()
+        img.save(thumb_io, 'JPEG', quality=85)
+
+        thumbnail = File(thumb_io, name=image.name)
+
+        return thumbnail
 
 
 

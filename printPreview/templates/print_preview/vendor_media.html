@@ -1,39 +1,59 @@
+<!--/.Indicators-->
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
 
-<h1>VENDOR MEDIA</h1>
 
-<!-- function display_media($vendor){
-    $counter = 0; 
-    echo '<div id="multi-item-example" class="carousel slide carousel-multi-item pt-3" data-ride="carousel">';
-    echo '<div class="carousel-inner" role="listbox">';
-    echo '<div class="carousel-item active">';
-
-    foreach($vendor->media as $idx=>$img_url){
-        if(($counter%4==0) && ($idx !=0)){
-            echo "</div>"; // first close the previous carousel 
-            // Then opena new carousel item
-            echo '<div class="carousel-item">';
-        }
-        //  Display the image 
-        ?>
-        <div class="col-md-3" style="float:left">
-            <div class="card mb-2">
-                <img class="card-img-top" src="<?php echo $img_url ?>" alt="Card image cap">
-            </div>
-        </div>
-        <?php
-        $counter++;
-    }
-    // Close the div 
-    echo "</div>";
-    echo "</div>";
-    echo '<a class="carousel-control-prev" href="#multi-item-example" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#multi-item-example" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>';
-    echo "</div>";
+        {% for img in vendor.gallery.all %}
     
-} -->
+        {% if forloop.first %}
+        <!-- If first round, display "active" carousel  -->
+        <div class="carousel-item active">
+            <div class="row">
+                {% endif %}
+                <!-- if the counter is divisible by 3 (i.e every three) but is not "0"-->
+                <!-- close the previous row and open a new one.  -->
+                {% if forloop.counter0|divisibleby:3 and not forloop.first %}
+                <!-- Close the previous row -->
+                <!-- close ROW div-->
+            </div>
+            <!-- close CAROUSEL div-->
+        </div>
+        <!--create new row -->
+        <div class="carousel-item">
+            <div class="row">
+                {% endif %}
+                <!-- Image -->
+                <div class="col-4">
+                    <div class="card bg-light">
+                        <img class=""
+                            src="{{ img.gallery_img.url }}" style="height:150px; width:160px; ">
+
+                        <div class="card-footer">
+                            <p class="card-text text-center">{{img.description}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% if forloop.last %}
+                <!-- close ROW div-->
+            </div>
+            <!-- close CAROUSEL div-->
+        </div>
+        {% endif %}
+
+        {% endfor %}
+
+
+
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>

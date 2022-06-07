@@ -54,9 +54,7 @@ def material_details(request,id:int=None):
         material_form = MaterialForm(request.POST)
         
         if material_form.is_valid():
-            print('material form is valid')
-            print('id')
-            print(id)
+
             # Update or delete an existing material option
             if id is not None:  
                 # TODO: Check that the material actually exists.
