@@ -14,25 +14,24 @@
 </script>
 
 
-{{vendor.created_by.first_name}}
-<div id="background-image" class="row mx-1" style="height:100vh; padding-top: 5vh">
-    <div class="col-md-5 translucent" style="height: 100%; min-width:440px; padding-top: 4vh; padding-bottom:4vh;">
+<div class="row mx-1">
+    <div class="col-md-5 translucent" style="min-width:440px; padding-top: 4vh;">
         <div class="row" style="height: 100%">
             <div class="col-xl-12" style="height: 100%">
-                <div class="card" style="height: 100%;">
-                    <div class="card-header" style="height: 200px;">
+                <div class="card" style="height:85vh">
+                    <div class="card-header" style="height: 120px;">
                         <div class="container" style="height: 100%">
                             <div class="row flex wrap" style="height: 100%">
-                                <div>
+                                <div class="col-3">
                                     <img src="{{vendor.get_thumbnail}}" alt="Placeholder image"
-                                        style="height: 75px;width:75px; border-radius: 50%">
+                                        style="margin:9px ; height: 75px;width:75px; border-radius: 50%">
                                 </div>
-                                <div class="col">
+                                <div class="col-9">
                                     <div class="row">
                                         <div class="col">
                                             <div class="text-left">
                                                 <strong>
-                                                    <h4> {{vendor.created_by.first_name}} </h4>
+                                                    <h4> {{vendor.store_name}} </h4>
                                                 </strong>
                                             </div>
                                         </div>
@@ -42,7 +41,7 @@
                                         <div class="col">
                                             <div class="text-left">
                                                 <small>
-                                                    <h5> TODO: Address , UK</h5>
+                                                    <h5> {{vendor.city}},  {{vendor.country}}</h5>
                                                 </small>
                                             </div>
                                         </div>
@@ -50,14 +49,7 @@
 
                                     <div class="row">
                                         <div class="col text-left">
-                                            stars
-                                        </div>
-                                        <div class="col text-left">
-                                            prints
-                                        </div>
-                                        <div class="col text-left">
-                                            delivery
-                                        </div>
+                                            {{vendor.get_lead_time_display }}                                         </div>
                                     </div>
                                 </div>
                             </div>
@@ -91,28 +83,30 @@
     <div id="stl-page-col" class="col-md-7" style="height: 100%; padding-top: 4vh; padding-bottom:4vh;">
         {% include 'print_preview/stl_viewer.html' %}
 
-        <div id="Summary-Checkout" style="height: 100px; position:absolute"
-            class="container position-fixed-bottom my-4 ">
-            <div class="row ">
-                <div class="col-sm ">
-                    <div class="row">
-                        <div class="col-md-1">
-                            <h3>Total:</h3>
-                        </div>
-                        <div class="col-md-11">
-                            <div id="total_price_value">
-                                <div class="spinner-border" role="status"></div>
-                            </div>
-                        </div>
+        <div id="Summary-Checkout" class="fixed-bottom m-5">
+            <!-- style="height: 100px; position:absolute"
+            class="container position-fixed-bottom my-4 " -->
+            <div class='row mt-1 mx-2' style='text-align: right'>
+                <div style='text-align: right;'>
+                    <div style='display:inline-block;'>
+                    <h2 >Total:</h2>
                     </div>
+                    <div style='display:inline-block;' id="total_price_value">
+                        <div class="spinner-border" role="status"></div>
+                    </div>
+
+
+                </div>
+                <div class='col-1'>
+
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-sm">
+            <div class="row mt-1 mx-2">
+                <div class="col-sm" style='text-align: right'>
                     <div>
                         <button id="checkout" type="button" onclick="checkout()"
-                            class="btn btn-lg btn-primary float-right">
+                            class="btn btn-lg btn-success float-right">
                             <div id="checkout_value">Checkout</div>
                         </button>
                     </div>
