@@ -47,6 +47,8 @@ class CreateCheckoutSession(View):
     @csrf_exempt
     def post(self, request, *args, **kwargs):
 
+        # Get the hostname
+        hostname = request._current_scheme_host
         # Get the cart obj
         cart = Cart(request)
 
@@ -138,15 +140,10 @@ class CreateCheckoutSession(View):
             ],
             mode='payment',
             success_url=
-            'http://127.0.0.1:8000/success?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url='http://127.0.0.1:8000/print/francesco',
+            f'{hostname}/success?session_id='+'{CHECKOUT_SESSION_ID}',
+            cancel_url=f'{hostname}/print/{vendor_slug}'
         )
 
-        # Tutorial
-        # return JsonResponse({
-        #     'id': session.id
-        # })
-        print(session.url)
+        
         return JsonResponse({'url': session.url})
-        return redirect(session.url)
-        return redirect(session.url, code=303)  # From django docs
+
