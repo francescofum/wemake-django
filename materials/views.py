@@ -11,7 +11,7 @@ from vendor.models import Vendor
 from django.contrib.auth.decorators import login_required
 from .forms import  MaterialForm, ColourForm
 
-
+@login_required
 def material_details(request,id:int=None): 
     '''
         @brief: TODO

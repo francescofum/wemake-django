@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['testserver','127.0.0.1','192.168.0.11','192.168.0.30'] # Remove after debugger+unit tests work
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'vendor_login'
 LOGIN_REDIRECT_URL = 'vendor_admin'
 LOGOUT_REDIRECT_URL = "vendor_login"
 
