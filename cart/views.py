@@ -179,14 +179,13 @@ def stripe_webhook(request):
     # Notify the vendor 
     notify_vendor(order)
 
-
-#   Handle payment failed 
-  elif  event['type'] == 'payment_intent.failed':
-    # Get the order
+  elif  event['type'] == 'charge.failed':
     # TODO: Test it
-    session = event['data']['object']
-    order_id  = session.metadata['order_id']
-    notify_customer_payment_failed(order)
+    charge_obj = event['data']['object']
+    email = charge_obj.billing_details['email']
+    notify_customer_payment_failed(email)
+
+
 
 
 

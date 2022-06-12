@@ -21,49 +21,6 @@
     </head>
 
     <body>
-        <table width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-                <td><h1>Payment has failed, please try again.</h1></td>
-            </tr>
-
-            <tr>
-                <td>
-                    <h3>Details</h3>
-
-                    <b>Name:</b> {{ order.first_name }} {{ order.last_name }}<br>
-                    <b>Address:</b> {{ order.address }}<br>
-                    <b>Zip and place:</b> {{ order.zipcode }} {{ order.place }}<br>
-                    <b>E-mail:</b> {{ order.email }}<br>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <h3>Products</h3>
-
-                    <table width="100%" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td><b>File</b></td>
-                            <td><b>Material</b></td>
-                            <td><b>Colour</b></td>
-                            <td><b>Price</b></td>
-                            <td><b>Quantity</b></td>
-                            <td><b></b></td>
-                        </tr>
-                        
-                        {% for item in order.items.all %}
-                            <tr>
-                                <td>{{ item.pretty_name }}</td>
-                                <td>{{ item.material }}</td>
-                                <td>{{ item.colour }}</td>
-                                <td>{{ item.price }}£</td>
-                                <td>{{ item.quantity }}</td>
-                                <td><a href='{{ item.url }}'>Download stl</a>                                </td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </td>
-            </tr>
-        </table>
+       <h3> Your payment was declined, please try again.</h3>
     </body>
 </html>
