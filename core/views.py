@@ -55,6 +55,6 @@ def checkout_success(request):
         cart.clear()
 
         notify_customer_recieved(order)
-        notify_vendor(order)
+        
 
     return render(request, 'core/checkout_success.html')

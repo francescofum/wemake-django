@@ -10,6 +10,8 @@ from order.models import Order
 from order.models import OrderItem
 from cart.cart import Cart
 
+from django.http import HttpResponse
+from order.utilities import notify_vendor, notify_customer_payment_failed
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
@@ -147,3 +149,46 @@ class CreateCheckoutSession(View):
         
         return JsonResponse({'url': session.url})
 
+
+# NOTE: run this first ./stripe login and then /stripe listen --forward-to localhost:8000/webhooks/stripe/
+@csrf_exempt
+def stripe_webhook(request):
+  payload = request.body
+  sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+  event = None
+
+  try:
+    event = stripe.Webhook.construct_event(
+      payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+    )
+  except ValueError as e:
+    # Invalid payload
+    return HttpResponse(status=400)
+  except stripe.error.SignatureVerificationError as e:
+    # Invalid signature
+    return HttpResponse(status=400)
+
+
+  # Handle the checkout.session.completed event TODO move from success to here
+  if event['type'] == 'checkout.session.completed':
+    session = event['data']['object']
+    order_id  = session.metadata['order_id']
+    order = Order.objects.get(pk=order_id)
+    order.status = "RECV"
+    order.save()
+    # Notify the vendor 
+    notify_vendor(order)
+
+
+#   Handle payment failed 
+  elif  event['type'] == 'payment_intent.failed':
+    # Get the order
+    # TODO: Test it
+    session = event['data']['object']
+    order_id  = session.metadata['order_id']
+    notify_customer_payment_failed(order)
+
+
+
+  # Passed signature verification
+  return HttpResponse(status=200)
