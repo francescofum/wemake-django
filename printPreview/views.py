@@ -22,6 +22,11 @@ def print_preview(request,slug):
     materials_json = vendor.serialize_materials_for_print_preview()
     print('materials_json:')
     print(materials_json)
+    
+    # Clear the cart
+    # TODO: repopulate the table w/ cart items
+    cart = Cart(request)
+    cart.clear()
 
     context = {'vendor':vendor,'materials_json':json.dumps(materials_json)}
     import pprint
