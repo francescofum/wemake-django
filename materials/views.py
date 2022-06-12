@@ -60,7 +60,6 @@ def material_details(request,id:int=None):
                 # TODO: Check that the material actually exists.
                 materialOption = Material.objects.get(pk=id) 
                 if 'update' in request.POST:
-                    print('update')
                     material_form = MaterialForm(request.POST,instance=materialOption) 
                     material_form.save()
                 if 'delete' in request.POST:
@@ -77,7 +76,7 @@ def material_details(request,id:int=None):
                     return HttpResponse(f"Error combination already exists\n{e}.")
         else:
             # TODO: Handle not valid form.
-            print('Material NOK')
+            print('Material KO')
 
             pass
 
@@ -103,10 +102,16 @@ def material_details(request,id:int=None):
         if "update" in request.POST:
             colour_forms = []
             for global_colour in GLOBAL_COLOURS.objects.all():
-                inst = Material.objects.get(pk=id).colours.get(global_colours__pk__iexact=global_colour.id)
-                form = ColourForm(request.POST,instance=inst,colour_id=global_colour.id,prefix=f"colour-{global_colour.id}")
-                form.save()
-                colour_forms.append(form)
+                try:
+                    inst = Material.objects.get(pk=id).colours.get(global_colours__pk__iexact=global_colour.id)
+                    form = ColourForm(request.POST,instance=inst,colour_id=global_colour.id,prefix=f"colour-{global_colour.id}")
+                    form.save()
+                    colour_forms.append(form)
+                except ObjectDoesNotExist:
+                    # Create it, this is an edge case when we add a global_material 
+                    # TODO Handle it
+                    pass
+                     
         
         return redirect("material_dashboard")
 
@@ -123,11 +128,6 @@ def material_dashboard(request):
 
     vendor      = request.user.vendor
     materials   = vendor.materials.all()
-
-    print('materials:')
-    print(materials)
-
-
 
     if(request.method == 'GET'):
         context = {
