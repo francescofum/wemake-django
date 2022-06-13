@@ -97,7 +97,7 @@ class Printer(models.Model):
         total_margin_coefficient = (self.price_margin / 100 ) + 1
         price_length_of_filament = float(cura_data['fil_len']) * float(material.price_length)
         price_energy_use = float(energy_use) * float(self.price_energy)
-        material_colour_coefficient = colour.price_coefficient 
+        material_colour_coefficient = (colour.price_coefficient / 100) + 1
         
         price_pre_margin = (  float(price_time_to_print)      \
                             + float(price_length_of_filament) \

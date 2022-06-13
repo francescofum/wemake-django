@@ -4,7 +4,7 @@ import stripe
 from order.models import Order, OrderItem
 from vendor.models import Vendor
 from cart.cart import Cart
-from order.utilities import notify_vendor, notify_customer_recieved, notify_customer_inprogress, notify_customer_shipped, notify_customer_scheduled
+from order.utilities import notify_vendor, notify_customer_confirmed
 
 
 def frontpage(request):
@@ -54,7 +54,7 @@ def checkout_success(request):
         cart = Cart(request)
         cart.clear()
 
-        notify_customer_recieved(order)
+        notify_customer_confirmed(order)
         notify_vendor(order)
 
     return render(request, 'core/checkout_success.html')

@@ -23,7 +23,7 @@ from materials.models import Colour
 from .models import Order
 from vendor.models import Vendor
 from .forms import orderForm, orderForm_Vendor
-from order.utilities import notify_vendor, notify_customer_recieved, notify_customer_inprogress, notify_customer_shipped, notify_customer_scheduled
+from order.utilities import notify_vendor, notify_customer_inprogress, notify_customer_confirmed, notify_customer_printing, notify_customer_dispatched, notify_customer_delivered
 
 
 
@@ -69,7 +69,7 @@ def checkout_details(request,  id:int=None):
 
             order = checkout(request, first_name, last_name, email, address, zipcode, note, price_total)
             
-            notify_customer_recieved(order)
+            notify_customer_inprogress(order)
             notify_vendor(order)
             
             cart.clear()
@@ -133,17 +133,24 @@ def order_details(request, id:int=None):
             form.fields[field].disabled = True
         
         if form.is_valid():
+
             # Order status
             status= form.cleaned_data.get("status")
 
-            if status == 'In Progress': 
+            if status == 'PEND': 
                 notify_customer_inprogress(order)
+            
+            if status == 'CONF': 
+                notify_customer_confirmed(order)
 
-            if status == 'Scheduled': 
-                notify_customer_scheduled(order)
+            if status == 'PRINT': 
+                notify_customer_printing(order)
 
-            if status == 'Shipped': 
-                notify_customer_shipped(order)
+            if status == 'DISP': 
+                notify_customer_dispatched(order)
+
+            if status == 'DELIV': 
+                notify_customer_delivered(order)
 
             form.save()
 

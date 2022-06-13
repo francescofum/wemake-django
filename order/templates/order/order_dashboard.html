@@ -34,23 +34,21 @@
             <p class="card-text"><small class="text-muted">Since: {{ vendor.created_at }}</small></p>
           </div>
           <hr>
-          <p>Your page: <a href="{% url 'print_preview' vendor.slug %}">link</a> </p>
-          
-          <p>You have X orders pending</p>
-          <p>You have Y printers online</p>
-          <p>You have Z materials in stock</p>
-          
+          <p><a href="{% url 'print_preview' vendor.slug %}">Your page</a> </p>      
 
           <div class="my-3 p-3 bg-body rounded shadow-sm">
-            <h6 class="border-bottom pb-2 mb-0">Orders                 <span class="badge bg-primary rounded-pill">3</span>            </h6>
+            <h6 class="border-bottom pb-2 mb-0">Orders:       </h6>
             
             {% for order in vendor.orders.all  %}
+            {% if order.status == 'PEND' %}
+            <div class="d-flex text-muted pt-3" style='display: none !important;'>
+            {% else %}
             <div class="d-flex text-muted pt-3">
-              <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-
+            {% endif %}
+            <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
               <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                 <div class="d-flex justify-content-between">
-                  <strong class="text-gray-dark">{{ order.first_name }} {{ order.last_name }}</strong>
+                  <strong class="text-gray-dark">({{ order.get_status_display }}) {{ order.first_name }} {{ order.last_name }}</strong>
                   <a href="{% url 'order'  order.id %}" >Details</a>
                 </div>
                 <span class="d-block">{{ order.address }}</span>

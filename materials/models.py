@@ -25,7 +25,7 @@ class Material(models.Model):
     stock           = models.BooleanField(default=True)
     price_length    = models.DecimalField(max_digits=3, decimal_places=2,default=1.0)
     printers        = models.ManyToManyField(to='printer.Printer',related_name="materials",blank=True)
-    vendor      = models.ForeignKey(Vendor,related_name='materials',on_delete=models.CASCADE)
+    vendor          = models.ForeignKey(Vendor,related_name='materials',on_delete=models.CASCADE)
     
     class Meta:
         unique_together = ['global_material', 'vendor']
@@ -35,11 +35,11 @@ class Material(models.Model):
 
 class Colour(models.Model):
     
-    stock = models.BooleanField(default=True)
-    owned_by = models.ForeignKey(Material, related_name='colours',on_delete=models.CASCADE) # On delete no cascade?
-    global_colours = models.ForeignKey(GLOBAL_COLOURS, related_name='colour_global',on_delete=models.DO_NOTHING) # On delete no cascade?
-    price_coefficient = models.DecimalField(max_digits=3,decimal_places=2,default=1.0)
-    discount      = models.DecimalField(max_digits=3, decimal_places=2,default=1.0)
+    stock               = models.BooleanField(default=True)
+    owned_by            = models.ForeignKey(Material, related_name='colours',on_delete=models.CASCADE) # On delete no cascade?
+    global_colours      = models.ForeignKey(GLOBAL_COLOURS, related_name='colour_global',on_delete=models.DO_NOTHING) # On delete no cascade?
+    price_coefficient   = models.IntegerField(default=0)
+    discount            = models.DecimalField(max_digits=3, decimal_places=2, default=1.0)
 
     
     class Meta:
@@ -54,5 +54,4 @@ class Colour(models.Model):
 
     def __str__(self):
         return f"{self.owned_by.vendor.created_by.username} {self.owned_by} {self.global_colours.name}"
-    
     

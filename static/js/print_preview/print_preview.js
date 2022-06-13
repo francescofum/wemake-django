@@ -123,7 +123,7 @@ function wm_stl_uploaded_success_callback(file, response) {
         stl_list[id]['id'] = id;
         stl_list[id]['pretty_name'] = response['pretty_name']
         stl_list[id]['copies'] = 1;
-        stl_list[id]['url'] = response["url"];
+        stl_list[id]['url'] = document.location.origin  + response["url"];
         stl_list[id]['filename'] = response['filename'];
         stl_list[id]['material'] = material;
         stl_list[id]['colour'] = colour;

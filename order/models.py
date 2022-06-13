@@ -22,12 +22,11 @@ class Order(models.Model):
         p.materials.all()
     '''
     STATUS_CHOICES = (
-        ('PEND', "Pending"),
-        ('RECV', "Received"),
-        ('PRINT', "Printing"),
-        ('FINISHING', "Finishing"),
-        ('CMPLT', "Complete"),
-        ('DELIV', "Sent")
+        ('PEND', "Pending"),        # Customer hasn't payed yet
+        ('CONF', "Confirmed"),      # Your order has been confirmed
+        ('PRINT', "Printing"),      # STL is currently printing...
+        ('DISP', "Dispatched"),     # Is on it's way
+        ('DELIV', "Delivered"),     # Has been delivered. How was your delivery? 
     )
 
     VENDOR_PAID_CHOICES = (
