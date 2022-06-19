@@ -60,8 +60,7 @@
 
                     <ul class="list-group list-group-flush"> 
                         {% for material in printer.materials.all %}
-                            {% if material.stock == False %}
-                            {% else %}  
+                            {% if material.stock == True %}
                                 <li class="list-group-item">{{ material.global_material }}</li>
                             {% endif %}
                         {% endfor %}

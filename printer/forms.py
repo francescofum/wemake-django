@@ -41,7 +41,7 @@ class PrinterForm(forms.ModelForm):
         'tray_length': 'Tray length',
         'tray_width': 'Tray width',
         'tray_height': 'Tray height',
-        'power': 'Asverage power consumption'
+        'power': 'Average power consumption'
         }
 
     @property
@@ -50,6 +50,8 @@ class PrinterForm(forms.ModelForm):
         helper.layout = Layout(
             HTML('<h2>Printer Settings</h2>')
         )
+
+        # Programatically adding the first few fields into the crispy form. Could write it out by hand, but this is easier. 
         for field in self.Meta().fields:
             if field == 'slug':
                 break
@@ -57,7 +59,7 @@ class PrinterForm(forms.ModelForm):
                 Field(field)
             )
             
-
+        # Now manually add the rest of the fields:
         helper.layout.append(PrependedText('slug', 'https://we-make.online/print/', active=True))
         helper.layout.append(AppendedText('price_energy', '£/Wh', active=True))
         helper.layout.append(AppendedText('price_min', '£', active=True))
@@ -106,6 +108,4 @@ class MaterialForm(forms.Form):
             return [material.id for material in self.printer.materials.all()]
         else:
             return []
-
- 
-    
+            

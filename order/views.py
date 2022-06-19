@@ -23,7 +23,7 @@ from materials.models import Colour
 from .models import Order
 from vendor.models import Vendor
 from .forms import orderForm, orderForm_Vendor
-from order.utilities import notify_vendor, notify_customer_inprogress, notify_customer_confirmed, notify_customer_printing, notify_customer_dispatched, notify_customer_delivered
+from order.utilities import notify_vendor, notify_customer_confirmed, notify_customer_printing, notify_customer_dispatched, notify_customer_delivered
 
 
 
@@ -69,7 +69,6 @@ def checkout_details(request,  id:int=None):
 
             order = checkout(request, first_name, last_name, email, address, zipcode, note, price_total)
             
-            notify_customer_inprogress(order)
             notify_vendor(order)
             
             cart.clear()
@@ -114,9 +113,7 @@ def order_details(request, id:int=None):
         else:
             form = orderForm_Vendor()
 
-        FIELD_NAMES = ['price_total', 'address', 'address2', 'city', 'country', 'zipcode' , 'email', 'first_name', 'last_name', 'note',  ] 
-        for field in FIELD_NAMES: 
-            form.fields[field].disabled = True
+
 
         context = {
             'form':form,
@@ -136,9 +133,6 @@ def order_details(request, id:int=None):
 
             # Order status
             status= form.cleaned_data.get("status")
-
-            if status == 'PEND': 
-                notify_customer_inprogress(order)
             
             if status == 'CONF': 
                 notify_customer_confirmed(order)

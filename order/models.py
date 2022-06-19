@@ -3,6 +3,7 @@
 # from io import BytesIO
 # from PIL import Image 
 
+from faulthandler import disable
 from django.db import models
 from materials.models import Material, Colour
 

@@ -35,19 +35,6 @@ def notify_vendor(order):
     msg.send()
 
 
-def notify_customer_inprogress(order):
-    from_email = settings.EMAIL_HOST_USER
-
-    to_email = order.email
-    subject = 'Order in progress (Pending)'
-    text_content = 'Pending'
-    html_content = render_to_string('order/email_notify_customer_confirmed.html', {'order': order})
-
-    msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
-    msg.attach_alternative(html_content, 'text/html')
-    msg.send()
-
-
 
 def notify_customer_confirmed(order):
     from_email = settings.EMAIL_HOST_USER
