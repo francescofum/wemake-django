@@ -172,7 +172,34 @@ def order_dashboard(request):
     vendor = request.user.vendor
 
     if(request.method == 'GET'):
+        
+        orders_pending = []
+        orders_confirmed = []
+        orders_printing = []
+        orders_dispatched = []
+        orders_delivered = []
+
+        orders_all = vendor.orders.all()
+        for order in vendor.orders.all(): 
+        
+            if order.status == 'PEND':
+                orders_pending.append(order)
+            if order.status == 'CONF':
+                orders_confirmed.append(order)
+            if order.status == 'PRINT':
+                orders_printing.append(order)
+            if order.status == 'DISP':
+                orders_dispatched.append(order)
+            if order.status == 'DELIV':
+                orders_delivered.append(order)
+
         context = {
             'vendor':vendor,
+            'orders_all':orders_all,
+            'orders_pending':orders_pending,
+            'orders_confirmed':orders_confirmed,
+            'orders_printing':orders_printing,
+            'orders_dispatched':orders_dispatched,
+            'orders_delivered':orders_delivered
         }        
         return render(request,'order/order_dashboard.html',context)

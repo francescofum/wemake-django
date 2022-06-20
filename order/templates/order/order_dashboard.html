@@ -8,7 +8,8 @@
 <div class="container">
   <header class="d-flex justify-content-center py-3">
     <ul class="nav nav-pills">
-      <li class="nav-item"><a href="{% url 'order_dashboard' %}" class="nav-link active" aria-current="page">Orders</a></li>
+      <li class="nav-item"><a href="{% url 'order_dashboard' %}" class="nav-link active" aria-current="page">Orders</a>
+      </li>
       <li class="nav-item"><a href="{% url 'printer_dashboard' %}" class="nav-link">Printers</a></li>
       <li class="nav-item"><a href="{% url 'material_dashboard' %}" class="nav-link">Materials</a></li>
       <li class="nav-item"><a href="{% url 'vendor_admin' %}" class="nav-link">Admin</a></li>
@@ -33,100 +34,94 @@
             <p class="card-text">Display the orders you have </p>
             <p class="card-text"><small class="text-muted">Since: {{ vendor.created_at }}</small></p>
           </div>
-          <hr>
-          <p><a href="{% url 'print_preview' vendor.slug %}">Your page</a> </p>      
-
+        </div>
+      </div>
+    </div>
+    <hr>
+          <p><a href="{% url 'print_preview' vendor.slug %}">Your page</a> </p>
           <div class="my-3 p-3 bg-body rounded shadow-sm">
-            <h6 class="border-bottom pb-2 mb-0">Orders:       </h6>
-            
-            {% for order in vendor.orders.all  %}
-            {% if order.status == 'PEND' %}
-            <div class="d-flex text-muted pt-3" style='display: none !important;'>
-            {% else %}
-            <div class="d-flex text-muted pt-3">
-            {% endif %}
-            <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-              <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-                <div class="d-flex justify-content-between">
-                  <strong class="text-gray-dark">({{ order.get_status_display }}) {{ order.first_name }} {{ order.last_name }}</strong>
-                  <a href="{% url 'order'  order.id %}" >Details</a>
+            <h6 class="border-bottom pb-2 mb-0">Orders: </h6>
+
+            <div class="row">
+              <div class="col-4">
+                <div class="list-group" id="list-tab" role="tablist">
+                  <a class="list-group-item list-group-item-action active" id="list-all-list" data-bs-toggle="list"
+                    href="#list-all" role="tab" aria-controls="list-all">All</a>
+                  <a class="list-group-item list-group-item-action" id="list-pending-list" data-bs-toggle="list"
+                    href="#list-pending" role="tab" aria-controls="list-pending">Pending</a>
+                  <a class="list-group-item list-group-item-action" id="list-confirmed-list" data-bs-toggle="list"
+                    href="#list-confirmed" role="tab" aria-controls="list-confirmed">Confirmed</a>
+                  <a class="list-group-item list-group-item-action" id="list-printing-list" data-bs-toggle="list"
+                    href="#list-printing" role="tab" aria-controls="list-printing">Printing</a>
+                  <a class="list-group-item list-group-item-action" id="list-dispatched-list" data-bs-toggle="list"
+                    href="#list-dispatched" role="tab" aria-controls="list-dispatched">Dispatched</a>
+                  <a class="list-group-item list-group-item-action" id="list-delivered-list" data-bs-toggle="list"
+                    href="#list-delivered" role="tab" aria-controls="list-delivered">Delivered</a>
                 </div>
-                <span class="d-block">{{ order.address }}</span>
+              </div>
+              <div class="col-8">
+                <div class="tab-content" id="nav-tabContent">
+                  <div class="tab-pane fade show active" id="list-all" role="tabpanel"
+                    aria-labelledby="list-all-list">
+                    {% for order in orders_all %}
+                    {% include "order/order_list.html" %}
+                    {% empty %}
+                    <p>You have no orders yet.</p>
+                    {% endfor %}
+                  </div>
+                  <div class="tab-pane fade show active" id="list-pending" role="tabpanel"
+                    aria-labelledby="list-pending-list">
+                    {% for order in orders_pending %}
+                    {% include "order/order_list.html" %}
+                    {% empty %}
+                    <p>You have no pending orders yet.</p>
+                    {% endfor %}
+                  </div>
+                  <div class="tab-pane fade" id="list-confirmed" role="tabpanel" aria-labelledby="list-confirmed-list">
+                    {% for order in orders_confirmed %}
+                    {% include "order/order_list.html" %}
+                    {% empty %}
+                    <p>You have no confirmed orders yet.</p>
+                    {% endfor %}
+                  </div>
+                  <div class="tab-pane fade" id="list-printing" role="tabpanel" aria-labelledby="list-printing-list">
+                    {% for order in orders_printing %}
+                    {% include "order/order_list.html" %}
+                    {% empty %}
+                    <p>You have no printing orders yet.</p>
+                    {% endfor %}
+                  </div>
+                  <div class="tab-pane fade" id="list-dispatched" role="tabpanel"
+                    aria-labelledby="list-dispatched-list">
+                    {% for order in orders_dispatched %}
+                    {% include "order/order_list.html" %}
+                    {% empty %}
+                    <p>You have no dispatched orders yet.</p>
+                    {% endfor %}
+                  </div>
+                  <div class="tab-pane fade" id="list-delivered" role="tabpanel" aria-labelledby="list-delivered-list">
+                    {% for order in orders_delivered %}
+                    {% include "order/order_list.html" %}
+                    {% empty %}
+                    <p>You have no delivered orders yet.</p>
+                    {% endfor %}
+                  </div>
+
+
+                </div>
               </div>
             </div>
 
-            
-            <!-- Modal -->
-            <div class="modal fade" id="Modal{{ order.id }}" tabindex="-1" aria-labelledby="Modal{{ order.id }}Label" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="Modal{{ order.id }}Label">{{ order.first_name }} {{ order.last_name }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected></option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                      <span class="d-block">Choices: {{ order.status.field.choices }} </span>
-                      {% for key in order.status.field.choices %}
-                      <span class="d-block">Choices: {{ key }}</span>
-                      {% endfor  %}
-                      <span class="d-block">Created: {{ order.created_at }}</span>
-                      <span class="d-block">{{ order.note }}</span>
-                    <hr>
-                    <h6>Address</h6>
-                      <span class="d-block">{{ order.address }}</span>
-                      <span class="d-block">{{ order.address2 }}</span>
-                      <span class="d-block">{{ order.country }}</span>
-                      <span class="d-block">{{ order.city }}</span>
-                      <span class="d-block">{{ order.zipcode }}</span>
-                      {% for item in order.items.all %}
-                        <hr>
-                        <span class="d-block">Name: {{ item.pretty_name }}</span>
-                        <span class="d-block">Material: {{ item.material }}</span>
-                        <span class="d-block">Colour: {{ item.colour }}</span>
-                        <span class="d-block">Infill: {{ item.infill }}</span>
-                        <span class="d-block">dim_x: {{ item.dim_x }}</span>
-                        <span class="d-block">dim_y: {{ item.dim_y }}</span>
-                        <span class="d-block">dim_z: {{ item.dim_z }}</span>
-                        <span class="d-block">price: {{ item.price }}</span>
-                      {% endfor %}
-                  </div>
-                  <div class="col-md-7 col-lg-8">
-                  </div>
-                  
-                  <div class="modal-footer">
-                    
-
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
 
 
-
-
-            {% endfor %}
-
-
-            </div>
-
-            <small class="d-block text-end mt-3">
-              <a href="#">All suggestions</a>
-            </small>
           </div>
 
 
         </div>
-      </div>
-    </div>
 
-  </div>
+
+
+
+</div>
 </div>
 {% endblock %}
