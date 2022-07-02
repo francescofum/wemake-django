@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-p24)=i4s$=$@$!42$2g@$o5eumo39njlh$(5#3!jao5q$^l#0+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['testserver','127.0.0.1','192.168.0.11','192.168.0.30'] # Remove after debugger+unit tests work
+ALLOWED_HOSTS = ['testserver','127.0.0.1','192.168.0.11','192.168.0.30','localhost'] # Remove after debugger+unit tests work
 
 LOGIN_URL = 'vendor_login'
 LOGIN_REDIRECT_URL = 'vendor_admin'
@@ -194,7 +194,7 @@ EMAIL_USE_TLS = True
 
 
 # Stripe Settings:
-
-STRIPE_PUBLIC_KEY = "pk_test_51Ia2C5HJurPRv8eSyWlNZ36WmDNj6hFvbuvtVQ6ZzYvPyTn7XrJXcoJeTTxPxzv9NeBSbcV8GIMajn4rbbUW00u300bQN63mbf"
-STRIPE_SECRET_KEY = "sk_test_51Ia2C5HJurPRv8eSqT5eKKQaNMmhNfPTy5IUVfzuFWAEw3Hb9M9B6DR6ObJ3EBhZaKuQJNT4zdGv5lbaqFnPsGqj00hPpG7AT4"
-STRIPE_WEBHOOK_SECRET = None
+                    
+STRIPE_PUBLIC_KEY = "pk_test_51L9pC5Ik05CqP5pbmO5ixM1z0hUrX4imgJfPgBC1RoU7tMyjYwE8OFg3B4cIv39mQA8gMIesB9pI5uPXDZhkQvss00LE0ghYZY"
+STRIPE_SECRET_KEY = "sk_test_51L9pC5Ik05CqP5pbuWHELvkSZ5cEhrYcjjdt2DqKIMelpTJh56upUsO651JkSkuDMB48ZIv7iCyH8SaBMLJovMvf00b4O5jOle"
+STRIPE_WEBHOOK_SECRET = "whsec_d30d4170794a708ac76d85bbb221556c69511bd121ce0518563f4e86d27943a5"
