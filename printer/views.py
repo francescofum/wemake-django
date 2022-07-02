@@ -13,7 +13,7 @@ from printPreview.models import STL
 import json
 from cart.cart import Cart 
 
-
+@login_required
 def printer_details(request,id:int=None): 
     '''
         @brief Renders a printer form. The printer form
