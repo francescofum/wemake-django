@@ -1,3 +1,5 @@
+from faulthandler import disable
+from turtle import end_fill
 from django import forms
 from django.forms.widgets import CheckboxSelectMultiple
 from crispy_forms.helper import FormHelper
@@ -45,6 +47,7 @@ class orderForm_Vendor(forms.ModelForm):
         model = Order 
         fields = ['status','price_total', 'address', 'address2', 'city', 'country', 'zipcode' , 'email', 'first_name', 'last_name', 'note',  ] 
 
+
     @property
     def helper(self):
         helper = FormHelper()
@@ -52,8 +55,15 @@ class orderForm_Vendor(forms.ModelForm):
             HTML('<h2>Order</h2>')
         )
         for field in self.Meta().fields:
-            helper.layout.append(
-                Field(field)
-            )
+            if field == 'status':
+                # Let the Vendor edit the status field
+                helper.layout.append(
+                    Field(field)
+                )
+            else: 
+                # All other fields except status are disabled (read only) for vendor
+                helper.layout.append(
+                    Field(field, disabled=True)
+                )   
         helper.layout.append(Submit('submit','Save',css_class='btn-primary'))
         return helper

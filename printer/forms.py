@@ -2,6 +2,8 @@ from django import forms
 from django.forms.widgets import CheckboxSelectMultiple
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, HTML, Submit, Div
+from crispy_forms.bootstrap import AppendedText, PrependedText
+
 
 from .models import Printer
 from vendor.models import Vendor
@@ -17,8 +19,8 @@ class PrinterForm(forms.ModelForm):
         fields = [
             'name',
             'is_active',
-            'slug',
             'description',
+            'slug',
             'price_energy',
             'price_min',
             'price_hour',
@@ -26,11 +28,20 @@ class PrinterForm(forms.ModelForm):
             'tray_length',
             'tray_width',
             'tray_height',
-            'power',
-            'config',
+            'power'
         ]
         labels = {
-        'is_active': 'Status',
+        'is_active': 'Status (Online/Offline)',
+        'slug': 'Url for customers',
+        'description': 'Description of printer',
+        'price_energy': 'Cost of electricity',
+        'price_min': 'Minimum price',
+        'price_hour': 'Price per hour',
+        'price_margin': 'Magin',
+        'tray_length': 'Tray length',
+        'tray_width': 'Tray width',
+        'tray_height': 'Tray height',
+        'power': 'Average power consumption'
         }
 
     @property
@@ -39,10 +50,26 @@ class PrinterForm(forms.ModelForm):
         helper.layout = Layout(
             HTML('<h2>Printer Settings</h2>')
         )
+
+        # Programatically adding the first few fields into the crispy form. Could write it out by hand, but this is easier. 
         for field in self.Meta().fields:
+            if field == 'slug':
+                break
             helper.layout.append(
                 Field(field)
             )
+            
+        # Now manually add the rest of the fields:
+        helper.layout.append(PrependedText('slug', 'https://we-make.online/print/', active=True))
+        helper.layout.append(AppendedText('price_energy', '£/Wh', active=True))
+        helper.layout.append(AppendedText('price_min', '£', active=True))
+        helper.layout.append(AppendedText('price_hour', '£', active=True))
+        helper.layout.append(AppendedText('price_margin', '%', active=True))
+        helper.layout.append(AppendedText('tray_length', 'mm', active=True))
+        helper.layout.append(AppendedText('tray_width', 'mm', active=True))
+        helper.layout.append(AppendedText('tray_height', 'mm', active=True))
+        helper.layout.append(AppendedText('power', 'Watts', active=True))
+
         helper.layout.append(Submit('submit','Save',css_class='btn-primary'))
         helper.form_tag = False
         return helper
@@ -81,6 +108,4 @@ class MaterialForm(forms.Form):
             return [material.id for material in self.printer.materials.all()]
         else:
             return []
-
- 
-    
+            

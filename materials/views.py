@@ -1,5 +1,6 @@
 
 
+from ast import Try
 from django.db import IntegrityError
 from django.shortcuts import render, HttpResponse, redirect
 from django.core.exceptions import ObjectDoesNotExist
@@ -17,7 +18,6 @@ def material_details(request,id:int=None):
         @brief: TODO
     '''
     vendor = request.user.vendor
-
     # ***** GET REQUESTS ******* #
 
     # Either display an existing material,
@@ -31,16 +31,20 @@ def material_details(request,id:int=None):
             for global_colour in GLOBAL_COLOURS.objects.all():
                 try:
                     colour = materialOption.colours.get(global_colours__pk__iexact=global_colour.id)
-                    colour_forms.append(ColourForm(colour_id=global_colour.id,instance=colour,prefix=f"colour-{global_colour.id}"))
+                    Form = ColourForm(colour_id=global_colour.id,instance=colour,prefix=f"colour-{global_colour.id}")
+                    colour_forms.append(Form)
+
                 except ObjectDoesNotExist:
                     # Colour does not exists so no instance is passed 
                     colour_forms.append(ColourForm(colour_id=global_colour.id,prefix=f"colour-{global_colour.id}"))
+
 
 
         else:
             material_form = MaterialForm()
             for colour in GLOBAL_COLOURS.objects.all():
                 colour_forms.append(ColourForm(colour_id=colour.id,prefix=f"colour-{colour.id}"))
+
 
     # ***** POST REQUESTS ******* #
 
@@ -52,7 +56,7 @@ def material_details(request,id:int=None):
         #           Material Form
         # -----------------------------------
         material_form = MaterialForm(request.POST)
-        
+
         if material_form.is_valid():
 
             # Update or delete an existing material option

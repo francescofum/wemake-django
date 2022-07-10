@@ -7,7 +7,7 @@ from .models import Vendor
 from order.views import checkout_details
 from order.forms import orderForm, orderForm_Vendor
 from order.models import Order
-from order.utilities import notify_customer_recieved
+from order.utilities import notify_customer_confirmed
 
 @login_required
 def vendor_admin(request):
