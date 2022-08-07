@@ -1,33 +1,52 @@
 {% extends 'core/base.html' %}
 
-{%block title %} Material {% endblock %} 
+{% load crispy_forms_tags %}
+
+{%block title %} Material {% endblock %}
 
 {% block content %}
 
-<h1 class="title">Materials</h1>
 <form method="post" action=".">
     {% csrf_token %}
-    {{ material_form.as_p}}
-    <!-- Loop over all the colours, display them. -->
-    {% for form in colour_forms %}
-    ------------------------------
-        {{form.as_p}}
-    {% endfor %}
-
-    <div class="field">
-        {% if not material_form.instance.id %}
-            <div class="control">
-                <button class="button" type="submit" name="add">Add</button>
-            </div>
+    <div class="contaner m-5">
+        {% if material_form.material_name == "ALL" %}
+        <h3>New material</h3>
         {% else %}
-        <div class="control">
-            <button class="button" type="submit" name="update">Update</button>
+        <h3>Material Settings for {{material_form.material_name}}</h3>
+        {% endif %}
+
+        {% crispy material_form %}
+        <hr>
+        <!-- Loop over all the colours, display them. -->
+        {% if material_form.material_name == "ALL" %}
+        <h3>Colours Settings:</h3>
+        {% else %}
+        <h3>Colours Settings for {{material_form.material_name}}</h3>
+        {% endif %}
+        <div style="max-height:500px;width:100%" class="overflow-auto mb-3">
+            {% for form in colour_forms %}
+            <div class=" p-2 bg-light border rounded m-2">
+                <h5>{{form.colour_name |title}}</h5>
+                {% crispy form %}
+            </div>
+            {% endfor %}
         </div>
 
-        <div class="control">
-            <button class="button" type="submit" name="delete">Delete</button>
+        <div class="field">
+            {% if not material_form.instance.id %}
+            <div class="control m-2 d-grid gap-2">
+                <button class="btn btn-success" type="submit" name="add">Add</button>
+            </div>
+            {% else %}
+            <div class="control m-2 d-grid gap-2">
+                <button class="btn btn-success" type="submit" name="update">Update</button>
+            </div>
+
+            <div class="control m-2 d-grid gap-2">
+                <button class="btn btn-danger" type="submit" name="delete">Delete</button>
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
     </div>
 </form>
 

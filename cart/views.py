@@ -10,6 +10,8 @@ from order.models import Order
 from order.models import OrderItem
 from cart.cart import Cart
 
+from django.http import HttpResponse
+from order.utilities import notify_vendor, notify_customer_payment_failed
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
@@ -48,6 +50,8 @@ class CreateCheckoutSession(View):
     @csrf_exempt
     def post(self, request, *args, **kwargs):
 
+        # Get the hostname
+        hostname = request._current_scheme_host
         # Get the cart obj
         cart = Cart(request)
 
@@ -139,15 +143,52 @@ class CreateCheckoutSession(View):
             ],
             mode='payment',
             success_url=
-            'http://127.0.0.1:8000/success?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url='http://127.0.0.1:8000/print/francesco',
+            f'{hostname}/success?session_id='+'{CHECKOUT_SESSION_ID}',
+            cancel_url=f'{hostname}/print/{vendor_slug}'
         )
 
-        # Tutorial
-        # return JsonResponse({
-        #     'id': session.id
-        # })
-        print(session.url)
+        
         return JsonResponse({'url': session.url})
-        return redirect(session.url)
-        return redirect(session.url, code=303)  # From django docs
+
+
+# NOTE: run this first ./stripe login and then /stripe listen --forward-to localhost:8000/webhooks/stripe/
+@csrf_exempt
+def stripe_webhook(request):
+  payload = request.body
+  sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+  event = None
+
+  try:
+    event = stripe.Webhook.construct_event(
+      payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+    )
+  except ValueError as e:
+    # Invalid payload
+    return HttpResponse(status=400)
+  except stripe.error.SignatureVerificationError as e:
+    # Invalid signature
+    return HttpResponse(status=400)
+
+
+  # Handle the checkout.session.completed event TODO move from success to here
+  if event['type'] == 'checkout.session.completed':
+    session = event['data']['object']
+    order_id  = session.metadata['order_id']
+    order = Order.objects.get(pk=order_id)
+    order.status = "RECV"
+    order.save()
+    # Notify the vendor 
+    notify_vendor(order)
+
+  elif  event['type'] == 'charge.failed':
+    # TODO: Test it
+    charge_obj = event['data']['object']
+    email = charge_obj.billing_details['email']
+    notify_customer_payment_failed(email)
+
+
+
+
+
+  # Passed signature verification
+  return HttpResponse(status=200)

@@ -35,7 +35,8 @@ def notify_vendor(order):
     msg.send()
 
 
-def notify_customer_recieved(order):
+
+def notify_customer_confirmed(order):
     from_email = settings.EMAIL_HOST_USER
 
     to_email = order.email
@@ -47,38 +48,49 @@ def notify_customer_recieved(order):
     msg.attach_alternative(html_content, 'text/html')
     msg.send()
 
-
-
-def notify_customer_inprogress(order):
+def notify_customer_payment_failed(email):
     from_email = settings.EMAIL_HOST_USER
 
-    to_email = order.email
-    subject = 'Order in progress'
-    text_content = 'Your order is in progress'
+    to_email = email
+    subject = 'Order payment faled'
+    text_content = 'Your order has not gone through as the payment was rejected.\nPlease try again.'
     html_content = render_to_string('order/email_notify_customer_inprogress.html', {'order': order})
 
     msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
     msg.attach_alternative(html_content, 'text/html')
     msg.send()
 
-def notify_customer_shipped(order):
+
+def notify_customer_printing(order):
     from_email = settings.EMAIL_HOST_USER
 
     to_email = order.email
-    subject = 'Order Shipped'
-    text_content = 'Your order is on its way '
+    subject = 'Printing..'
+    text_content = 'Your STLs are printing!'
+    html_content = render_to_string('order/email_notify_customer_inprogress.html', {'order': order})
+
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+    msg.attach_alternative(html_content, 'text/html')
+    msg.send()
+
+def notify_customer_dispatched(order):
+    from_email = settings.EMAIL_HOST_USER
+
+    to_email = order.email
+    subject = 'Order Dispatched'
+    text_content = 'Your order is on its way'
     html_content = render_to_string('order/email_notify_customer_shipped.html', {'order': order})
 
     msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
     msg.attach_alternative(html_content, 'text/html')
     msg.send()
 
-def notify_customer_scheduled(order):
+def notify_customer_delivered(order):
     from_email = settings.EMAIL_HOST_USER
 
     to_email = order.email
-    subject = 'Order Scheduled'
-    text_content = 'Your order is scheduled to arrive!'
+    subject = 'Delivered'
+    text_content = 'Your order has been delivered. '
     html_content = render_to_string('order/email_notify_customer_scheduled.html', {'order': order})
 
     msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])

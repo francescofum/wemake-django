@@ -23,7 +23,7 @@ from materials.models import Colour
 from .models import Order
 from vendor.models import Vendor
 from .forms import orderForm, orderForm_Vendor
-from order.utilities import notify_vendor, notify_customer_recieved, notify_customer_inprogress, notify_customer_shipped, notify_customer_scheduled
+from order.utilities import notify_vendor, notify_customer_confirmed, notify_customer_printing, notify_customer_dispatched, notify_customer_delivered
 
 
 
@@ -69,7 +69,6 @@ def checkout_details(request,  id:int=None):
 
             order = checkout(request, first_name, last_name, email, address, zipcode, note, price_total)
             
-            notify_customer_recieved(order)
             notify_vendor(order)
             
             cart.clear()
@@ -114,9 +113,7 @@ def order_details(request, id:int=None):
         else:
             form = orderForm_Vendor()
 
-        FIELD_NAMES = ['price_total', 'address', 'address2', 'city', 'country', 'zipcode' , 'email', 'first_name', 'last_name', 'note',  ] 
-        for field in FIELD_NAMES: 
-            form.fields[field].disabled = True
+
 
         context = {
             'form':form,
@@ -133,17 +130,21 @@ def order_details(request, id:int=None):
             form.fields[field].disabled = True
         
         if form.is_valid():
+
             # Order status
             status= form.cleaned_data.get("status")
+            
+            if status == 'CONF': 
+                notify_customer_confirmed(order)
 
-            if status == 'In Progress': 
-                notify_customer_inprogress(order)
+            if status == 'PRINT': 
+                notify_customer_printing(order)
 
-            if status == 'Scheduled': 
-                notify_customer_scheduled(order)
+            if status == 'DISP': 
+                notify_customer_dispatched(order)
 
-            if status == 'Shipped': 
-                notify_customer_shipped(order)
+            if status == 'DELIV': 
+                notify_customer_delivered(order)
 
             form.save()
 
@@ -171,7 +172,34 @@ def order_dashboard(request):
     vendor = request.user.vendor
 
     if(request.method == 'GET'):
+        
+        orders_pending = []
+        orders_confirmed = []
+        orders_printing = []
+        orders_dispatched = []
+        orders_delivered = []
+
+        orders_all = vendor.orders.all()
+        for order in vendor.orders.all(): 
+        
+            if order.status == 'PEND':
+                orders_pending.append(order)
+            if order.status == 'CONF':
+                orders_confirmed.append(order)
+            if order.status == 'PRINT':
+                orders_printing.append(order)
+            if order.status == 'DISP':
+                orders_dispatched.append(order)
+            if order.status == 'DELIV':
+                orders_delivered.append(order)
+
         context = {
             'vendor':vendor,
+            'orders_all':orders_all,
+            'orders_pending':orders_pending,
+            'orders_confirmed':orders_confirmed,
+            'orders_printing':orders_printing,
+            'orders_dispatched':orders_dispatched,
+            'orders_delivered':orders_delivered
         }        
         return render(request,'order/order_dashboard.html',context)
