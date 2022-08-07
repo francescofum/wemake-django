@@ -17,6 +17,7 @@ class CreateCheckoutSession(View):
 
     # Helper function to create list items from cart
     def create_list_items(self, cart):
+        print(cart.cart.items())
         # result items dict
         items = []
         for product_id, data in cart.cart.items():

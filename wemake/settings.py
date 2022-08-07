@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-p24)=i4s$=$@$!42$2g@$o5eumo39njlh$(5#3!jao5q$^l#0+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['testserver','127.0.0.1','192.168.0.11','192.168.0.30'] # Remove after debugger+unit tests work
+ALLOWED_HOSTS = ['35.197.206.54','wemake.network', 'testserver','127.0.0.1','192.168.0.11','192.168.0.30'] # Remove after debugger+unit tests work
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'vendor_admin'

@@ -60,7 +60,7 @@ class Printer(models.Model):
     def slice(self,stl_id):
         # TODO: put wm_slicer_cura in the env, don't hardcode.
         # TOOD: put port in env, don't hardcode.
-        response = requests.post('http://127.0.0.1:5555/analyse_stl', json={"stl_id": stl_id,'printe_id':self.id})
+        response = requests.post('http://wemake.network:5555/analyse_stl', json={"stl_id": stl_id,'printer_id':self.id})
     
         if response.status_code == 200:
             data = json.loads(response.text)
