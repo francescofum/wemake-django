@@ -52,8 +52,8 @@ class Order(models.Model):
     
     note = models.TextField(blank=True, null=True)
     # price fields
-    price_total = models.DecimalField(max_digits=6, decimal_places=2,null=True,blank=True)
-    price_shipping = models.DecimalField(max_digits=6, decimal_places=2,null=True,blank=True)
+    price_total = models.DecimalField(max_digits=10, decimal_places=2,null=True,blank=True)
+    price_shipping = models.DecimalField(max_digits=10, decimal_places=2,null=True,blank=True)
     shipping_type = models.CharField(max_length=255,null=True,blank=True) # Make these options when we have them completely defined.
                                                                           # Currently not used. 
     class Meta: 
