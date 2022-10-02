@@ -10,3 +10,5 @@ django-crispy-forms==1.14.0
 crispy-bootstrap5==0.6
 stripe==2.76
 requests==2.27.1
+Werkzeug==2.1.2
+pyOpenSSL==22.0.0
