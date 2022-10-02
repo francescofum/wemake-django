@@ -51,10 +51,14 @@ def checkout_success(request):
     if order_update_result: 
         order = Order.objects.get(pk=order_id)
 
+        context = {
+            'order' : order
+        }
+
         cart = Cart(request)
         cart.clear()
 
         notify_customer_confirmed(order)
         notify_vendor(order)
 
-    return render(request, 'core/checkout_success.html')
+    return render(request, 'core/checkout_success.html', context)
