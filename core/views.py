@@ -7,9 +7,11 @@ from cart.cart import Cart
 from order.utilities import notify_vendor, notify_customer_confirmed
 
 
-def frontpage(request):
-    return render(request, 'core/frontpage.html')
+def frontpage_main(request):
+    return render(request, 'core/frontpage_main.html')
 
+def frontpage_vendors(request):
+    return render(request, 'core/frontpage_vendors.html')
 
 def checkout(request):
     return render(request, 'core/checkout.html')

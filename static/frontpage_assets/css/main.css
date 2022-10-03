@@ -616,7 +616,7 @@ p {
   }
 }
 
-.sticky .navbar .navbar-nav .navbarSupportedContent a {
+.sticky .navbar .navbar-nav .nav-item a {
   color: #162447;
 }
 
