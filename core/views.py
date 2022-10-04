@@ -7,9 +7,11 @@ from cart.cart import Cart
 from order.utilities import notify_vendor, notify_customer_confirmed
 
 
-def frontpage(request):
-    return render(request, 'core/frontpage.html')
+def frontpage_main(request):
+    return render(request, 'core/frontpage_main.html')
 
+def frontpage_vendors(request):
+    return render(request, 'core/frontpage_vendors.html')
 
 def checkout(request):
     return render(request, 'core/checkout.html')
@@ -51,10 +53,14 @@ def checkout_success(request):
     if order_update_result: 
         order = Order.objects.get(pk=order_id)
 
+        context = {
+            'order' : order
+        }
+
         cart = Cart(request)
         cart.clear()
 
         notify_customer_confirmed(order)
         notify_vendor(order)
 
-    return render(request, 'core/checkout_success.html')
+    return render(request, 'core/checkout_success.html', context)
