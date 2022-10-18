@@ -9,7 +9,7 @@
 
 
 <script>
-    const material_colours = {{ materials_json| safe}};
+    const material_colours = {{ materials_json | safe}};
     const cart = {};
 </script>
 
@@ -31,7 +31,7 @@
                                         <div class="col">
                                             <div class="text-left">
                                                 <strong>
-                                                    <h4> {{vendor.store_name}} </h4>
+                                                    <h4 > {{vendor.store_name}} </h4>
                                                 </strong>
                                             </div>
                                         </div>
@@ -66,12 +66,12 @@
                     </div>
                     <div class="card-footer text-muted text-left">
                         <!-- <div class="card-footer text-muted text-left" style="height: 100px"> -->
-                        <div>Additional Services:</div>
+                        <div >Additional Services:</div>
                         <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#cad_support_modal">
                             CAD Services
                         </div>
                         <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#contact_vendor_modal">
-                            <i class="far fa-envelope"></i>Contact us
+                            Contact us
                         </div>
                     </div>
                 </div>
@@ -83,29 +83,30 @@
     <div id="stl-page-col" class="col-md-7" style="height: 100%; padding-top: 4vh; padding-bottom:4vh;">
         {% include 'print_preview/stl_viewer.html' %}
 
-        <div id="Summary-Checkout" class="fixed-bottom m-5">
+        
+        <div id="Summary-Checkout" class="m-5 position-absolute bottom-0 end-0" >
             <!-- style="height: 100px; position:absolute"
             class="container position-fixed-bottom my-4 " -->
-            <div class='row mt-1 mx-2' style='text-align: right'>
-                <div style='text-align: right;'>
-                    <div style='display:inline-block;'>
+            <div class="row mt-1 mx-2" style="text-align: right">
+                <div style="text-align: right;">
+                    <div style="display:inline-block;">
                     <h2 >Total:</h2>
                     </div>
-                    <div style='display:inline-block;' id="total_price_value">
+                    <div style="display:inline-block;" id="total_price_value">
                         <div class="spinner-border" role="status"></div>
                     </div>
 
 
                 </div>
-                <div class='col-1'>
+                <div class="col-1">
 
                 </div>
             </div>
 
             <div class="row mt-1 mx-2">
-                <div class="col-sm" style='text-align: right'>
+                <div class="col-sm" style="text-align: right">
                     <div>
-                        <button id="checkout" type="button" onclick="checkout()"
+                        <button id="checkout" type="button" onclick="checkout();"
                             class="btn btn-lg btn-success float-right">
                             <div id="checkout_value">Checkout</div>
                         </button>

@@ -8,6 +8,8 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 import json
+from django.core.mail import EmailMultiAlternatives, send_mail
+from django.template.loader import render_to_string
 
 from vendor.models import Vendor
 from cart.cart import Cart 
@@ -148,3 +150,27 @@ def go_to_checkout(request):
     checkout_details(request,cart)
 
     return JsonResponse(response,status=500) # only arrives here if error
+
+
+def send_vendor_query(request,slug):
+    from_email = settings.EMAIL_HOST_USER
+    vendor = Vendor.objects.get(slug=slug)
+    to_email = request.POST.get('email')
+    topic = request.POST.get('topic')
+    body = request.POST.get('description')
+    subject = f"New message re: {topic}"
+
+    context = {
+        'from':from_email,
+        'to':to_email,
+        'subject':subject,
+        'body':body
+    }
+    text_content = 'You have a new query'
+    html_content = render_to_string('print_preview/contact_vendor_email.html', context)
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+  
+    response = {} 
+    return JsonResponse(response,status=200)

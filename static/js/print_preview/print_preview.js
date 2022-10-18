@@ -712,15 +712,16 @@ function send_vendor_query() {
     var contactUs_details = $("#contactUs_details").val();
 
     response = $.ajax({
-        url: ajax_object.ajax_url,
-        type: 'POST',
+        url: 'send_vendor_query/',
+        type: 'post',
         success: contact_vendor_success_callback,
         data: {
-            action: 'contact_vendor',
-            vendor_id: vendor_id['vendor_id'],
             email: contactUs_email,
             topic: contactUs_topic,
             description: contactUs_details
+        },
+        headers: {
+            'X-CSRFToken': csrftoken
         }
     });
     $("#contact_vendor_modal").modal('hide');
@@ -731,8 +732,32 @@ function send_vendor_query() {
 
 function contact_vendor_success_callback(response) {
     console.log(response)
+}
+
+function send_vendor_cad_query() {
+    var contactUs_email = $("#contactUsCad_email").val();
+    var contactUs_topic = $("#contactUsCad_topic").val();
+    var contactUs_details = $("#contactUsCad_details").val();
+    
+    response = $.ajax({
+        url: 'send_vendor_query/',
+        type: 'post',
+        success: contact_vendor_success_callback,
+        data: {
+            email: contactUs_email,
+            topic: contactUs_topic,
+            description: contactUs_details
+        },
+        headers: {
+            'X-CSRFToken': csrftoken
+        }
+    });
+    $("#contact_vendor_modal").modal('hide');
+    $("#cad_support_modal").modal('hide');
+    // $("#contactUs_details").val('')
 
 }
+
 
 function add_all_items_to_cart() {
     // Adds all items to the cart
