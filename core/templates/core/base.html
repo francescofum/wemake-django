@@ -50,7 +50,7 @@
 
   <!-- ======== header start ======== -->
   <header class="header">
-    <div class="navbar-area">
+    <div class="navbar-area {% url 'frontpage_main' as url_ %} {% if url_ != request.path %} sticky {% endif %}  ">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-12">
