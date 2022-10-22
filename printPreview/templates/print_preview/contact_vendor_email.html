@@ -1,0 +1,19 @@
+
+
+Dear vendor, 
+<br>
+You have received an email from a visitor ({{ to }})on your page:
+<br>
+-------------------------------------------
+<br>
+{{ body }}
+<br>
+-------------------------------------------
+<br>
+<a href="mailto:{{to}}?subject={{subject}}&body=Dear {{ to }},
+Regarding your query:
+-------------------------------------------
+%0A{{body}}
+-------------------------------------------">
+    Please click here to reply.
+</a>

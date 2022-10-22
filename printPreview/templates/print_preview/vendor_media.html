@@ -1,4 +1,5 @@
 <!--/.Indicators-->
+
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
 
@@ -25,9 +26,8 @@
                 <!-- Image -->
 
                 <div class="col-4">
-                    <div class="card bg-light">
-                        <img class="" src="{{ img.gallery_img.url }}" style="height:150px; width:160px; ">
-
+                    <div class="card bg-light" style="height:100%; width:100%;">
+                        <img class="" src="{{ img.gallery_img.url }}" style="object-fit:cover;max-height:150px;min-height:150px">
                         <div class="card-footer">
                             <p class="card-text text-center">{{img.description}}</p>
                         </div>
