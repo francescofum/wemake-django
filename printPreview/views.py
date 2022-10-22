@@ -26,11 +26,18 @@ def print_preview(request,slug):
     print(materials_json)
     
     # Clear the cart
-    # TODO: repopulate the table w/ cart items
+    # TODO: 
+    # repopulate the table w/ cart items
+    # when repopluate table w/ cart items, need to set initial_upload_screen=false
+
     cart = Cart(request)
     cart.clear()
 
-    context = {'vendor':vendor,'materials_json':json.dumps(materials_json)}
+    context = {
+        'vendor':vendor,
+        'materials_json':json.dumps(materials_json),
+        'initial_upload_screen':'true'
+        }
     import pprint
     pprint.pprint(materials)
     return render(request,'print_preview/print_preview.html',context)
