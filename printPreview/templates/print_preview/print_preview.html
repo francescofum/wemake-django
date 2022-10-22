@@ -81,7 +81,18 @@
         </div>
     </div>
     <!-- Right side of the page: stl viewer, rows, checkout ... -->
-    <div id="stl-page-col" class="col-md-7" >
+    <div id="initial-upload-screen" class=" col-md-7" style="padding:90px">
+        <img src="/media/base-website/upload.png" alt="Upload STL" style="width:50vh;height:50vh;" >
+            <div style="cursor: pointer;" id="user_dropzone"
+        class="w-100 my-2 container align-items-center justify-content-center large">
+        <button id="dropzone-button" type="button" class="btn btn-primary">Add files </button>
+        <div id="initial-upload-spinner" style="display:none">
+            <div class="spinner-border text-primary" role="status" ></div>
+        </div>
+    </div>
+    </div>
+
+    <div id="stl_viewer-screen" id="stl-page-col" class="col-md-7" style="display: none;" >
         {% include 'print_preview/stl_viewer.html' %}
 
         

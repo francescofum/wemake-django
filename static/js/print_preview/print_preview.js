@@ -52,6 +52,8 @@ function wm_create_dropzone() {
         // complete: wm_stl_uploaded_complete_callback, // Callback function for when a file upload is complete, whether successfull or erronous.  
         sending: function wm_stl_upload_sending_callback() {
             $('.dz-preview').remove();
+            document.getElementById("initial-upload-spinner").style.display = "initial"; 
+
         },
         createImageThumbnails: false,
         uploadprogress: function (file, progress, bytesSent) {
@@ -110,7 +112,8 @@ function create_new_div(id,printer_id=1) {
  * @param: response - The response from the server. 
  */
 function wm_stl_uploaded_success_callback(file, response) {
-
+    document.getElementById("initial-upload-screen").style.display = "none"; 
+    document.getElementById("stl_viewer-screen").style.display = "initial"; 
     try {
         //  Get the parameters
         id = response['id']
