@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+
 
 from .forms import VendorGalleryForm, VendorSettingsForm
 from .models import Vendor 
@@ -8,6 +10,33 @@ from order.views import checkout_details
 from order.forms import orderForm, orderForm_Vendor
 from order.models import Order
 from order.utilities import notify_customer_confirmed
+
+
+def vendor_login(request):
+    '''
+        User login page. 
+    '''
+
+    if(request.method == 'GET'):
+        return render(request,'vendor/login.html')
+
+    if(request.method == 'POST'):
+        # Get email field
+        email = request.POST.get('email')
+        # Get password field (TODO: should this be encrypted or something?)
+        password = request.POST.get('password')
+
+        # Django wants authentication based on username, so get the username
+        # user = User.objects.get(email=email)
+        user = authenticate(username=email, password=password)
+        print("authenticating")
+        if user is not None:
+            # Login the user
+            login(request,user)
+            return redirect("vendor_admin")
+        else:
+            # No backend authenticated the credentials
+            return redirect("vendor_login")
 
 @login_required
 def vendor_admin(request):
