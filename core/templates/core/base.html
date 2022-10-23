@@ -52,12 +52,15 @@
   <!-- ======== header start ======== -->
   {% url 'frontpage_main' as url_frontpage %} 
   <header class="header">
-    <div class="navbar-area {% if request.path != url_frontpage %} sticky {% endif %}  ">
-      <div class="container">
+    <div class="navbar-area {% if request.path != url_frontpage %} navbar-dark bg-primary {% endif %}  ">
+      <div class="container" >
         <div class="row align-items-center">
           <div class="col-lg-12">
             <nav class="navbar navbar-expand-lg">
-              <a class="navbar-brand" href="{% url 'frontpage_main' %}" style="color:#5864FF; font-size: 40px">
+              <a class="navbar-brand" href="{% url 'frontpage_main' %}" style="
+              {% if request.path != url_frontpage %} color:#ffffff; {% endif %}
+              {% if request.path == url_frontpage %} color:#5864FF; {% endif %}
+               font-size: 30px">
                 We<b>Make</b>
               </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
