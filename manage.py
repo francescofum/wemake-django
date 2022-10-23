@@ -7,14 +7,16 @@ import debugpy
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wemake.settings')
-
-    try:
-        
-        debugpy.listen(("0.0.0.0", 3002))
-        debugpy.wait_for_client()
-        print('Attached!')
-    except Exception as e:
-        pass
+    
+    if(os.environ['DEBUG'])=="TRUE":
+        print("Waiting for debugger to attach.....")
+        try:
+            
+            debugpy.listen(("0.0.0.0", 3002))
+            debugpy.wait_for_client()
+            print('Attached!')
+        except Exception as e:
+            pass
 
     try:
         from django.core.management import execute_from_command_line
