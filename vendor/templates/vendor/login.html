@@ -1,19 +1,38 @@
 {% extends 'core/base.html' %}
 
-{%block title %} Login {% endblock %} 
+{%block title %} Login {% endblock %}
 
 {% block content %}
-<h1 class="title">Login</h1>
-<form method="post" action=".">
-    {% csrf_token %}
-    {{ form.as_p}}
 
-    <div class="field">
-        <div class="control">
-            <button class="button">Log in</button>
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+        <div class="col-lg-7 text-center text-lg-start">
+            <h1 class="display-4 fw-bold lh-1 mb-3">Vendor Login</h1>
+            <p class="col-lg-10 fs-4">We're making it easy to set up your own 3D printing business!
+                If you have a 3D printer and would like to register onto our network email us at <b><i>info@wemake.network</i></b>
+                and we'll set you up with an account.</p>
         </div>
+        <div class="col-md-10 mx-auto col-lg-5">
+            <form class="p-4 p-md-5 border rounded-3 bg-light" method="post" action=".">
+                {% csrf_token %}
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">Password</label>
+                </div>
+                <!-- TODO: Add remember me option... cookies -->
+                <!-- <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div> -->
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+                <hr class="my-4">
+                <small class="text-muted">By clicking 'login', you agree to the terms of use.</small>
+            </form>
     </div>
-</form>
-
+</div>
 {% endblock %}
-
