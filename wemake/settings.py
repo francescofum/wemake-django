@@ -179,6 +179,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # EMAIL_HOST_PASSWORD = ''
 # EMAIL_USE_TLS = False
 
+CSRF_TRUSTED_ORIGINS = ['https://*.wemake.network','https://*.127.0.0.1']
+
 
 
 ########'proper' GMail - WeMake server
