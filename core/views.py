@@ -8,10 +8,16 @@ from order.utilities import notify_vendor, notify_customer_confirmed
 
 
 def frontpage_main(request):
-    return render(request, 'core/frontpage_main.html')
+    context = {
+        'frontpage_navbar' : 'true'
+    }
+    return render(request, 'core/frontpage_main.html', context)
 
 def frontpage_vendors(request):
-    return render(request, 'core/frontpage_vendors.html')
+    context = {
+        'frontpage_navbar' : 'true'
+    }
+    return render(request, 'core/frontpage_vendors.html', context)
 
 def checkout(request):
     return render(request, 'core/checkout.html')

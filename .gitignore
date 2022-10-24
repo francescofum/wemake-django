@@ -1,7 +1,3 @@
 *.pyc
 __pycache__
-<<<<<<< HEAD
-media/
-=======
 db.sqlite3
->>>>>>> material_fix

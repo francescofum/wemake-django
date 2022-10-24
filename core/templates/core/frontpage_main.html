@@ -1,3 +1,4 @@
+{% extends 'core/base.html' %}
 
 {% block title %} {% endblock %}
 
@@ -52,65 +53,9 @@
     </div>
     <!-- preloader end -->
 
-    <!-- ======== header start ======== -->
-    <header class="header">
-      <div class="navbar-area">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-lg-12">
-              <nav class="navbar navbar-expand-lg">
-                <a class="navbar-brand" href="#top" style="color:#5864FF; font-size: 40px">
-                  We<b>Make</b>
-                </a>
-                <button
-                  class="navbar-toggler"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation"
-                >
-                  <span class="toggler-icon"></span>
-                  <span class="toggler-icon"></span>
-                  <span class="toggler-icon"></span>
-                </button>
-
-                <div
-                  class="collapse navbar-collapse sub-menu-bar"
-                  id="navbarSupportedContent"
-                >
-                  <ul id="nav" class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                      <a class="page-scroll active" href="#home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="page-scroll" href="#features">Features</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="page-scroll" href="#about">About</a>
-                    </li>
-
-                    <li class="nav-item">
-                      <a class="page-scroll" href="#why">Why</a>
-                    </li>
-                  </ul>
-                </div>
-                <!-- navbar collapse -->
-              </nav>
-              <!-- navbar -->
-            </div>
-          </div>
-          <!-- row -->
-        </div>
-        <!-- container -->
-      </div>
-      <!-- navbar area -->
-    </header>
-    <!-- ======== header end ======== -->
 
     <!-- ======== hero-section start ======== -->
-    <section id="home" class="hero-section">
+    <section id="home" class="hero-section" style="padding:10vh">
       <div class="container">
         <div class="row align-items-center position-relative">
           <div class="col-lg-6">
@@ -135,8 +80,8 @@
           <div class="col-lg-6">
             <div class="hero-img wow fadeInUp" data-wow-delay=".5s">
                 
-                <img src="media/Sinterit Grey Material.png" width="700" height="400" alt="" />
-                <!-- <img src="media/screenshot vendor-dashboards.png" width="700" height="400" alt="" /> -->
+                <img src="/media/base-website/Sinterit Grey Material.png" width="700" height="400" alt="" />
+                <!-- <img src="/media/base-website/Screenshot vendor-dashboards.png" width="700" height="400" alt="" /> -->
                 <!-- <img src="static/frontpage_assets/img/hero/hero-img.png" alt="" /> -->
             </div>
           </div>
@@ -222,7 +167,7 @@
           </div>
           <div class="col-xl-6 col-lg-6 order-first order-lg-last">
             <div class="about-img-2">
-              <img src="media/screenshot print-preview.png" alt="" class="w-100" />
+              <img src="media/base-website/Screenshot print-preview.png" alt="" class="w-100" />
               <img
                 src="static/frontpage_assets/img/about/about-right-shape.svg"
                 alt=""
@@ -245,7 +190,7 @@
         <div class="row align-items-center">
           <div class="col-xl-6 col-lg-6">
             <div class="about-img">
-              <img src="media/screenshot vendor-dashboards.png" alt="" class="w-100" />
+              <img src="/media/base-website/Screenshot vendor-dashboards.png" alt="" class="w-100" />
               <img
                 src="static/frontpage_assets/img/about/about-left-shape.svg"
                 alt=""
@@ -288,7 +233,7 @@
 
 
     <!-- ======== feature-section start ======== -->
-    <section id="why" class="feature-extended-section pt-100">
+    <section id="why" class="feature-extended-section pt-100" style="display: none;">
       <div class="feature-extended-wrapper">
         <div class="container">
           <div class="row justify-content-center">
@@ -397,7 +342,7 @@
     <!-- ======== feature-section end ======== -->
 
     <!-- ======== subscribe-section start ======== -->
-    <section id="contact" class="subscribe-section pt-120">
+    <section id="contact" class="subscribe-section pt-120" style="display: none;">
       <div class="container">
         <div class="subscribe-wrapper img-bg">
           <div class="row align-items-center">
@@ -430,7 +375,7 @@
     <!-- ======== subscribe-section end ======== -->
 
     <!-- ======== footer start ======== -->
-    <footer class="footer">
+    <footer class="footer"  style="display: none;">
       <div class="container">
         <div class="widget-wrapper">
           <div class="row">

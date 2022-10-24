@@ -5,6 +5,23 @@
     "version": "0.2.0",
     "configurations": [
 
+
+        {
+            "name": "Python: Remote Attach",
+            "type": "python",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 3002
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "/Users/raul/Projects/WeMake/wm-django/django/src",
+                    "remoteRoot": "/wemake-src/src"
+                }
+            ],
+            "justMyCode": false
+        },
         {
             "name": "Chrome",
             "request": "launch",

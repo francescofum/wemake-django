@@ -12,13 +12,14 @@
     const material_colours = {{ materials_json | safe}};
     const cart = {};
 </script>
+<!-- <section id="home" class="hero-section col-lg-12" style="padding: 0px 0px 0px 0px !important; height:80px">
+</section> -->
 
-
-<div class="row mx-1">
-    <div class="col-md-5 translucent" style="min-width:440px; padding-top: 4vh;">
+<div class="row mx-1" style="height: 100%-14vh; padding: 0vh 7vh 7vh 10vh;">
+    <div class="col-md-5 translucent" >
         <div class="row" style="height: 100%">
             <div class="col-xl-12" style="height: 100%">
-                <div class="card" style="height:85vh">
+                <div class="card" style="height:75vh">
                     <div class="card-header" style="height: 120px;">
                         <div class="container" style="height: 100%">
                             <div class="row flex wrap" style="height: 100%">
@@ -80,7 +81,21 @@
         </div>
     </div>
     <!-- Right side of the page: stl viewer, rows, checkout ... -->
-    <div id="stl-page-col" class="col-md-7" style="height: 100%; padding-top: 4vh; padding-bottom:4vh;">
+    <div id="initial-upload-screen" class=" col-md-7" style="padding:90px; text-align: center; {% if initial_upload_screen == 'false' %} display: none; {% endif %} ">
+        <img src="/media/base-website/upload.png" alt="Upload STL" style="width:50vh;height:50vh;" >
+            <div style="cursor: pointer;" id="user_dropzone"
+        class="w-100 my-2 container align-items-center justify-content-center large">
+        <div style="padding-bottom:10px;">
+            <button id="dropzone-button" type="button" class="btn btn-primary">Add files </button>
+        </div >
+            <div id="initial-upload-spinner" style="text-align: center; display:none">
+                <div class="spinner-border text-primary" role="status" >
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stl_viewer-screen" id="stl-page-col" class="col-md-7"  style=" {% if initial_upload_screen == 'true' %} display: none; {% endif %} "  >
         {% include 'print_preview/stl_viewer.html' %}
 
         
