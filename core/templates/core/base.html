@@ -26,40 +26,29 @@
 <body>
 
 
-  <!-- old NAVBAR -->
-  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top" style='height:50px'>
-            <div class="container-fluid">
-              <a class="navbar-brand" href="#">WeMake</a>
-                <ul class="navbar-nav me-right mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Print</a>
-                  </li>
-                  <li class="nav-item">
-                    {% if user.is_authenticated %}
-                    <a class="nav-link active" href="{% url 'logout' %}">Log Out</a>
-                    {% else %}
-                    <a class="nav-link active" href="{% url 'vendor_login' %}">Log In</a>
-                    {% endif %}
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#">Register</a>
-                  </li>
-                </ul>
-            </div>
-          </nav> -->
-
-
   <!-- ======== header start ======== -->
-  {% url 'frontpage_main' as url_frontpage %} 
+
+  {% url 'frontpage_main' as url_frontpage_main %} 
+  {% url 'frontpage_vendors' as url_frontpage_vendor %} 
+
+
   <header class="header">
-    <div class="navbar-area {% if request.path != url_frontpage %} navbar-dark bg-primary {% endif %}  ">
-      <div class="container" >
+    <div class="navbar-area  
+    {% if frontpage_navbar %}
+    {% else %}
+      navbar-dark bg-primary
+    {% endif %}  
+    ">
+    <div class="container" >
         <div class="row align-items-center">
           <div class="col-lg-12">
             <nav class="navbar navbar-expand-lg">
               <a class="navbar-brand" href="{% url 'frontpage_main' %}" style="
-              {% if request.path != url_frontpage %} color:#ffffff; {% endif %}
-              {% if request.path == url_frontpage %} color:#5864FF; {% endif %}
+                  {% if frontpage_navbar %}
+                  color:#5864FF;
+                  {% else %}
+                  color:#ffffff;
+                 {% endif %}
                font-size: 30px">
                 We<b>Make</b>
               </a>
@@ -74,13 +63,13 @@
               <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                 <ul id="nav" class="navbar-nav ms-auto">
                   <li class="nav-item">
-                    <a class="page-scroll " href="{% if request.path != url_frontpage %}{% url 'frontpage_main' %}{% endif %}#home">Home</a>
+                    <a class="page-scroll " href="{% if frontpage_navbar %}{% else %}{% url 'frontpage_main' %}{% endif %}#home">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="page-scroll" href="{% if request.path != url_frontpage %}{% url 'frontpage_main' %}{% endif %}#features">Features</a>
+                    <a class="page-scroll" href="{% if frontpage_navbar %}{% else %}{% url 'frontpage_main' %}{% endif %}#features">Features</a>
                   </li>
                   <li class="nav-item">
-                    <a class="page-scroll" href="{% if request.path != url_frontpage %}{% url 'frontpage_main' %}{% endif %}#about">About</a>
+                    <a class="page-scroll" href="{% if frontpage_navbar %}{% else %}{% url 'frontpage_main' %}{% endif %}#about">About</a>
                   </li>
 
                   <li class="nav-item">
@@ -107,8 +96,11 @@
   <!-- MAIN CONTENT -->
   <section class="section">
     <div class="container-fluid" style="
-      {% if request.path != url_frontpage %} padding-top:10vh {% endif %}
-      {% if request.path == url_frontpage %} padding:0px  {% endif %}
+      {% if frontpage_navbar %} 
+      padding:0px 
+      {% else %}
+      padding-top:10vh
+      {% endif %}
       
       " >
       {% block content %}
