@@ -69,7 +69,7 @@
                     <p>You have no orders yet.</p>
                     {% endfor %}
                   </div>
-                  <div class="tab-pane fade show active" id="list-pending" role="tabpanel"
+                  <div class="tab-pane fade" id="list-pending" role="tabpanel"
                     aria-labelledby="list-pending-list">
                     {% for order in orders_pending %}
                     {% include "order/order_list.html" %}
