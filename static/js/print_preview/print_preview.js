@@ -262,6 +262,10 @@ function create_row_html(id,printer_id=1) {
         var name = material_colours[key]['name'];
         $(`#stl_${id}_material`).append(new Option(name, key))
     }
+
+    // Select the first material, the notify backend
+    $(`#stl_${id}_material`).val($(`#stl_${id}_material option:last`).val());
+    material_selection_changed(id,printer_id);
 }
 
 
