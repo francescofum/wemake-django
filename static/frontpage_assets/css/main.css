@@ -584,7 +584,11 @@ p {
 }
 
 /*===== NAVBAR =====*/
-.navbar-area {
+.navbar-thin {
+  height: 60px;
+}
+
+.navbar-area {  
   position: absolute;
   top: 0;
   left: 0;
@@ -607,7 +611,7 @@ p {
 }
 
 .sticky .navbar {
-  padding: 10px 0;
+  padding: 5px 0;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
