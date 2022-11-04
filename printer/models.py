@@ -94,7 +94,7 @@ class Printer(models.Model):
 
         energy_use = (cura_data['print_s'] / 3600) * self.power
         price_time_to_print = float(self.price_hour) * (cura_data['print_s'] / 3600)
-        total_margin_coefficient = (self.price_margin / 100 ) + 1
+        # total_margin_coefficient = (self.price_margin / 100 ) + 1        <<<< use this for a %, but right now, for fixed abosolute margin:
         price_length_of_filament = float(cura_data['fil_len']) * float(material.price_length)
         price_energy_use = float(energy_use) * float(self.price_energy)
         material_colour_coefficient = (colour.price_coefficient / 100) + 1
@@ -105,10 +105,10 @@ class Printer(models.Model):
                             ) * float(material_colour_coefficient)  
   
 
-        price_total = float(price_pre_margin) * float(total_margin_coefficient)
+        price_total = float(price_pre_margin) + float(self.price_margin) # * float(total_margin_coefficient)
 
         if price_total < self.price_min:
-            price_total = self.price_min
+            price_total = self.price_min + self.price_margin 
         
         return price_total
 
