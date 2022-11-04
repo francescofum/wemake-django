@@ -64,7 +64,7 @@ class PrinterForm(forms.ModelForm):
         helper.layout.append(AppendedText('price_energy', '£/Wh', active=True))
         helper.layout.append(AppendedText('price_min', '£', active=True))
         helper.layout.append(AppendedText('price_hour', '£', active=True))
-        helper.layout.append(AppendedText('price_margin', '%', active=True))
+        helper.layout.append(AppendedText('price_margin', '£', active=True))
         helper.layout.append(AppendedText('tray_length', 'mm', active=True))
         helper.layout.append(AppendedText('tray_width', 'mm', active=True))
         helper.layout.append(AppendedText('tray_height', 'mm', active=True))
