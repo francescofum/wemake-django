@@ -119,27 +119,27 @@ class CreateCheckoutSession(View):
                         }
                     }
                 },
-                {
-                    'shipping_rate_data': {
-                        'type': 'fixed_amount',
-                        'fixed_amount': {
-                            'amount': 1500,
-                            'currency': 'gbp',
-                        },
-                        'display_name': 'Next day air',
-                        # Delivers in exactly 1 business day
-                        'delivery_estimate': {
-                            'minimum': {
-                                'unit': 'business_day',
-                                'value': 1,
-                            },
-                            'maximum': {
-                                'unit': 'business_day',
-                                'value': 1,
-                            },
-                        }
-                    }
-                },
+                # {
+                #     'shipping_rate_data': {
+                #         'type': 'fixed_amount',
+                #         'fixed_amount': {
+                #             'amount': 1500,
+                #             'currency': 'gbp',
+                #         },
+                #         'display_name': 'Next day air',
+                #         # Delivers in exactly 1 business day
+                #         'delivery_estimate': {
+                #             'minimum': {
+                #                 'unit': 'business_day',
+                #                 'value': 1,
+                #             },
+                #             'maximum': {
+                #                 'unit': 'business_day',
+                #                 'value': 1,
+                #             },
+                #         }
+                #     }
+                # },
             ],
             mode='payment',
             success_url=
