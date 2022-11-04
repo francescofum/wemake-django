@@ -108,7 +108,7 @@ class Printer(models.Model):
         price_total = float(price_pre_margin) + float(self.price_margin) # * float(total_margin_coefficient)
 
         if price_total < self.price_min:
-            price_total = self.price_min
+            price_total = self.price_min + self.price_margin 
         
         return price_total
 
