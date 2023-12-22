@@ -188,8 +188,8 @@ CSRF_TRUSTED_ORIGINS = ['https://*.wemake.network','https://*.127.0.0.1']
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
-EMAIL_HOST_USER = 'make.it.ffra@gmail.com'
-EMAIL_HOST_PASSWORD = 'chafhyxogylgnbrg'        # password: 'chafhyxogylgnbrg'  Generated at: https://myaccount.google.com/apppasswords, account: make.it.ffra@gmail.com using 2-factor Authentication. Requires to establish server.connect
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''   
 EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = False
 
@@ -197,6 +197,6 @@ EMAIL_USE_TLS = True
 
 # Stripe Settings:
                     
-STRIPE_PUBLIC_KEY = "pk_test_51L9pC5Ik05CqP5pbmO5ixM1z0hUrX4imgJfPgBC1RoU7tMyjYwE8OFg3B4cIv39mQA8gMIesB9pI5uPXDZhkQvss00LE0ghYZY"
-STRIPE_SECRET_KEY = "sk_test_51L9pC5Ik05CqP5pbuWHELvkSZ5cEhrYcjjdt2DqKIMelpTJh56upUsO651JkSkuDMB48ZIv7iCyH8SaBMLJovMvf00b4O5jOle"
-STRIPE_WEBHOOK_SECRET = "whsec_d30d4170794a708ac76d85bbb221556c69511bd121ce0518563f4e86d27943a5"
+STRIPE_PUBLIC_KEY = ""
+STRIPE_SECRET_KEY = ""
+STRIPE_WEBHOOK_SECRET = ""
